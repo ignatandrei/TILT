@@ -12,12 +12,12 @@
 		<!--<ProjectReference Include="..\DB2GUI\DB2GUI_RSCG.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />-->
 	</ItemGroup>
 	<ItemGroup>
-		<AdditionalFiles Include="models.txt"  />
+		<AdditionalFiles Include="models.txt" />
 		<CompilerVisibleProperty Include="GenerateStep" />
 
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.3" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
 	  <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
 	</ItemGroup>
 	<PropertyGroup>

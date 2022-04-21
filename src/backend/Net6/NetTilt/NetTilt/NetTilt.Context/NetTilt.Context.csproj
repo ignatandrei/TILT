@@ -10,8 +10,8 @@
     <None Remove="context.txt" />
   </ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.3" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.4" />
 
 	</ItemGroup>
 	<ItemGroup>
@@ -22,7 +22,7 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<AdditionalFiles Include="context.txt"  />
+		<AdditionalFiles Include="context.txt" />
 
 		<CompilerVisibleProperty Include="GenerateStep" />
 
