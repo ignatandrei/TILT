@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32407.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReBuildOnceWhenDBChanges", "ReBuildOnceWhenDBChanges", "{E0D77344-24DF-42C5-9B03-3A1B5F3F8C6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTilt.GeneratorFromDB", "NetTilt\NetTilt.GeneratorFromDB\NetTilt.GeneratorFromDB.csproj", "{21BBEE45-0015-48C5-82FC-C3286D2CEF58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTilt.Context", "NetTilt\NetTilt.Context\NetTilt.Context.csproj", "{C1E4287B-B475-4A15-AB9F-7B4DCE61650F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTilt.Models", "NetTilt\NetTilt.Models\NetTilt.Models.csproj", "{7DAAFB3F-C962-4005-BEE5-A511FAF0AE7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTilt.WebAPI", "NetTilt\NetTilt.WebAPI\NetTilt.WebAPI.csproj", "{B3EDAEA8-1E00-4DA2-B6FB-ADA49476E453}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21BBEE45-0015-48C5-82FC-C3286D2CEF58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21BBEE45-0015-48C5-82FC-C3286D2CEF58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21BBEE45-0015-48C5-82FC-C3286D2CEF58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21BBEE45-0015-48C5-82FC-C3286D2CEF58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1E4287B-B475-4A15-AB9F-7B4DCE61650F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1E4287B-B475-4A15-AB9F-7B4DCE61650F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1E4287B-B475-4A15-AB9F-7B4DCE61650F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1E4287B-B475-4A15-AB9F-7B4DCE61650F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DAAFB3F-C962-4005-BEE5-A511FAF0AE7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DAAFB3F-C962-4005-BEE5-A511FAF0AE7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DAAFB3F-C962-4005-BEE5-A511FAF0AE7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DAAFB3F-C962-4005-BEE5-A511FAF0AE7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3EDAEA8-1E00-4DA2-B6FB-ADA49476E453}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3EDAEA8-1E00-4DA2-B6FB-ADA49476E453}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3EDAEA8-1E00-4DA2-B6FB-ADA49476E453}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3EDAEA8-1E00-4DA2-B6FB-ADA49476E453}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{21BBEE45-0015-48C5-82FC-C3286D2CEF58} = {E0D77344-24DF-42C5-9B03-3A1B5F3F8C6B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {48748284-7636-4557-AF3E-15C245A0F50D}
+	EndGlobalSection
+EndGlobal

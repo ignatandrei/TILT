@@ -1,0 +1,13 @@
+﻿{
+	"version":"2022.4.15.615",
+	"connections":[
+	{
+		"Provider": "Microsoft.EntityFrameworkCore.SqlServer",
+		"FolderForContext": "..\\NetTilt.Context\\Generated",
+		"FolderForClasses": "..\\NetTilt.Models\\Generated",
+		"ProjectWithDesigner": "..\\NetTilt.WebAPI\\",
+		"NameContext": "ApplicationDBContext",
+		"ConnectionString":"Data Source=.;Initial Catalog=tilt;UId=sa;pwd=<YourStrong@Passw0rd>"
+	}
+	]
+}
