@@ -52,8 +52,19 @@ app.UseAMS();
 app.UseBlocklyAutomation();
 using (var scope = app.Services.CreateScope())
 {
+    if (File.Exists("Tilt.db"))
+        File.Delete("Tilt.db");
+
     var dbcontext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
-    dbcontext.Database.EnsureCreated();    
+    dbcontext.Database.EnsureCreated();
+
+    //seed db
+    dbcontext.TILT_URL.Add(new TILT_URL()
+    {
+        Secret = "Andrei",
+        URLPart = "ignatandrei"
+    });
+    await dbcontext.SaveChangesAsync();
 }
 
 app.Run();
