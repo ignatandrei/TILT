@@ -20,8 +20,8 @@ dotnet tool restore
 #        $folder = $_frperror[0].TargetObject
 #}
 
-Remove-Item -LiteralPath $pathToModels -Force -Recurse -ErrorAction SilentlyContinue 
-Remove-Item -LiteralPath $pathToContext -Force -Recurse -ErrorAction SilentlyContinue 
+#Remove-Item -LiteralPath $pathToModels -Force -Recurse -ErrorAction SilentlyContinue 
+#Remove-Item -LiteralPath $pathToContext -Force -Recurse -ErrorAction SilentlyContinue 
 
 Write-Host "search for csproj in $projectPath"
 
