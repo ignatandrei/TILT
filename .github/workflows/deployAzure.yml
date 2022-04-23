@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.0.x'
-          include-prerelease: true
+          include-prerelease: false
 
       - name: Build with dotnet
         run: |
@@ -26,7 +26,9 @@ jobs:
 
       - name: dotnet publish
         run: |
-            cd src/backend/Net6/NetTilt/NetTilt.WebAPI 
+            cd src/backend/Net6/NetTilt
+            ls -lh
+            cd NetTilt.WebAPI 
             dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
