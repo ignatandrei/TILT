@@ -17,12 +17,12 @@ builder.Services.Configure<JsonOptions>(options =>
     options.SerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
 });
 builder.Services.AddSwaggerGen();
-bool IsInCI = new XAboutMySoftware_78102118871091131225395110108769286().IsInCI;
+bool IsBuildFromCI = new XAboutMySoftware_78102118871091131225395110108769286().IsInCI;
 
 builder.Services.AddDbContextFactory<ApplicationDBContext>(
     options =>
     {
-        if (IsInCI)
+        if (IsBuildFromCI)
         {
             var cn = builder.Configuration.GetConnectionString("DefaultConnection");
             options.UseSqlServer(cn);
@@ -50,21 +50,24 @@ app.UseAuthorization();
 app.MapControllers();
 app.UseAMS();
 app.UseBlocklyAutomation();
-using (var scope = app.Services.CreateScope())
+if (!IsBuildFromCI)
 {
-    if (File.Exists("Tilt.db"))
-        File.Delete("Tilt.db");
-
-    var dbcontext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
-    dbcontext.Database.EnsureCreated();
-
-    //seed db
-    dbcontext.TILT_URL.Add(new TILT_URL()
+    using (var scope = app.Services.CreateScope())
     {
-        Secret = "Andrei",
-        URLPart = "ignatandrei"
-    });
-    await dbcontext.SaveChangesAsync();
+        if (File.Exists("Tilt.db"))
+            File.Delete("Tilt.db");
+
+        var dbcontext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
+        dbcontext.Database.EnsureCreated();
+
+        //seed db
+        dbcontext.TILT_URL.Add(new TILT_URL()
+        {
+            Secret = "Andrei",
+            URLPart = "ignatandrei"
+        });
+        await dbcontext.SaveChangesAsync();
+    }
 }
 
 app.Run();
