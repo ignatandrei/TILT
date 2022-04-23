@@ -27,17 +27,17 @@ public partial class {{classLoop.Name}}_Table: I_{{classLoop.Name}}_Table  {
      public static implicit operator {{classLoop.Name}}_Table({{classLoop.Name}} obj) { 
         if(obj == null)
             return null;
-
+            System.Diagnostics.Debugger.Break();
          var ret= new {{classLoop.Name}}_Table();
-         ret.CopyFrom(obj);
+         ret.CopyFrom(obj as I_{{classLoop.Name}}_Table );
          return ret;
      }
      public static implicit operator {{classLoop.Name}}({{classLoop.Name}}_Table obj) { 
         if(obj == null)
             return null;
-
+            System.Diagnostics.Debugger.Break();
          var ret= new {{classLoop.Name}}();
-         ret.CopyFrom(obj);
+         ret.CopyFrom(obj as I_{{classLoop.Name}}_Table) ;
          return ret;
      }
 }
