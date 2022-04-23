@@ -29,7 +29,7 @@ jobs:
             cd src/backend/Net6/NetTilt
             ls -lh
             cd NetTilt/NetTilt.WebAPI 
-            dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+            dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp -r linux-x64
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
