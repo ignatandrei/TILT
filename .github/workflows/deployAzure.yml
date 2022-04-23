@@ -28,7 +28,7 @@ jobs:
         run: |
             cd src/backend/Net6/NetTilt
             ls -lh
-            cd NetTilt.WebAPI 
+            cd NetTilt/NetTilt.WebAPI 
             dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
