@@ -123,9 +123,14 @@ public partial class {{nameContext}}_{{table.Name}}_SearchController : Controlle
     public IAsyncEnumerable<{{table.Name}}> AdvancedSearch(Search{{table.Name}} search){
             return _context.{{table.Name}}Find_AsyncEnumerable(search);
         }
-    [HttpGet]
+    [HttpPost]
     public Task<long> Count(Search{{table.Name}} search){
             return _context.{{table.Name}}Count(search);
+        }
+
+        [HttpGet]
+    public Task<long> CountAll(){
+            return _context.{{table.Name}}Count(null);
         }
 }
     
