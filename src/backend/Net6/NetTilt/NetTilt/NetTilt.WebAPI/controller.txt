@@ -8,10 +8,10 @@ namespace Generated;
 
 [Route("api/[controller]")]
 [ApiController]
-public partial class {{nameContext}}_{{table.Name}}_Controller : ControllerBase
+public partial class {{nameContext}}_{{table.Name}}Controller : ControllerBase
 {
     private {{nameContext}}  _context ;
-    public {{nameContext}}_{{table.Name}}_Controller({{nameContext}} context){
+    public {{nameContext}}_{{table.Name}}Controller({{nameContext}} context){
         _context=context;
     }
 
@@ -52,6 +52,16 @@ public partial class {{nameContext}}_{{table.Name}}_Controller : ControllerBase
 public partial class {{nameContext}}_{{table.Name}}_MetadataController : ControllerBase
 {
     [HttpGet]
+    public async Task<bool> TableExists([FromServices] {{nameContext}} context){
+        try{
+            var data= await context.{{table.Name}}.Where(it=>false).CountAsync();
+            return (data == 0);
+        }
+        catch(Exception){
+            return false;
+        }
+    }
+    [HttpGet]
     public string Name(){
         return "{{table.Name}}";
     }
@@ -76,10 +86,10 @@ public partial class {{nameContext}}_{{table.Name}}_MetadataController : Control
 [Route("api/[controller]/[action]")]
 [ApiController]
 
-public partial class {{nameContext}}_{{table.Name}}_XController : ControllerBase
+public partial class {{nameContext}}_{{table.Name}}_SearchController : ControllerBase
 {
     private {{nameContext}}  _context ;
-    public {{nameContext}}_{{table.Name}}_XController({{nameContext}} context){
+    public {{nameContext}}_{{table.Name}}_SearchController({{nameContext}} context){
         _context=context;
     }
     
