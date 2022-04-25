@@ -12,7 +12,6 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
 });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.Configure<JsonOptions>(options =>
 {
@@ -37,7 +36,13 @@ else
 builder.Services
      .AddHealthChecksUI(setup =>
      {
-         setup.AddHealthCheckEndpoint("me", "/healthz");
+
+         var health = "/healthz"; 
+         if (IsBuildFromCI)
+         {
+             health = builder.Configuration["deployURL"] + health;
+         }
+         setup.AddHealthCheckEndpoint("me",health );
          setup.SetEvaluationTimeInSeconds (60*60);
          //setup.SetHeaderText
          setup.MaximumHistoryEntriesPerEndpoint(10);
@@ -97,6 +102,7 @@ if (!IsBuildFromCI)
         await dbcontext.SaveChangesAsync();
     }
 }
+
 app.MapHealthChecks("/healthz", new HealthCheckOptions
 {
     Predicate = _ => true,
