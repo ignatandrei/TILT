@@ -9,7 +9,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
 });
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.Configure<JsonOptions>(options =>
+builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
 {
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
     options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
@@ -49,6 +49,8 @@ builder.Services.AddAuthentication(x =>
                };
            });
 builder.Services.AddScoped<IAuthUrl, AuthUrl>();
+builder.Services.AddScoped<ISearchDataTILT_URL, SearchDataTILT_URL>();
+
 builder.Services
      .AddHealthChecksUI(setup =>
      {
