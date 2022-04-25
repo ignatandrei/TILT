@@ -1,3 +1,7 @@
+using HealthChecks.UI.Client;
+using HealthChecks.UI.Core;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -18,6 +22,31 @@ builder.Services.Configure<JsonOptions>(options =>
 });
 builder.Services.AddSwaggerGen();
 bool IsBuildFromCI = new XAboutMySoftware_78102118871091131225395110108769286().IsInCI;
+var cnSqlite = "Data Source=Tilt.db";
+
+var hc = builder.Services.AddHealthChecks();
+if (IsBuildFromCI)
+{
+    hc.AddSqlServer(builder.Configuration["Data:ConnectionStrings:DefaultConnection"],name:"database SqlServer");
+}
+else
+{
+    hc.AddSqlite(cnSqlite, name: "database Sqlite");
+}
+
+builder.Services
+     .AddHealthChecksUI(setup =>
+     {
+         setup.AddHealthCheckEndpoint("me", "/healthz");
+         setup.SetEvaluationTimeInSeconds (60*60);
+         //setup.SetHeaderText
+         setup.MaximumHistoryEntriesPerEndpoint(10);
+     }
+        
+    )
+     .AddInMemoryStorage()
+     ;
+
 
 builder.Services.AddDbContextFactory<ApplicationDBContext>(
     options =>
@@ -30,8 +59,7 @@ builder.Services.AddDbContextFactory<ApplicationDBContext>(
 
         else
         {
-            var cn = "Data Source=Tilt.db";
-            options.UseSqlite(cn);
+            options.UseSqlite(cnSqlite);
         }
     }
      )
@@ -69,5 +97,13 @@ if (!IsBuildFromCI)
         await dbcontext.SaveChangesAsync();
     }
 }
+app.MapHealthChecks("/healthz", new HealthCheckOptions
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
+app.MapHealthChecksUI(setup =>
+{
 
+});
 app.Run();
