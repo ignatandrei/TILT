@@ -2,9 +2,9 @@
 
 public class TheSecretToken
 {
-    public TheSecret(IConfiguration configuration)
+    public TheSecretToken(IConfiguration configuration)
     {
-        Secret = configuration["MySettings:secretToken" ?? "andrei";
+        Secret = configuration["MySettings:secretToken" ];
     }
     public string Secret { get; }
 }

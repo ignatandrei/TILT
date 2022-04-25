@@ -1,6 +1,3 @@
-using HealthChecks.UI.Client;
-using HealthChecks.UI.Core;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +29,26 @@ else
 {
     hc.AddSqlite(cnSqlite, name: "database Sqlite");
 }
+
+var key = builder.Configuration["MySettings:secretToken"];
+builder.Services.AddAuthentication(x =>
+{
+
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+           .AddJwtBearer(x =>
+           {
+               x.RequireHttpsMetadata = false;
+               x.SaveToken = true;
+               x.TokenValidationParameters = new TokenValidationParameters
+               {
+                   ValidateIssuerSigningKey = true,
+                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+                   ValidateIssuer = false,
+                   ValidateAudience = false
+               };
+           });
 
 builder.Services
      .AddHealthChecksUI(setup =>
@@ -79,7 +96,7 @@ var app = builder.Build();
 }
 app.UseBlocklyUI(app.Environment);
 app.UseAuthorization();
-
+app.UseAuthentication();
 app.MapControllers();
 app.UseAMS();
 app.UseBlocklyAutomation();
