@@ -1,16 +1,15 @@
-﻿using BoilerplateFree;
-
-namespace NetTilt.Auth
+﻿namespace NetTilt.Auth
 {
 
     [AutoGenerateInterface]
     public class AuthUrl : IAuthUrl
     {
         private readonly ISearchDataTILT_URL search;
-
-        public AuthUrl(ISearchDataTILT_URL searchUrl)
+        private string SecretKey;
+        public AuthUrl(ISearchDataTILT_URL searchUrl, IConfiguration configuration)
         {
-            this.search = searchUrl;
+            search = searchUrl;
+            SecretKey = configuration["MySettings:secretToken"];
         }
         private async Task<string?> privateLogin(string url, string secret)
         {
@@ -18,15 +17,15 @@ namespace NetTilt.Auth
             if (data == null)
                 return null;
 
-            if (data.Length != 0)
+            if (data.Length != 1)
                 return null;
 
-            var item = data[0]!;
+            var item = data[0];
             if (item.Secret != secret)
                 return null;
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("andrei");
+            var key = Encoding.ASCII.GetBytes(SecretKey);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
