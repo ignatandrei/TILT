@@ -38,10 +38,6 @@ builder.Services
      {
 
          var health = "/healthz"; 
-         if (IsBuildFromCI)
-         {
-             health = builder.Configuration["deployURL"] + health;
-         }
          setup.AddHealthCheckEndpoint("me",health );
          setup.SetEvaluationTimeInSeconds (60*60);
          //setup.SetHeaderText
