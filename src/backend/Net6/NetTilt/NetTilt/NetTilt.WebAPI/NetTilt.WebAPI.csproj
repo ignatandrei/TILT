@@ -39,6 +39,7 @@
 
 	</ItemGroup>
 	<ItemGroup>
+	  <ProjectReference Include="..\..\NetTilt.Auth\NetTilt.Auth.csproj" />
 	  <ProjectReference Include="..\NetTilt.Context\NetTilt.Context.csproj" />
 	</ItemGroup>
 
