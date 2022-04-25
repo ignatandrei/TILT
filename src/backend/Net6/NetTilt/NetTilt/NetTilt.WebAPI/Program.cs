@@ -26,7 +26,7 @@ var cnSqlite = "Data Source=Tilt.db";
 var hc = builder.Services.AddHealthChecks();
 if (IsBuildFromCI)
 {
-    hc.AddSqlServer(builder.Configuration["Data:ConnectionStrings:DefaultConnection"],name:"database SqlServer");
+    hc.AddSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"],name:"database SqlServer");
 }
 else
 {
@@ -99,7 +99,7 @@ if (!IsBuildFromCI)
     }
 }
 
-app.MapHealthChecks("/healthz", new HealthCheckOptions
+app.MapHealthChecks("healthz", new HealthCheckOptions
 {
     Predicate = _ => true,
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
