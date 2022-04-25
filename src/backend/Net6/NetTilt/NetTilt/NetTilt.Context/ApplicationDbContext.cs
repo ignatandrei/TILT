@@ -5,6 +5,6 @@ namespace Generated
 {
     public partial class ApplicationDBContext : DbContext
     {
-
+        
     }
 }
