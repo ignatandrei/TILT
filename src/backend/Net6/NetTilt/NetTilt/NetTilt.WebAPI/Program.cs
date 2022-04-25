@@ -37,7 +37,11 @@ builder.Services
      .AddHealthChecksUI(setup =>
      {
 
-         var health = "/healthz"; 
+         var health = "/healthz";
+         if (IsBuildFromCI)
+         {
+             health = builder.Configuration["MySettings:url"] + health;
+         }
          setup.AddHealthCheckEndpoint("me",health );
          setup.SetEvaluationTimeInSeconds (60*60);
          //setup.SetHeaderText
