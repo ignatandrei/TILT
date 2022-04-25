@@ -1,4 +1,3 @@
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -49,7 +48,7 @@ builder.Services.AddAuthentication(x =>
                    ValidateAudience = false
                };
            });
-
+builder.Services.AddScoped<IAuthUrl, AuthUrl>();
 builder.Services
      .AddHealthChecksUI(setup =>
      {

@@ -12,5 +12,6 @@ global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 global using Microsoft.IdentityModel.Tokens;
 global using System.Text;
+global using NetTilt.Auth;
 
 [assembly: AMS_Base.VersionReleased(Name = "FutureRelease", ISODateTime = "9999-04-16", recordData = AMS_Base.RecordData.Merges)]
