@@ -48,6 +48,20 @@
         {
             return privateLogin(url, secret);
         }
+        private async Task<string?> privateCreateUser(string url, string secret)
+        {
+            var data = await search.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, url).ToArrayAsync(); ;
+            if (data != null)
+                return null;
+
+            //todo: insert into database
+            return await privateLogin(url, secret);
+
+        }
+        public Task<string?> CreateUser(string url, string secret)
+        {
+            return privateCreateUser(url, secret);
+        }
 
         public int? Decrypt(string token)
         {
