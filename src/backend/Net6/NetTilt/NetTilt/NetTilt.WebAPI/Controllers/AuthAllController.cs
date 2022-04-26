@@ -13,6 +13,16 @@ public class AuthAllController : ControllerBase
         
     }
     [HttpGet("{urlPart}/{secret}")]
+    public async Task<ActionResult<string>> CreateEndPoint(string urlPart, string secret)
+    {
+        var data = await auth.CreateEndpoint(urlPart, secret);
+        if (string.IsNullOrWhiteSpace(data))
+        {
+            return new NotFoundObjectResult($"{urlPart} already exists or other error");
+        }
+        return data;
+    }
+    [HttpGet("{urlPart}/{secret}")]
     public async Task<ActionResult<string>> Login( string urlPart, string secret)
     {
         var data= await auth.Login(urlPart, secret);

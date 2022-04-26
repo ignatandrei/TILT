@@ -50,19 +50,22 @@
         {
             return privateLogin(url, secret);
         }
-        private async Task<string?> privateCreateUser(string url, string secret)
+        private async Task<string?> privateCreateEndpoint(string url, string secret)
         {
             var data = await search.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, url).ToArrayAsync(); ;
             if (data != null)
-                return null;
+            {
+                //maybe he wants to login ?
+                return await privateLogin(url, secret);
+            }
 
             var val = await insert.InsertTILT_URL(new TILT_URL_Table() { Secret=secret, URLPart=url});
             return await privateLogin(url, secret);
 
         }
-        public Task<string?> CreateUser(string url, string secret)
+        public Task<string?> CreateEndpoint(string url, string secret)
         {
-            return privateCreateUser(url, secret);
+            return privateCreateEndpoint(url, secret);
         }
 
         public int? Decrypt(string token)
