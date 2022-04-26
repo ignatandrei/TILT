@@ -47,5 +47,31 @@
             return privateLogin(url, secret);
         }
 
+        public int? Decrypt(string token)
+        {
+            JwtSecurityTokenHandler tokenHandler = new ();
+            var jwtSecurityToken = tokenHandler.ReadJwtToken(token);
+            if (jwtSecurityToken == null)
+            {
+                return null;
+            }
+            if ((jwtSecurityToken.Claims?.Count() ?? 0)== 0)
+            {
+                return null;
+            }
+            var claims = jwtSecurityToken.Claims.ToArray();
+            var webPage = claims.FirstOrDefault(it => it.Type == ClaimTypes.Webpage);
+            if (webPage == null)
+            {
+                webPage = claims.FirstOrDefault(it => it.Type?.ToLower() == "website");
+                if (webPage == null)
+                {
+                    return null;
+                }
+            }
+
+            return int.Parse(webPage.Value);
+        }
+
     }
 }

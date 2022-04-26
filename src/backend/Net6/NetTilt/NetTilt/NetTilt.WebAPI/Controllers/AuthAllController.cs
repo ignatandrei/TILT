@@ -21,5 +21,16 @@ public class AuthAllController : ControllerBase
         }
         return data;
     }
+    [HttpPost("{token}")]
+    public ActionResult<int> Decrypt(string token)
+    {
+        //return 0;
+        var data = auth.Decrypt(token);
+        if (data == null)
+        {
+            return new NotFoundObjectResult($"cannot find {token}");
+        }
+        return data;
+    }
 }
 
