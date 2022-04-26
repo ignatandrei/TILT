@@ -1,0 +1,8 @@
+﻿[
+    {
+        "id":  "javascript",
+        "description":  "javascript errors",
+        "categories":  "javascript",
+        "blocks":  "window_open;text"
+    }
+]
