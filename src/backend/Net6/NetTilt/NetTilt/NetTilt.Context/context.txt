@@ -1,10 +1,31 @@
 ﻿#nullable enable
-//version 2022.4.25.615
+//version 2022.4.25.615 new
 using Microsoft.EntityFrameworkCore;
 namespace Generated;
 
+    public interface I_InsertData{{nameContext}}{
+{{ for classLoop in queries }}
+        Task<{{classLoop.Name}}_Table> Insert{{classLoop.Name}}({{classLoop.Name}}_Table value);
+{{end}}    
+    }
+    
+    public class InsertData{{nameContext}}: I_InsertData{{nameContext}}{
 
+        private {{nameContext}} _context;
+        public InsertData{{nameContext}}({{nameContext}} context){
+            _context=context;
+        }
+{{ for classLoop in queries }}
+        public async Task<{{classLoop.Name}}_Table> Insert{{classLoop.Name}}({{classLoop.Name}}_Table value){
+            {{classLoop.Name}} val = value;
+            _context.{{classLoop.Name}}.Add(val);
+            await _context.SaveChangesAsync();
+            return val;
 
+        }
+{{end}}    
+    
+    }
 
    {{ for classLoop in queries }}
    public interface ISearchData{{classLoop.Name}} {

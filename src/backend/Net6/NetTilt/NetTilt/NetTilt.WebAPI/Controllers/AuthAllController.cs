@@ -10,6 +10,7 @@ public class AuthAllController : ControllerBase
     public AuthAllController(IAuthUrl auth)
     {
         this.auth = auth;
+        
     }
     [HttpGet("{urlPart}/{secret}")]
     public async Task<ActionResult<string>> Login( string urlPart, string secret)

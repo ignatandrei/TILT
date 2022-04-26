@@ -49,6 +49,7 @@ builder.Services.AddAuthentication(x =>
                };
            });
 builder.Services.AddScoped<IAuthUrl, AuthUrl>();
+builder.Services.AddScoped<I_InsertDataApplicationDBContext, InsertDataApplicationDBContext>();
 builder.Services.AddScoped<ISearchDataTILT_URL, SearchDataTILT_URL>();
 
 builder.Services

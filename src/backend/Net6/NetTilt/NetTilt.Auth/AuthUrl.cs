@@ -6,10 +6,12 @@
     {
         const string TokenId = "TokenId";
         private readonly ISearchDataTILT_URL search;
+        private readonly I_InsertDataApplicationDBContext insert;
         private string SecretKey;
-        public AuthUrl(ISearchDataTILT_URL searchUrl, IConfiguration configuration)
+        public AuthUrl(ISearchDataTILT_URL searchUrl, IConfiguration configuration, I_InsertDataApplicationDBContext insert)
         {
             search = searchUrl;
+            this.insert = insert;
             SecretKey = configuration["MySettings:secretToken"];
         }
         
@@ -54,7 +56,7 @@
             if (data != null)
                 return null;
 
-            //todo: insert into database
+            var val = await insert.InsertTILT_URL(new TILT_URL_Table() { Secret=secret, URLPart=url});
             return await privateLogin(url, secret);
 
         }
