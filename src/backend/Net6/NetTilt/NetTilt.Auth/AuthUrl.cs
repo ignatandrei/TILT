@@ -53,7 +53,7 @@
         private async Task<string?> privateCreateEndpoint(string url, string secret)
         {
             var data = await search.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, url).ToArrayAsync(); ;
-            if (data != null)
+            if (data?.Length>0)
             {
                 //maybe he wants to login ?
                 return await privateLogin(url, secret);
