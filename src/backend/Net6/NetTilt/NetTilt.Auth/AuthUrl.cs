@@ -4,6 +4,7 @@
     [AutoGenerateInterface]
     public class AuthUrl : IAuthUrl
     {
+        const string TokenId = "TokenId";
         private readonly ISearchDataTILT_URL search;
         private string SecretKey;
         public AuthUrl(ISearchDataTILT_URL searchUrl, IConfiguration configuration)
@@ -11,6 +12,7 @@
             search = searchUrl;
             SecretKey = configuration["MySettings:secretToken"];
         }
+        
         private async Task<string?> privateLogin(string url, string secret)
         {
             var data = await search.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, url).ToArrayAsync(); ;
@@ -30,7 +32,7 @@
             {
                 Subject = new ClaimsIdentity(new Claim[]
                     {
-                    new Claim(ClaimTypes.Webpage,item.ID.ToString() ),
+                    new Claim(TokenId ,item.ID.ToString() ),
                     new Claim(ClaimTypes.Role, "Editor")
                     }),
 
@@ -59,15 +61,12 @@
             {
                 return null;
             }
-            var claims = jwtSecurityToken.Claims.ToArray();
-            var webPage = claims.FirstOrDefault(it => it.Type == ClaimTypes.Webpage);
+            var claims = jwtSecurityToken.Claims?.ToArray();
+            var webPage = claims?.FirstOrDefault(it => it.Type == TokenId);
             if (webPage == null)
             {
-                webPage = claims.FirstOrDefault(it => it.Type?.ToLower() == "website");
-                if (webPage == null)
-                {
-                    return null;
-                }
+                return null;
+
             }
 
             return int.Parse(webPage.Value);
