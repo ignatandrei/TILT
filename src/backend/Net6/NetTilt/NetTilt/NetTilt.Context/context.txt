@@ -1,13 +1,44 @@
 ﻿#nullable enable
-//version 2022.4.15.615
+//version 2022.4.25.615 new
 using Microsoft.EntityFrameworkCore;
 namespace Generated;
 
+    public interface I_InsertData{{nameContext}}{
+{{ for classLoop in queries }}
+        Task<{{classLoop.Name}}_Table> Insert{{classLoop.Name}}({{classLoop.Name}}_Table value);
+{{end}}    
+    }
+    
+    public class InsertData{{nameContext}}: I_InsertData{{nameContext}}{
 
+        private {{nameContext}} _context;
+        public InsertData{{nameContext}}({{nameContext}} context){
+            _context=context;
+        }
+{{ for classLoop in queries }}
+        public async Task<{{classLoop.Name}}_Table> Insert{{classLoop.Name}}({{classLoop.Name}}_Table value){
+            {{classLoop.Name}} val = value;
+            _context.{{classLoop.Name}}.Add(val);
+            await _context.SaveChangesAsync();
+            return val;
 
+        }
+{{end}}    
+    
+    }
 
    {{ for classLoop in queries }}
-   public partial class SearchData{{classLoop.Name}} {
+   public interface ISearchData{{classLoop.Name}} {
+        IAsyncEnumerable<{{classLoop.Name}}> {{classLoop.Name}}Find_AsyncEnumerable(Search{{classLoop.Name}}? search);
+    {{ for col in classLoop.cols}}
+     {{if col.TheTypeName}}
+     public  IAsyncEnumerable<{{classLoop.Name}}> {{classLoop.Name}}SimpleSearch_{{col.Name}}(SearchCriteria sc,  {{col.TheTypeName}} value);
+    public  IAsyncEnumerable<{{classLoop.Name}}> {{classLoop.Name}}SimpleSearchNull_{{col.Name}}(SearchCriteria sc);
+    {{end}}
+    {{ end}}
+
+   }
+   public partial class SearchData{{classLoop.Name}} : ISearchData{{classLoop.Name}}{
         private {{nameContext}} context;
         public SearchData{{classLoop.Name}} ({{nameContext}} context) {
             this.context=context;
@@ -21,6 +52,39 @@ namespace Generated;
         public Task<long> {{classLoop.Name}}Count( Search{{classLoop.Name}} search){
             return context.{{classLoop.Name}}Count(search);
         }
+        public  IAsyncEnumerable<{{classLoop.Name}}> {{classLoop.Name}}SimpleSearch(SearchCriteria sc, e{{classLoop.Name}}Columns colToSearch, string value){
+            var search = new Search{{classLoop.Name}}();
+            var orderBy = new Generated.OrderBy<e{{classLoop.Name}}Columns>();
+            orderBy.FieldName = colToSearch;
+            orderBy.Asc = true;
+            search.OrderBys = new[] { orderBy };
+            search.PageNumber = 1;
+            search.PageSize = int.MaxValue;
+            var s = new SearchField<e{{classLoop.Name}}Columns>();
+            s.Criteria = sc;
+            s.FieldName = colToSearch;
+            s.Value = value;
+            search.SearchFields = new[] { s };
+            var data = this.{{classLoop.Name}}Find_AsyncEnumerable(search);
+            return data;
+        }
+
+        //andrei
+    {{ for col in classLoop.cols}}
+     {{if col.TheTypeName}}
+     public  IAsyncEnumerable<{{classLoop.Name}}> {{classLoop.Name}}SimpleSearch_{{col.Name}}(SearchCriteria sc,  {{col.TheTypeName}} value){
+        
+        return {{classLoop.Name}}SimpleSearch(sc,e{{classLoop.Name}}Columns.{{col.Name}},value.ToString());
+        
+    }
+    public  IAsyncEnumerable<{{classLoop.Name}}> {{classLoop.Name}}SimpleSearchNull_{{col.Name}}(SearchCriteria sc){
+        
+        return {{classLoop.Name}}SimpleSearch(sc,e{{classLoop.Name}}Columns.{{col.Name}},null);
+        
+    }
+    {{end}}
+    {{ end}}
+
 
    }
    public class Search{{classLoop.Name}} :  Search<e{{classLoop.Name}}Columns,{{classLoop.Name}}>
@@ -576,6 +640,8 @@ public partial class {{nameContext}}
          s.SearchFields[0] = search;
         return this.{{classLoop.Name}}Find_AsyncEnumerable(s);
     }
+
+
     public IAsyncEnumerable<{{classLoop.Name}}> {{classLoop.Name}}Find_AsyncEnumerable(Search{{classLoop.Name}}? search){
         
         IQueryable<{{classLoop.Name}}> data= this.{{classLoop.Name}} ;

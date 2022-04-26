@@ -1,7 +1,3 @@
-using HealthChecks.UI.Client;
-using HealthChecks.UI.Core;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,7 +9,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
 });
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.Configure<JsonOptions>(options =>
+builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
 {
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
     options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
@@ -32,6 +28,29 @@ else
 {
     hc.AddSqlite(cnSqlite, name: "database Sqlite");
 }
+
+var key = builder.Configuration["MySettings:secretToken"];
+builder.Services.AddAuthentication(x =>
+{
+
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+           .AddJwtBearer(x =>
+           {
+               x.RequireHttpsMetadata = false;
+               x.SaveToken = true;
+               x.TokenValidationParameters = new TokenValidationParameters
+               {
+                   ValidateIssuerSigningKey = true,
+                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+                   ValidateIssuer = false,
+                   ValidateAudience = false
+               };
+           });
+builder.Services.AddScoped<IAuthUrl, AuthUrl>();
+builder.Services.AddScoped<I_InsertDataApplicationDBContext, InsertDataApplicationDBContext>();
+builder.Services.AddScoped<ISearchDataTILT_URL, SearchDataTILT_URL>();
 
 builder.Services
      .AddHealthChecksUI(setup =>
@@ -79,7 +98,7 @@ var app = builder.Build();
 }
 app.UseBlocklyUI(app.Environment);
 app.UseAuthorization();
-
+app.UseAuthentication();
 app.MapControllers();
 app.UseAMS();
 app.UseBlocklyAutomation();

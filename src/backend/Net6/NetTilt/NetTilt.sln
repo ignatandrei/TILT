@@ -5,13 +5,15 @@ VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReBuildOnceWhenDBChanges", "ReBuildOnceWhenDBChanges", "{E0D77344-24DF-42C5-9B03-3A1B5F3F8C6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTilt.GeneratorFromDB", "NetTilt\NetTilt.GeneratorFromDB\NetTilt.GeneratorFromDB.csproj", "{21BBEE45-0015-48C5-82FC-C3286D2CEF58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetTilt.GeneratorFromDB", "NetTilt\NetTilt.GeneratorFromDB\NetTilt.GeneratorFromDB.csproj", "{21BBEE45-0015-48C5-82FC-C3286D2CEF58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTilt.Context", "NetTilt\NetTilt.Context\NetTilt.Context.csproj", "{C1E4287B-B475-4A15-AB9F-7B4DCE61650F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetTilt.Context", "NetTilt\NetTilt.Context\NetTilt.Context.csproj", "{C1E4287B-B475-4A15-AB9F-7B4DCE61650F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTilt.Models", "NetTilt\NetTilt.Models\NetTilt.Models.csproj", "{7DAAFB3F-C962-4005-BEE5-A511FAF0AE7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetTilt.Models", "NetTilt\NetTilt.Models\NetTilt.Models.csproj", "{7DAAFB3F-C962-4005-BEE5-A511FAF0AE7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTilt.WebAPI", "NetTilt\NetTilt.WebAPI\NetTilt.WebAPI.csproj", "{B3EDAEA8-1E00-4DA2-B6FB-ADA49476E453}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetTilt.WebAPI", "NetTilt\NetTilt.WebAPI\NetTilt.WebAPI.csproj", "{B3EDAEA8-1E00-4DA2-B6FB-ADA49476E453}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTilt.Auth", "NetTilt.Auth\NetTilt.Auth.csproj", "{3D0F1F43-1DFF-4F12-AF0C-DEB20AC2DAEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{B3EDAEA8-1E00-4DA2-B6FB-ADA49476E453}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3EDAEA8-1E00-4DA2-B6FB-ADA49476E453}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3EDAEA8-1E00-4DA2-B6FB-ADA49476E453}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D0F1F43-1DFF-4F12-AF0C-DEB20AC2DAEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D0F1F43-1DFF-4F12-AF0C-DEB20AC2DAEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D0F1F43-1DFF-4F12-AF0C-DEB20AC2DAEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D0F1F43-1DFF-4F12-AF0C-DEB20AC2DAEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
