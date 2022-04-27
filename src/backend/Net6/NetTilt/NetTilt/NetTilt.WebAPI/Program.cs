@@ -118,6 +118,14 @@ builder.Services.AddDbContextFactory<ApplicationDBContext>(
     }
      )
    ;
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "AllowAll",
+                      policy =>
+                      {
+                          policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().SetIsOriginAllowed(it => true);
+                      });
+});
 var app = builder.Build();
 
 app.UseStaticFiles();
@@ -128,6 +136,7 @@ app.UseStaticFiles();
     app.UseSwaggerUI();
 }
 app.UseBlocklyUI(app.Environment);
+app.UseCors("AllowAll");
 app.UseAuthorization();
 app.UseAuthentication();
 app.MapControllers();
