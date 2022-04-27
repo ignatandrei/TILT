@@ -38,7 +38,7 @@
                     new Claim(ClaimTypes.Role, "Editor")
                     }),
 
-                Expires = DateTime.UtcNow.AddMinutes(5),
+                Expires = DateTime.UtcNow.AddDays(30),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
@@ -87,9 +87,10 @@
                 return null;
 
             }
-
+            claims = claims?.Where(it => (it.Type == TokenId || it.Type == "role")).ToArray();
             return claims;
         }
 
+        
     }
 }

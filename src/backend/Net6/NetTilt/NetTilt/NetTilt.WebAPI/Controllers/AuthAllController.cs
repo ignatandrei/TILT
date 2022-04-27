@@ -2,7 +2,6 @@
 
 namespace NetTilt.WebAPI.Controllers;
 
-[AllowAnonymous]
 [Route("api/[controller]/[action]")]
 [ApiController]
 public class AuthAllController : ControllerBase
@@ -14,6 +13,7 @@ public class AuthAllController : ControllerBase
         this.auth = auth;
         
     }
+    [AllowAnonymous]
     [HttpGet("{urlPart}/{secret}")]
     public async Task<ActionResult<string>> CreateEndPoint(string urlPart, string secret)
     {
@@ -24,6 +24,7 @@ public class AuthAllController : ControllerBase
         }
         return data;
     }
+    [AllowAnonymous]
     [HttpGet("{urlPart}/{secret}")]
     public async Task<ActionResult<string>> Login( string urlPart, string secret)
     {
@@ -34,6 +35,7 @@ public class AuthAllController : ControllerBase
         }
         return data;
     }
+    [AllowAnonymous]
     [HttpPost("{token}")]
     public ActionResult<Claim[]> Decrypt(string token)
     {
@@ -44,6 +46,23 @@ public class AuthAllController : ControllerBase
             return new NotFoundObjectResult($"cannot find {token}");
         }
         return data;
+    }
+
+    [Authorize(Policy = "CustomBearer")]
+    [HttpGet]
+    public int WebPageFromClaim()
+    {
+        var c = this.User?.Claims.ToArray();
+        if ((c?.Length ?? 0) == 0)
+            return -1;
+
+        return c.Length;
+    }
+    [Authorize(Policy = "CustomBearer")]
+    [HttpGet]
+    public bool IsUserAuthenticated()
+    {
+        return true;
     }
 }
 
