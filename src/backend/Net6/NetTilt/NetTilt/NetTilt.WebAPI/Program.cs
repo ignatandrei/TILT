@@ -30,28 +30,58 @@ else
 }
 
 var key = builder.Configuration["MySettings:secretToken"];
-builder.Services.AddAuthentication(x =>
-{
+builder.Services.AddAuthorization(options=>
 
-    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-           .AddJwtBearer(x =>
+    options.AddPolicy("CustomBearer", policy =>
+    {
+        policy.AuthenticationSchemes.Add("CustomBearer");
+        policy.RequireAuthenticatedUser();
+    }));
+builder.Services.AddAuthentication()
+           .AddJwtBearer("CustomBearer",options =>
            {
-               x.RequireHttpsMetadata = false;
-               x.SaveToken = true;
-               x.TokenValidationParameters = new TokenValidationParameters
+              
+               options.RequireHttpsMetadata = false;
+               options.SaveToken = true;
+               options.TokenValidationParameters = new TokenValidationParameters
                {
                    ValidateIssuerSigningKey = true,
                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
                    ValidateIssuer = false,
                    ValidateAudience = false
                };
+               options.Events = new JwtBearerEvents()
+               {
+                   OnMessageReceived = ctx =>
+                   {
+                       if (!(ctx?.Request?.Headers?.ContainsKey("Authorization") ?? true))
+                       {
+                           ctx.NoResult();
+                           return Task.CompletedTask;
+                       };
+                       var auth = ctx.Request.Headers["Authorization"].ToString();
+                       if (string.IsNullOrEmpty(auth))
+                       {
+                           ctx.NoResult();
+                           return Task.CompletedTask;
+                       }
+                       if (!auth.StartsWith("CustomBearer ", StringComparison.OrdinalIgnoreCase))
+                       {
+                           ctx.NoResult();
+                           return Task.CompletedTask;
+                       }
+
+                       ctx.Token = auth.Substring("CustomBearer ".Length).Trim();
+                       return Task.CompletedTask;
+
+                   }
+               };
+               //x.Events.OnTokenValidated=
            });
 builder.Services.AddScoped<IAuthUrl, AuthUrl>();
 builder.Services.AddScoped<I_InsertDataApplicationDBContext, InsertDataApplicationDBContext>();
 builder.Services.AddScoped<ISearchDataTILT_URL, SearchDataTILT_URL>();
-
+builder.Services.AddScoped<ISearchDataTILT_Note, SearchDataTILT_Note>();
 builder.Services
      .AddHealthChecksUI(setup =>
      {
@@ -90,6 +120,7 @@ builder.Services.AddDbContextFactory<ApplicationDBContext>(
    ;
 var app = builder.Build();
 
+app.UseStaticFiles();
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 {

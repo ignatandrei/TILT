@@ -38,7 +38,7 @@
                     new Claim(ClaimTypes.Role, "Editor")
                     }),
 
-                Expires = DateTime.UtcNow.AddMinutes(5),
+                Expires = DateTime.UtcNow.AddDays(30),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
@@ -53,7 +53,7 @@
         private async Task<string?> privateCreateEndpoint(string url, string secret)
         {
             var data = await search.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, url).ToArrayAsync(); ;
-            if (data != null)
+            if (data?.Length>0)
             {
                 //maybe he wants to login ?
                 return await privateLogin(url, secret);
@@ -68,7 +68,7 @@
             return privateCreateEndpoint(url, secret);
         }
 
-        public int? Decrypt(string token)
+        public Claim[]? Decrypt(string token)
         {
             JwtSecurityTokenHandler tokenHandler = new ();
             var jwtSecurityToken = tokenHandler.ReadJwtToken(token);
@@ -87,9 +87,17 @@
                 return null;
 
             }
-
-            return int.Parse(webPage.Value);
+            claims = claims?.Where(it => (it.Type == TokenId || it.Type == "role")).ToArray();
+            return claims;
         }
+        public long? MainUrlId(Claim[] claims)
+        {
+            var c = claims?.FirstOrDefault(it => it.Type == TokenId);
+            if (c == null)
+                return null;
 
+            return long.Parse(c.Value);
+        }
+        
     }
 }

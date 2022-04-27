@@ -1,0 +1,14 @@
+﻿[
+    {
+        "id":  "authenticate",
+        "description":  "create and authenticate",
+        "categories":  "login",
+        "blocks":  "get__api_AuthAll_CreateEndPoint___urlPart___secret;text;math_number;text_print;convertHtml;post__api_AuthAll_Decrypt___token;headersbeforehttp;text_join;get__api_AuthAll_IsUserAuthenticated"
+    },
+    {
+        "id":  "newPost",
+        "description":  "add today post",
+        "categories":  "login;create post",
+        "blocks":  "get__api_AuthAll_CreateEndPoint___urlPart___secret;text;math_number;headersbeforehttp;text_join;text_print;get__api_Note_HasPostedToday;post__api_Note_AddNote;TILT_Note_Table;convertHtml;get__api_Note_AllMyNotes"
+    }
+]
