@@ -81,7 +81,7 @@ builder.Services.AddAuthentication()
 builder.Services.AddScoped<IAuthUrl, AuthUrl>();
 builder.Services.AddScoped<I_InsertDataApplicationDBContext, InsertDataApplicationDBContext>();
 builder.Services.AddScoped<ISearchDataTILT_URL, SearchDataTILT_URL>();
-
+builder.Services.AddScoped<ISearchDataTILT_Note, SearchDataTILT_Note>();
 builder.Services
      .AddHealthChecksUI(setup =>
      {
@@ -120,6 +120,7 @@ builder.Services.AddDbContextFactory<ApplicationDBContext>(
    ;
 var app = builder.Build();
 
+app.UseStaticFiles();
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 {

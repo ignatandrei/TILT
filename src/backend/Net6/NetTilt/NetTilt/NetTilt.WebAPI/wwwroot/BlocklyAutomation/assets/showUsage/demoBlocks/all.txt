@@ -1,8 +1,8 @@
 ﻿[
     {
-        "id":  "javascript",
-        "description":  "javascript errors",
-        "categories":  "javascript",
+        "id":  "authenticate",
+        "description":  "create and authenticate",
+        "categories":  "login",
         "blocks":  "window_open;text"
     }
 ]

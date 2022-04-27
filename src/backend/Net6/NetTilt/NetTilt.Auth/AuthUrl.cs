@@ -90,7 +90,14 @@
             claims = claims?.Where(it => (it.Type == TokenId || it.Type == "role")).ToArray();
             return claims;
         }
+        public long? MainUrlId(Claim[] claims)
+        {
+            var c = claims?.FirstOrDefault(it => it.Type == TokenId);
+            if (c == null)
+                return null;
 
+            return long.Parse(c.Value);
+        }
         
     }
 }
