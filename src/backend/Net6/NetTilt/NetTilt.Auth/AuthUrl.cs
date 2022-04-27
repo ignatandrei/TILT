@@ -68,7 +68,7 @@
             return privateCreateEndpoint(url, secret);
         }
 
-        public int? Decrypt(string token)
+        public Claim[]? Decrypt(string token)
         {
             JwtSecurityTokenHandler tokenHandler = new ();
             var jwtSecurityToken = tokenHandler.ReadJwtToken(token);
@@ -88,7 +88,7 @@
 
             }
 
-            return int.Parse(webPage.Value);
+            return claims;
         }
 
     }

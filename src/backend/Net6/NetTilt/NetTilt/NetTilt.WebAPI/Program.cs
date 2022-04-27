@@ -38,6 +38,7 @@ builder.Services.AddAuthentication(x =>
 })
            .AddJwtBearer(x =>
            {
+              
                x.RequireHttpsMetadata = false;
                x.SaveToken = true;
                x.TokenValidationParameters = new TokenValidationParameters
@@ -47,6 +48,7 @@ builder.Services.AddAuthentication(x =>
                    ValidateIssuer = false,
                    ValidateAudience = false
                };
+               //x.Events.OnTokenValidated=
            });
 builder.Services.AddScoped<IAuthUrl, AuthUrl>();
 builder.Services.AddScoped<I_InsertDataApplicationDBContext, InsertDataApplicationDBContext>();

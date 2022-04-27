@@ -1,4 +1,6 @@
-﻿namespace NetTilt.WebAPI.Controllers;
+﻿using System.Security.Claims;
+
+namespace NetTilt.WebAPI.Controllers;
 
 [AllowAnonymous]
 [Route("api/[controller]/[action]")]
@@ -33,7 +35,7 @@ public class AuthAllController : ControllerBase
         return data;
     }
     [HttpPost("{token}")]
-    public ActionResult<int> Decrypt(string token)
+    public ActionResult<Claim[]> Decrypt(string token)
     {
         //return 0;
         var data = auth.Decrypt(token);
