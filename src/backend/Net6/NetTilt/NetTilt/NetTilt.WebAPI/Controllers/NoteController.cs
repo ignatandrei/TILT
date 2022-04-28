@@ -2,17 +2,17 @@
 
 [Route("api/[controller]/[action]")]
 [ApiController]
-public class NoteController : ControllerBase
+public class TILTController : ControllerBase
 {
     private readonly IAuthUrl auth;
 
-    public NoteController(IAuthUrl auth)
+    public TILTController(IAuthUrl auth)
     {
         this.auth = auth;
     }
     [Authorize(Policy = "CustomBearer", Roles = "Editor")]
     [HttpPost]
-    public async Task<ActionResult<TILT_Note_Table>> AddNote([FromServices] I_InsertDataApplicationDBContext insert, TILT_Note_Table note)
+    public async Task<ActionResult<TILT_Note_Table>> AddTILT([FromServices] I_InsertDataApplicationDBContext insert, TILT_Note_Table note)
     {
         var c = this.User?.Claims.ToArray();
         var idUrl = auth.MainUrlId(c);
@@ -32,10 +32,10 @@ public class NoteController : ControllerBase
     }
     [Authorize(Policy = "CustomBearer", Roles = "Editor")]
     [HttpGet()]
-    public async Task<ActionResult<bool?>> HasPostedToday([FromServices] ISearchDataTILT_Note searchNotes)
+    public async Task<ActionResult<bool?>> HasTILTToday([FromServices] ISearchDataTILT_Note searchNotes)
     {
         //Tobemoved
-        var all = await AllMyNotes(searchNotes);
+        var all = await AllMyTILTs(searchNotes);
         if (all?.Value == null)
             return false;
         var now = DateTime.UtcNow.Date;
@@ -43,7 +43,7 @@ public class NoteController : ControllerBase
     }
     [Authorize(Policy = "CustomBearer", Roles = "Editor")]
     [HttpGet()]
-    public async Task<ActionResult<TILT_Note_Table[]?>> AllMyNotes([FromServices] ISearchDataTILT_Note searchNotes)
+    public async Task<ActionResult<TILT_Note_Table[]?>> AllMyTILTs([FromServices] ISearchDataTILT_Note searchNotes)
     {
         //Tobemoved
         var c = this.User?.Claims.ToArray();

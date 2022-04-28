@@ -61,7 +61,7 @@
         <next>
           <block type="text_print">
             <value name="TEXT">
-              <block type="get__api_Note_HasPostedToday">
+              <block type="get__api_TILT_HasTILTToday">
                 <value name="override_Host">
                   <block type="text">
                     <field name="TEXT"> </field>
@@ -77,7 +77,7 @@
             <next>
               <block type="text_print">
                 <value name="TEXT">
-                  <block type="post__api_Note_AddNote">
+                  <block type="post__api_TILT_AddTILT">
                     <value name="val_values">
                       <block type="TILT_Note_Table">
                         <value name="val_id">
@@ -114,7 +114,7 @@
                     <value name="TEXT">
                       <block type="convertHtml">
                         <value name="ArrayToConvert">
-                          <block type="get__api_Note_AllMyNotes">
+                          <block type="get__api_TILT_AllMyTILTs">
                             <value name="override_Host">
                               <block type="text">
                                 <field name="TEXT"> </field>
