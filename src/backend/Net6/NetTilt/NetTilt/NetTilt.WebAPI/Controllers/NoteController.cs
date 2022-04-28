@@ -34,7 +34,7 @@ public class TILTController : ControllerBase
     [HttpGet()]
     public async Task<ActionResult<bool?>> HasTILTToday([FromServices] ISearchDataTILT_Note searchNotes)
     {
-        //Tobemoved
+        //TB: 2022-04-30 to be moved into a class - skinny controllers
         var all = await AllMyTILTs(searchNotes);
         if (all?.Value == null)
             return false;
@@ -45,7 +45,7 @@ public class TILTController : ControllerBase
     [HttpGet()]
     public async Task<ActionResult<TILT_Note_Table[]?>> AllMyTILTs([FromServices] ISearchDataTILT_Note searchNotes)
     {
-        //Tobemoved
+        //TB: 2022-04-30 to be moved into a class - skinny controllers
         var c = this.User?.Claims.ToArray();
         var idUrl = auth.MainUrlId(c);
         if (idUrl == null)
