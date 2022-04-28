@@ -56,5 +56,36 @@ public class TILTController : ControllerBase
         var ret= data.Select(it => { var n = new TILT_Note_Table(); n.CopyFrom(it);return n; }).ToArray();
         return ret;
     }
+    [Authorize(Policy = "CustomBearer", Roles = "Editor")]
+    [HttpGet("{numberTILTS}")]
+    public async Task<ActionResult<TILT_Note_Table[]?>> MyLatestTILTs(int numberTILTS, [FromServices] ISearchDataTILT_Note searchNotes)
+    {
+        //TB: 2022-04-30 to be moved into a class - skinny controllers
+        var c = this.User?.Claims.ToArray();
+        var idUrl = auth.MainUrlId(c);
+        if (idUrl == null)
+        {
+            return new UnauthorizedResult();
+        }
+        SearchTILT_Note search = new();
+        search.SearchFields = new SearchField<eTILT_NoteColumns>[1];
+        search.SearchFields[0] = new SearchField<eTILT_NoteColumns>
+        {
+            FieldName = eTILT_NoteColumns.IDURL,
+            Value = idUrl.ToString(),
+            Criteria = SearchCriteria.Equal
+        };
+        search.OrderBys = new OrderBy<eTILT_NoteColumns>[1];
+        search.OrderBys[0] = new OrderBy<eTILT_NoteColumns>()
+        {
+            FieldName = eTILT_NoteColumns.ID,
+            Asc = false
+        };
+        search.PageNumber = 1;
+        search.PageSize = numberTILTS;
+        var data = await searchNotes.TILT_NoteFind_AsyncEnumerable(search).ToArrayAsync();
+        var ret = data.Select(it => { var n = new TILT_Note_Table(); n.CopyFrom(it); return n; }).ToArray();
+        return ret;
+    }
 }
 
