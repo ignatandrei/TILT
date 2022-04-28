@@ -14,6 +14,7 @@ public class TILTController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<TILT_Note_Table>> AddTILT([FromServices] I_InsertDataApplicationDBContext insert, TILT_Note_Table note)
     {
+        //TB: 2022-04-30 to be moved into a class - skinny controllers
         var c = this.User?.Claims.ToArray();
         var idUrl = auth.MainUrlId(c);
         if (idUrl == null)
