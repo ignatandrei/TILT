@@ -158,6 +158,11 @@ if (!IsBuildFromCI)
             Secret = "Andrei",
             URLPart = "ignatandrei"
         });
+        dbcontext.TILT_URL.Add(new TILT_URL()
+        {
+            Secret = "test",
+            URLPart = "test"
+        });
         await dbcontext.SaveChangesAsync();
     }
 }

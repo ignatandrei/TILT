@@ -9,6 +9,12 @@
         "id":  "newPost",
         "description":  "add today post",
         "categories":  "login;create post",
-        "blocks":  "get__api_AuthAll_CreateEndPoint___urlPart___secret;text;math_number;headersbeforehttp;text_join;text_print;get__api_Note_HasPostedToday;post__api_Note_AddNote;TILT_Note_Table;convertHtml;get__api_Note_AllMyNotes"
+        "blocks":  "get__api_AuthAll_CreateEndPoint___urlPart___secret;text;math_number;headersbeforehttp;text_join;text_print;get__api_TILT_HasTILTToday;post__api_TILT_AddTILT;TILT_Note_Table;convertHtml;get__api_TILT_MyLatestTILTs___numberTILTS"
+    },
+    {
+        "id":  "publicTilts",
+        "description":  "public Tilts",
+        "categories":  "see",
+        "blocks":  "converttojson;get__api_PublicTILTs_PublicTiltsURL;text;math_number;text_print;lists_getIndex;convertHtml;get__api_PublicTILTs_LatestTILTs___urlPart___numberTILTS"
     }
 ]
