@@ -69,15 +69,16 @@ namespace NetTilt.Auth
         {
             return privateCreateEndpoint(url, secret);
         }
-        public Claim[]? Decrypt(string token)
+        [AOPMarkerMethod]
+        private Claim[]? privateDecrypt(string token)
         {
-            JwtSecurityTokenHandler tokenHandler = new ();
+            JwtSecurityTokenHandler tokenHandler = new();
             var jwtSecurityToken = tokenHandler.ReadJwtToken(token);
             if (jwtSecurityToken == null)
             {
                 return null;
             }
-            if ((jwtSecurityToken.Claims?.Count() ?? 0)== 0)
+            if ((jwtSecurityToken.Claims?.Count() ?? 0) == 0)
             {
                 return null;
             }
@@ -91,7 +92,16 @@ namespace NetTilt.Auth
             claims = claims?.Where(it => (it.Type == TokenId || it.Type == "role")).ToArray();
             return claims;
         }
+        public Claim[]? Decrypt(string token)
+        {
+            return privateDecrypt(token);
+        }
         public long? MainUrlId(Claim[] claims)
+        {
+            return privateMainUrlId(claims);
+        }
+        [AOPMarkerMethod]
+        private long? privateMainUrlId(Claim[] claims)
         {
             var c = claims?.FirstOrDefault(it => it.Type == TokenId);
             if (c == null)
