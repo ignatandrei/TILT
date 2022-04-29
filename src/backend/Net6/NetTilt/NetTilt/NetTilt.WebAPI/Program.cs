@@ -207,7 +207,7 @@ using (var activity = source.StartActivity("StartApp"))
 {
 
     activity?.SetTag("On", DateTime.UtcNow);
-
+    activity?.SetStatus(Status.Ok);
 }
 
 app.Run();

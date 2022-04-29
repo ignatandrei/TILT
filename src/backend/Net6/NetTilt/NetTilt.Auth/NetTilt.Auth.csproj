@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
@@ -14,6 +14,7 @@
 
 	</ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="OpenTelemetry.Api" Version="1.3.0-beta.1" />
 		<PackageReference Include="AOPMethodsCommon" Version="2021.6.11.907" />
 		<PackageReference Include="AOPMethodsGenerator" Version="2021.6.11.907" />
 		<AdditionalFiles Include="../AutoMethod.txt" />
