@@ -1,5 +1,4 @@
-using OpenTelemetry.Resources;
-using OpenTelemetry.Trace;
+using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -109,6 +108,10 @@ builder.Services.AddOpenTelemetryTracing(b =>
 {
     // uses the default Jaeger settings
     //b.AddJaegerExporter();
+    b.AddAzureMonitorTraceExporter(o =>
+     {
+         o.ConnectionString = "InstrumentationKey=4772445f-40dd-44ae-b7d5-2c2ea33b9de3;IngestionEndpoint=https://westus2-2.in.applicationinsights.azure.com/;LiveEndpoint=https://westus2.livediagnostics.monitor.azure.com/";
+     });
 
     // receive traces from our own custom sources
     b.AddSource("TILT_SOURCE");
@@ -198,4 +201,13 @@ app.MapHealthChecksUI(setup =>
 {
 
 });
+
+using var source = new ActivitySource("TILT_SOURCE");
+using (var activity = source.StartActivity("StartApp"))
+{
+
+    activity?.SetTag("On", DateTime.UtcNow);
+
+}
+
 app.Run();
