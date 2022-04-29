@@ -1,8 +1,9 @@
-﻿namespace NetTilt.Auth
+﻿
+namespace NetTilt.Auth
 {
-
+    [AutoMethods(CustomTemplateFileName = "../AutoMethod.txt", MethodPrefix = "auto", template = TemplateMethod.CustomTemplateFile)]
     [AutoGenerateInterface]
-    public class AuthUrl : IAuthUrl
+    public partial class AuthUrl : IAuthUrl
     {
         const string TokenId = "TokenId";
         private readonly ISearchDataTILT_URL search;
@@ -14,7 +15,7 @@
             this.insert = insert;
             SecretKey = configuration["MySettings:secretToken"];
         }
-        
+        [AOPMarkerMethod]
         private async Task<string?> privateLogin(string url, string secret)
         {
             var data = await search.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, url).ToArrayAsync(); ;
@@ -50,6 +51,7 @@
         {
             return privateLogin(url, secret);
         }
+        [AOPMarkerMethod]
         private async Task<string?> privateCreateEndpoint(string url, string secret)
         {
             var data = await search.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, url).ToArrayAsync(); ;
@@ -67,7 +69,7 @@
         {
             return privateCreateEndpoint(url, secret);
         }
-
+        [AOPMarkerMethod]
         public Claim[]? Decrypt(string token)
         {
             JwtSecurityTokenHandler tokenHandler = new ();
@@ -90,6 +92,7 @@
             claims = claims?.Where(it => (it.Type == TokenId || it.Type == "role")).ToArray();
             return claims;
         }
+        [AOPMarkerMethod]
         public long? MainUrlId(Claim[] claims)
         {
             var c = claims?.FirstOrDefault(it => it.Type == TokenId);
