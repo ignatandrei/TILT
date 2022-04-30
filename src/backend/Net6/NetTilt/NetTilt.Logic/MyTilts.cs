@@ -8,7 +8,7 @@ namespace NetTilt.Logic
 {
     [AutoGenerateInterface]
     [AutoMethods(CustomTemplateFileName = "../AutoMethod.txt", MethodPrefix = "auto", template = TemplateMethod.CustomTemplateFile)]
-    public partial class MyTilts
+    public partial class MyTilts: IMyTilts
     {
         private readonly I_InsertDataApplicationDBContext insert;
         private readonly IAuthUrl auth;

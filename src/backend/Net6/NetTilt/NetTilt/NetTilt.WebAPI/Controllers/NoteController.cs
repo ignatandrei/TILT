@@ -5,10 +5,10 @@ namespace NetTilt.WebAPI.Controllers;
 [ApiController]
 public class TILTController : ControllerBase
 {
-    private readonly MyTilts addLogic;
+    private readonly IMyTilts addLogic;
     
 
-    public TILTController(MyTilts addLogic)
+    public TILTController(IMyTilts addLogic)
     {
         this.addLogic = addLogic;        
     }
