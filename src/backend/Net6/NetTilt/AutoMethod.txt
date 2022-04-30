@@ -46,7 +46,7 @@ namespace {{NamespaceName}} {
             // {{mi.Parameters }}
             //var sw=Stopwatch.StartNew();
             var act=Activity.Current;
-            using var span = MyActivitySource.StartActivity("{{mi.NewName}}", ActivityKind.Client, default(ActivityContext));
+            using var span = MyActivitySource.StartActivity("{{mi.NewName}}", ActivityKind.Client,act?.Context??default(ActivityContext));
             {{~ for miArg in mi.Parameters  ~}}
                 string val{{ miArg.Key }} ;
                 try{

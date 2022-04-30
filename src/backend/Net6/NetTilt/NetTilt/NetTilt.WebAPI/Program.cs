@@ -112,19 +112,43 @@ builder.Services.AddOpenTelemetryTracing(b =>
      {
          o.ConnectionString = "InstrumentationKey=4772445f-40dd-44ae-b7d5-2c2ea33b9de3;IngestionEndpoint=https://westus2-2.in.applicationinsights.azure.com/;LiveEndpoint=https://westus2.livediagnostics.monitor.azure.com/";
      });
-
+    //b.AddConsoleExporter(c =>
+    //{
+    //});
     // receive traces from our own custom sources
-    b.AddSource("TILT_SOURCE");
+    b.AddSource("TILT_SOURCE*");
 
     // decorate our service name so we can find it when we look inside Jaeger
     b.SetResourceBuilder(ResourceBuilder.CreateDefault()
-        .AddService("TILTWebAPI", "TILT"));
+        .AddService("TILTWebAPI", "TILT")        
+        );
 
     // receive traces from built-in sources
-    b.AddHttpClientInstrumentation();
-    b.AddAspNetCoreInstrumentation();
-    b.AddSqlClientInstrumentation();
-    b.AddEntityFrameworkCoreInstrumentation();
+    b.AddHttpClientInstrumentation(c =>
+    {
+        c.RecordException = true;
+        c.SetHttpFlavor = true;
+    });
+    b.AddAspNetCoreInstrumentation(c =>
+    {
+        c.RecordException = true;
+        c.EnableGrpcAspNetCoreSupport = true;
+        
+    });
+    b.AddSqlClientInstrumentation(c =>
+    {
+        c.EnableConnectionLevelAttributes = true;
+        c.RecordException = true;
+        c.SetDbStatementForStoredProcedure = true;
+        c.SetDbStatementForText = true;
+       
+    });
+    b.AddEntityFrameworkCoreInstrumentation(c =>
+    {
+        c.SetDbStatementForStoredProcedure = true;
+        c.SetDbStatementForText = true;
+
+    });
 });
 
 builder.Services.AddDbContextFactory<ApplicationDBContext>(
