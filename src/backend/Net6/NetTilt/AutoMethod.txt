@@ -71,7 +71,6 @@ namespace {{NamespaceName}} {
                 throw;
             }
             finally{
-                Console.WriteLine("--{{mi.Name}} finally ");
                 span?.Stop();
                 
             }
