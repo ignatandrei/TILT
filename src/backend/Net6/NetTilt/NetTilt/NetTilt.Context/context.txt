@@ -17,6 +17,8 @@ namespace Generated;
         }
 {{ for classLoop in queries }}
         public async Task<{{classLoop.Name}}_Table> Insert{{classLoop.Name}}({{classLoop.Name}}_Table value){
+            using(NetTilt.Models.Models.StartMethod("InsertData{{nameContext}}","Insert{{classLoop.Name}}"));
+
             {{classLoop.Name}} val = value;
             _context.{{classLoop.Name}}.Add(val);
             await _context.SaveChangesAsync();
@@ -44,15 +46,22 @@ namespace Generated;
             this.context=context;
         }
         public IAsyncEnumerable<{{classLoop.Name}}> {{classLoop.Name}}Find_AsyncEnumerable(Search{{classLoop.Name}}? search){
+            using(NetTilt.Models.Models.StartMethod("SearchData{{classLoop.Name}}","{{classLoop.Name}}Find_AsyncEnumerable"));
+
             return context.{{classLoop.Name}}Find_AsyncEnumerable(search);
         }
         public Task<{{classLoop.Name}}[]> {{classLoop.Name}}Find_Array( Search{{classLoop.Name}}? search){
+            using(NetTilt.Models.Models.StartMethod("SearchData{{classLoop.Name}}","{{classLoop.Name}}Find_Array"));
             return  context.{{classLoop.Name}}Find_Array(search);
         }
         public Task<long> {{classLoop.Name}}Count( Search{{classLoop.Name}} search){
+             using(NetTilt.Models.Models.StartMethod("SearchData{{classLoop.Name}}","{{classLoop.Name}}Count"));
+
             return context.{{classLoop.Name}}Count(search);
         }
         public  IAsyncEnumerable<{{classLoop.Name}}> {{classLoop.Name}}SimpleSearch(SearchCriteria sc, e{{classLoop.Name}}Columns colToSearch, string value){
+using(NetTilt.Models.Models.StartMethod("SearchData{{classLoop.Name}}","{{classLoop.Name}}SimpleSearch"));
+
             var search = new Search{{classLoop.Name}}();
             var orderBy = new Generated.OrderBy<e{{classLoop.Name}}Columns>();
             orderBy.FieldName = colToSearch;
@@ -73,11 +82,13 @@ namespace Generated;
     {{ for col in classLoop.cols}}
      {{if col.TheTypeName}}
      public  IAsyncEnumerable<{{classLoop.Name}}> {{classLoop.Name}}SimpleSearch_{{col.Name}}(SearchCriteria sc,  {{col.TheTypeName}} value){
+using(NetTilt.Models.Models.StartMethod("SearchData{{classLoop.Name}}","{{classLoop.Name}}SimpleSearch_{{col.Name}}"));
         
         return {{classLoop.Name}}SimpleSearch(sc,e{{classLoop.Name}}Columns.{{col.Name}},value.ToString());
         
     }
     public  IAsyncEnumerable<{{classLoop.Name}}> {{classLoop.Name}}SimpleSearchNull_{{col.Name}}(SearchCriteria sc){
+using(NetTilt.Models.Models.StartMethod("SearchData{{classLoop.Name}}","{{classLoop.Name}}SimpleSearchNull_{{col.Name}}"));
         
         return {{classLoop.Name}}SimpleSearch(sc,e{{classLoop.Name}}Columns.{{col.Name}},null);
         
@@ -91,6 +102,8 @@ namespace Generated;
     {
     
     public override IOrderedQueryable<{{classLoop.Name}}> TransformToOrder(IQueryable<{{classLoop.Name}}> data){
+using(NetTilt.Models.Models.StartMethod("SearchData{{classLoop.Name}}","IOrderedQueryable<{{classLoop.Name}}"));
+
         if(OrderBys == null || OrderBys.Length ==0){
            //first item
            {{ for prop in classLoop.cols  limit:1 }}
@@ -138,6 +151,7 @@ namespace Generated;
 
 
     public override  IQueryable<{{classLoop.Name}}> TransformToWhere(IQueryable<{{classLoop.Name}}> data){
+using(NetTilt.Models.Models.StartMethod("SearchData{{classLoop.Name}}","TransformToWhere"));
         if(SearchFields == null || SearchFields.Length ==0)        
             return data;
         var returnValue = data;
@@ -548,12 +562,15 @@ public partial class {{nameContext}}
     {{ if classLoop.numberKeys == 1  }}
     //has a single id
     public  Task<{{classLoop.Name}}> {{classLoop.Name}}GetSingle({{classLoop.firstKey.TheTypeName}} {{ classLoop.firstKey.Name}}){
+using(NetTilt.Models.Models.StartMethod("{{nameContext}}","{{classLoop.Name}}GetSingle"));
         return 
             this.{{classLoop.Name}}
                 .Where(it=>it.{{ classLoop.firstKey.Name}} == {{ classLoop.firstKey.Name}})
                 .FirstOrDefaultAsync();
     }
     public  async Task<bool> {{classLoop.Name}}Delete({{classLoop.firstKey.TheTypeName}} {{ classLoop.firstKey.Name}}){
+    using(NetTilt.Models.Models.StartMethod("{{nameContext}}","{{classLoop.Name}}Delete"));
+
         var item = await {{classLoop.Name}}GetSingle({{ classLoop.firstKey.Name}});
         if(item == null)
             return false;
@@ -562,6 +579,8 @@ public partial class {{nameContext}}
         return true; 
     }
     public  async Task<bool> {{classLoop.Name}}Modify({{classLoop.Name}} val ){
+    using(NetTilt.Models.Models.StartMethod("{{nameContext}}","{{classLoop.Name}}Modify"));
+
         var item = await {{classLoop.Name}}GetSingle(val.{{ classLoop.firstKey.Name}});
         if(item == null)
             return false;
@@ -573,7 +592,8 @@ public partial class {{nameContext}}
     //generate just for keys 1, not for {{numberKeys}}
     {{ end }}
     public async  Task<{{classLoop.Name}}> {{classLoop.Name}}Save({{classLoop.Name}} val){
-        
+        using(NetTilt.Models.Models.StartMethod("{{nameContext}}","{{classLoop.Name}}Save"));
+
         var data= await {{classLoop.Name}}SaveMultiple(val);
         if(data == null)
             return null;
@@ -582,7 +602,8 @@ public partial class {{nameContext}}
                 
     }
     public async  Task<{{classLoop.Name}}[]> {{classLoop.Name}}SaveMultiple(params {{classLoop.Name}}[] values){
-        
+        using(NetTilt.Models.Models.StartMethod("{{nameContext}}","{{classLoop.Name}}SaveMultiple"));
+
         if(values == null)
             return null;
         if(values.Length == 0)
@@ -597,11 +618,14 @@ public partial class {{nameContext}}
     }
     
     public  IAsyncEnumerable<{{classLoop.Name}}> {{classLoop.Name}}GetAll(){
-        
+        using(NetTilt.Models.Models.StartMethod("{{nameContext}}","{{classLoop.Name}}GetAll"));
+ 
         return this.{{classLoop.Name}}Find_AsyncEnumerable(null);
     }
     public  IAsyncEnumerable<{{classLoop.Name}}> {{classLoop.Name}}SimpleSearch(SearchCriteria sc, e{{classLoop.Name}}Columns colToSearch, string value){
-        var search = new Search{{classLoop.Name}}();
+        using(NetTilt.Models.Models.StartMethod("{{nameContext}}","{{classLoop.Name}}SimpleSearch"));
+ 
+ var search = new Search{{classLoop.Name}}();
         var orderBy = new Generated.OrderBy<e{{classLoop.Name}}Columns>();
         orderBy.FieldName = colToSearch;
         orderBy.Asc = true;
@@ -621,12 +645,14 @@ public partial class {{nameContext}}
     {{ for col in classLoop.cols}}
      {{if col.TheTypeName}}
      public  IAsyncEnumerable<{{classLoop.Name}}> {{classLoop.Name}}SimpleSearch_{{col.Name}}(SearchCriteria sc,  {{col.TheTypeName}} value){
-        
+        using(NetTilt.Models.Models.StartMethod("{{nameContext}}","{{classLoop.Name}}SimpleSearch_{{col.Name}}"));
+  
         return {{classLoop.Name}}SimpleSearch(sc,e{{classLoop.Name}}Columns.{{col.Name}},value.ToString());
         
     }
     public  IAsyncEnumerable<{{classLoop.Name}}> {{classLoop.Name}}SimpleSearchNull_{{col.Name}}(SearchCriteria sc){
-        
+         using(NetTilt.Models.Models.StartMethod("{{nameContext}}","{{classLoop.Name}}SimpleSearchNull_{{col.Name}}"));
+ 
         return {{classLoop.Name}}SimpleSearch(sc,e{{classLoop.Name}}Columns.{{col.Name}},null);
         
     }
@@ -635,6 +661,8 @@ public partial class {{nameContext}}
 
 
     public  IAsyncEnumerable<{{classLoop.Name}}> {{classLoop.Name}}SimpleSearch(SearchField<e{{classLoop.Name}}Columns> search){
+         using(NetTilt.Models.Models.StartMethod("{{nameContext}}","{{classLoop.Name}}SimpleSearchField"));
+ 
         var s=new Search{{classLoop.Name}}();
          s.SearchFields = new SearchField<e{{classLoop.Name}}Columns>[1];
          s.SearchFields[0] = search;
@@ -643,7 +671,8 @@ public partial class {{nameContext}}
 
 
     public IAsyncEnumerable<{{classLoop.Name}}> {{classLoop.Name}}Find_AsyncEnumerable(Search{{classLoop.Name}}? search){
-        
+         using(NetTilt.Models.Models.StartMethod("{{nameContext}}","{{classLoop.Name}}Find_AsyncEnumerable"));
+ 
         IQueryable<{{classLoop.Name}}> data= this.{{classLoop.Name}} ;
         if(search == null){
             return data.AsAsyncEnumerable();
@@ -653,6 +682,8 @@ public partial class {{nameContext}}
         return ret.AsAsyncEnumerable();
     }
     public Task<{{classLoop.Name}}[]> {{classLoop.Name}}Find_Array( Search{{classLoop.Name}}? search){
+         using(NetTilt.Models.Models.StartMethod("{{nameContext}}","{{classLoop.Name}}Find_Array"));
+ 
         IQueryable<{{classLoop.Name}}> data= this.{{classLoop.Name}} ;
         if(search == null){
             return data.ToArrayAsync();
@@ -662,7 +693,8 @@ public partial class {{nameContext}}
         return ret.ToArrayAsync();
     }
     public Task<long> {{classLoop.Name}}Count( Search{{classLoop.Name}} search){
-        
+         using(NetTilt.Models.Models.StartMethod("{{nameContext}}","{{classLoop.Name}}Count"));
+ 
         IQueryable<{{classLoop.Name}}> data= this.{{classLoop.Name}} ;
         if(search != null){
             data = search.TransformToWhere(data);        
