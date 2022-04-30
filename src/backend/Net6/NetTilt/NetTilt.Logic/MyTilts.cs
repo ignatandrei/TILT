@@ -41,7 +41,7 @@ namespace NetTilt.Logic
             note.IDURL = idUrl.Value;
             note.ID = 0;
             note.ForDate = DateTime.UtcNow;
-            var noteOrig = new TILT_Note();
+            var noteOrig = new TILT_Note_Table();
             noteOrig.CopyFrom(note);
             await insert.InsertTILT_Note(noteOrig);
             note.CopyFrom(noteOrig);
