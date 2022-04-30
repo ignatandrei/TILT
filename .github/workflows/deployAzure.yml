@@ -29,7 +29,7 @@ jobs:
         shell: powershell
         run: |
             cd src/backend/Net6/NetTilt
-            ls -lh
+            # ls -lh
             .\AOPMethod.ps1
             cd NetTilt/NetTilt.WebAPI 
             dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp -r linux-x64
