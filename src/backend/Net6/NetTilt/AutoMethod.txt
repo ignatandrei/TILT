@@ -66,6 +66,7 @@ namespace {{NamespaceName}} {
             }
             catch(Exception ex){
                 span?.RecordException(ex);
+                span?.SetTag("exceptionMessage",ex.Message);
                 span?.SetStatus(Status.Error);
                 throw;
             }
