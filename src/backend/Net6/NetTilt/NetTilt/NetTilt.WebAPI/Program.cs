@@ -120,7 +120,8 @@ builder.Services.AddOpenTelemetryTracing(b =>
 
     // decorate our service name so we can find it when we look inside Jaeger
     b.SetResourceBuilder(ResourceBuilder.CreateDefault()
-        .AddService("TILTWebAPI", "TILT"));
+        .AddService("TILTWebAPI", "TILT")        
+        );
 
     // receive traces from built-in sources
     b.AddHttpClientInstrumentation(c =>
