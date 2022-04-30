@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetTilt.Models", "NetTilt\N
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetTilt.WebAPI", "NetTilt\NetTilt.WebAPI\NetTilt.WebAPI.csproj", "{B3EDAEA8-1E00-4DA2-B6FB-ADA49476E453}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTilt.Auth", "NetTilt.Auth\NetTilt.Auth.csproj", "{3D0F1F43-1DFF-4F12-AF0C-DEB20AC2DAEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetTilt.Auth", "NetTilt.Auth\NetTilt.Auth.csproj", "{3D0F1F43-1DFF-4F12-AF0C-DEB20AC2DAEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetTilt.Logic", "NetTilt.Logic\NetTilt.Logic.csproj", "{292A7E87-2A75-409D-953C-EC8C83E22414}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,12 +43,17 @@ Global
 		{3D0F1F43-1DFF-4F12-AF0C-DEB20AC2DAEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D0F1F43-1DFF-4F12-AF0C-DEB20AC2DAEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D0F1F43-1DFF-4F12-AF0C-DEB20AC2DAEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{292A7E87-2A75-409D-953C-EC8C83E22414}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{292A7E87-2A75-409D-953C-EC8C83E22414}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{292A7E87-2A75-409D-953C-EC8C83E22414}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{292A7E87-2A75-409D-953C-EC8C83E22414}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{21BBEE45-0015-48C5-82FC-C3286D2CEF58} = {E0D77344-24DF-42C5-9B03-3A1B5F3F8C6B}
+		{292A7E87-2A75-409D-953C-EC8C83E22414} = {E0D77344-24DF-42C5-9B03-3A1B5F3F8C6B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {48748284-7636-4557-AF3E-15C245A0F50D}

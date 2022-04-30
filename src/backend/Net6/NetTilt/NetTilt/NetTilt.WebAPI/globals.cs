@@ -18,6 +18,7 @@ global using Microsoft.AspNetCore.Mvc;
 global using Azure.Monitor.OpenTelemetry.Exporter;
 global using OpenTelemetry.Resources;
 global using OpenTelemetry.Trace;
+global using NetTilt.Logic;
 
 
 

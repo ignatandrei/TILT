@@ -1,35 +1,27 @@
-﻿namespace NetTilt.WebAPI.Controllers;
+﻿
+namespace NetTilt.WebAPI.Controllers;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
 public class TILTController : ControllerBase
 {
-    private readonly IAuthUrl auth;
+    private readonly MyTilts addLogic;
+    
 
-    public TILTController(IAuthUrl auth)
+    public TILTController(MyTilts addLogic)
     {
-        this.auth = auth;
+        this.addLogic = addLogic;        
     }
     [Authorize(Policy = "CustomBearer", Roles = "Editor")]
     [HttpPost]
-    public async Task<ActionResult<TILT_Note_Table>> AddTILT([FromServices] I_InsertDataApplicationDBContext insert, TILT_Note_Table note)
+    public async Task<ActionResult<TILT_Note_Table>> AddTILT(TILT_Note_Table note)
     {
-        //TB: 2022-05-01 to be moved into a class - skinny controllers
-        var c = this.User?.Claims.ToArray();
-        var idUrl = auth.MainUrlId(c);
-        if (idUrl == null)
+        var data =await addLogic.AddTILT(note, this.User?.Claims.ToArray());
+        if(data == null)
         {
             return new UnauthorizedResult();
         }
-        note.IDURL = idUrl.Value;
-        note.ID = 0;
-        note.ForDate = DateTime.UtcNow;
-        var noteOrig = new TILT_Note();
-        noteOrig.CopyFrom(note);
-        await insert.InsertTILT_Note(noteOrig);
-        note.CopyFrom(noteOrig);
-        return note;
-
+        return data;
     }
     [Authorize(Policy = "CustomBearer", Roles = "Editor")]
     [HttpGet()]
@@ -46,47 +38,25 @@ public class TILTController : ControllerBase
     [HttpGet()]
     public async Task<ActionResult<TILT_Note_Table[]?>> AllMyTILTs([FromServices] ISearchDataTILT_Note searchNotes)
     {
-        //TB: 2022-05-01 to be moved into a class - skinny controllers
-        var c = this.User?.Claims.ToArray();
-        var idUrl = auth.MainUrlId(c);
-        if (idUrl == null)
+        var data = await addLogic.AllMyTILTs(this.User?.Claims.ToArray());
+
+        if (data == null)
         {
             return new UnauthorizedResult();
         }
-        var data =await searchNotes.TILT_NoteSimpleSearch_IDURL(SearchCriteria.Equal, idUrl.Value).ToArrayAsync();
-        var ret= data.Select(it => { var n = new TILT_Note_Table(); n.CopyFrom(it);return n; }).ToArray();
-        return ret;
+        return data;
     }
     [Authorize(Policy = "CustomBearer", Roles = "Editor")]
     [HttpGet("{numberTILTS}")]
     public async Task<ActionResult<TILT_Note_Table[]?>> MyLatestTILTs(int numberTILTS, [FromServices] ISearchDataTILT_Note searchNotes)
     {
-        //TB: 2022-05-01 to be moved into a class - skinny controllers
-        var c = this.User?.Claims.ToArray();
-        var idUrl = auth.MainUrlId(c);
-        if (idUrl == null)
+        var data = await addLogic.MyLatestTILTs(numberTILTS, this.User?.Claims.ToArray());
+
+        if (data == null)
         {
             return new UnauthorizedResult();
         }
-        SearchTILT_Note search = new();
-        search.SearchFields = new SearchField<eTILT_NoteColumns>[1];
-        search.SearchFields[0] = new SearchField<eTILT_NoteColumns>
-        {
-            FieldName = eTILT_NoteColumns.IDURL,
-            Value = idUrl.ToString(),
-            Criteria = SearchCriteria.Equal
-        };
-        search.OrderBys = new OrderBy<eTILT_NoteColumns>[1];
-        search.OrderBys[0] = new OrderBy<eTILT_NoteColumns>()
-        {
-            FieldName = eTILT_NoteColumns.ID,
-            Asc = false
-        };
-        search.PageNumber = 1;
-        search.PageSize = numberTILTS;
-        var data = await searchNotes.TILT_NoteFind_AsyncEnumerable(search).ToArrayAsync();
-        var ret = data.Select(it => { var n = new TILT_Note_Table(); n.CopyFrom(it); return n; }).ToArray();
-        return ret;
+        return data;
     }
 }
 
