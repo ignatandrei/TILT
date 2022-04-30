@@ -10,8 +10,8 @@ namespace NetTilt.Models
             var cur = Activity.Current;
             var cnt = cur?.Context ?? default(ActivityContext);            
             var act= activitySource.StartActivity($"{nameClass}_{nameMethod}",ActivityKind.Client,cnt);
-            act?.SetTag("Andrei", "test15");
-            act?.AddEvent(new ActivityEvent("asd"+nameClass+nameMethod));
+            //act?.SetTag("Andrei", "test15");
+            //act?.AddEvent(new ActivityEvent("asd"+nameClass+nameMethod));
             //Activity.Current = act;
             //act?.SetTag("peer.service", "aaa");
             //act?.SetTag("net.peer.name", "bbb");
