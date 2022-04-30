@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -102,6 +104,29 @@ builder.Services
      ;
 
 
+builder.Services.AddOpenTelemetryTracing(b =>
+{
+    // uses the default Jaeger settings
+    //b.AddJaegerExporter();
+    b.AddAzureMonitorTraceExporter(o =>
+     {
+         o.ConnectionString = "InstrumentationKey=4772445f-40dd-44ae-b7d5-2c2ea33b9de3;IngestionEndpoint=https://westus2-2.in.applicationinsights.azure.com/;LiveEndpoint=https://westus2.livediagnostics.monitor.azure.com/";
+     });
+
+    // receive traces from our own custom sources
+    b.AddSource("TILT_SOURCE");
+
+    // decorate our service name so we can find it when we look inside Jaeger
+    b.SetResourceBuilder(ResourceBuilder.CreateDefault()
+        .AddService("TILTWebAPI", "TILT"));
+
+    // receive traces from built-in sources
+    b.AddHttpClientInstrumentation();
+    b.AddAspNetCoreInstrumentation();
+    b.AddSqlClientInstrumentation();
+    b.AddEntityFrameworkCoreInstrumentation();
+});
+
 builder.Services.AddDbContextFactory<ApplicationDBContext>(
     options =>
     {
@@ -176,4 +201,13 @@ app.MapHealthChecksUI(setup =>
 {
 
 });
+
+using var source = new ActivitySource("TILT_SOURCE");
+using (var activity = source.StartActivity("StartApp"))
+{
+
+    activity?.SetTag("On", DateTime.UtcNow);
+    activity?.SetStatus(Status.Ok);
+}
+
 app.Run();

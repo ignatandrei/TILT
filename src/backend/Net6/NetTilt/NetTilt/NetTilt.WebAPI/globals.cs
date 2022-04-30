@@ -15,6 +15,9 @@ global using System.Text;
 global using NetTilt.Auth;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Mvc;
+global using Azure.Monitor.OpenTelemetry.Exporter;
+global using OpenTelemetry.Resources;
+global using OpenTelemetry.Trace;
 
 
 
