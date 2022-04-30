@@ -1,4 +1,5 @@
-﻿using BoilerplateFree;
+﻿using AOPMethodsCommon;
+using BoilerplateFree;
 using Generated;
 using NetTilt.Auth;
 using System.Security.Claims;
@@ -6,8 +7,8 @@ using System.Security.Claims;
 namespace NetTilt.Logic
 {
     [AutoGenerateInterface]
-
-    public class MyTilts
+    [AutoMethods(CustomTemplateFileName = "../AutoMethod.txt", MethodPrefix = "auto", template = TemplateMethod.CustomTemplateFile)]
+    public partial class MyTilts
     {
         private readonly I_InsertDataApplicationDBContext insert;
         private readonly IAuthUrl auth;
@@ -19,11 +20,12 @@ namespace NetTilt.Logic
             this.auth = auth;
             this.searchNotes = searchNotes;
         }
-
+        
         public Task<TILT_Note_Table?> AddTILT(TILT_Note_Table note, Claim[]? c)
         {
             return privateAddTILT(note, c);
         }
+        [AOPMarkerMethod]
         private async Task<TILT_Note_Table?> privateAddTILT(TILT_Note_Table note, Claim[]? c)
         {
             var idUrl = auth.MainUrlId(c);
@@ -51,6 +53,7 @@ namespace NetTilt.Logic
         {
             return privateAllMyTILTs(c);
         }
+        [AOPMarkerMethod]
         private async Task<TILT_Note_Table[]?> privateAllMyTILTs(Claim[]? c)
         {
 
@@ -68,6 +71,7 @@ namespace NetTilt.Logic
         {
             return privateHasTILTToday(c);
         }
+        [AOPMarkerMethod]
         async Task<bool> privateHasTILTToday(Claim[]? c)
         {
             var all = await MyLatestTILTs(1, c);
@@ -80,6 +84,7 @@ namespace NetTilt.Logic
         {
             return privateMyLatestTILTs(numberTILTS, c);
         }
+        [AOPMarkerMethod]
         private async Task<TILT_Note_Table[]?> privateMyLatestTILTs(int numberTILTS, Claim[]? c)
         {
 
