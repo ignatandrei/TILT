@@ -11,6 +11,15 @@ global using LightBDD.Framework;
 global using LightBDD.NUnit3;
 global using LightBDD.Framework.Scenarios;
 global using System;
+global using LightBDD.Core.Configuration;
+global using LightBDD.Core.Results;
+global using LightBDD.Framework.Reporting.Formatters;
+global using System.Collections.Generic;
+global using System.IO;
+global using NetTilt.Tests;
+global using LightBDD.Framework.Configuration;
+global using System.Text;
 
-[assembly: LightBddScope]
+//[assembly: LightBddScope]
+[assembly: ConfiguredLightBddScope]
 
