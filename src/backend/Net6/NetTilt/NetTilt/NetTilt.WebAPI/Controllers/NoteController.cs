@@ -27,12 +27,12 @@ public class TILTController : ControllerBase
     [HttpGet()]
     public async Task<ActionResult<bool?>> HasTILTToday([FromServices] ISearchDataTILT_Note searchNotes)
     {
-        //TB: 2022-05-01 to be moved into a class - skinny controllers
-        var all = await AllMyTILTs(searchNotes);
-        if (all?.Value == null)
-            return false;
-        var now = DateTime.UtcNow.Date;
-        return all.Value.FirstOrDefault (it=>it.ForDate.HasValue && now.Subtract(it.ForDate.Value.Date).TotalDays == 0) !=null;
+        var data = await addLogic.HasTILTToday(this.User?.Claims.ToArray());
+        if (data == null)
+        {
+            return new UnauthorizedResult();
+        }
+        return data;
     }
     [Authorize(Policy = "CustomBearer", Roles = "Editor")]
     [HttpGet()]
