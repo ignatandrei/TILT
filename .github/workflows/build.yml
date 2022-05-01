@@ -26,5 +26,8 @@ jobs:
             cd src/backend/Net6/NetTilt 
             dotnet build --no-restore
 
-    # - name: Test
-      # run: dotnet test --no-build --verbosity normal
+    - name: Test
+      run: |
+            cd src/backend/Net6/NetTilt 
+            cd NetTilt.Tests
+            dotnet test --no-build #--verbosity normal
