@@ -57,5 +57,6 @@ jobs:
         shell: powershell        
         run: |
           dir coverage.xml
-          $ProgressPreference = 'SilentlyContinue' Invoke-WebRequest -Uri https://uploader.codecov.io/latest/windows/codecov.exe -Outfile codecov.exe 
+          $ProgressPreference = 'SilentlyContinue' 
+          Invoke-WebRequest -Uri https://uploader.codecov.io/latest/windows/codecov.exe -Outfile codecov.exe 
           .\codecov.exe
