@@ -25,13 +25,9 @@ public class TILTController : ControllerBase
     }
     [Authorize(Policy = "CustomBearer", Roles = "Editor")]
     [HttpGet()]
-    public async Task<ActionResult<bool?>> HasTILTToday([FromServices] ISearchDataTILT_Note searchNotes)
+    public async Task<ActionResult<bool>> HasTILTToday([FromServices] ISearchDataTILT_Note searchNotes)
     {
         var data = await addLogic.HasTILTToday(this.User?.Claims.ToArray());
-        if (data == null)
-        {
-            return new UnauthorizedResult();
-        }
         return data;
     }
     [Authorize(Policy = "CustomBearer", Roles = "Editor")]
