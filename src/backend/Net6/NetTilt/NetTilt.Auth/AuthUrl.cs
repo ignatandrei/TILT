@@ -5,7 +5,7 @@ namespace NetTilt.Auth
     [AutoGenerateInterface]
     public partial class AuthUrl : IAuthUrl
     {
-        const string TokenId = "TokenId";
+        public const string TokenId = "TokenId";
         private readonly ISearchDataTILT_URL search;
         private readonly I_InsertDataApplicationDBContext insert;
         private string SecretKey;
