@@ -53,3 +53,9 @@ jobs:
           dotnet build src/backend/Net6/NetTilt/NetTilt.sln
           dotnet-coverage collect 'dotnet test src\backend\Net6\NetTilt\NetTilt.Tests\NetTilt.Tests.csproj' -f xml  -o 'coverage.xml'
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+      - name: Install codecov
+        shell: powershell        
+        run: |
+          dir coverage.xml
+          $ProgressPreference = 'SilentlyContinue' Invoke-WebRequest -Uri https://uploader.codecov.io/latest/windows/codecov.exe -Outfile codecov.exe 
+          .\codecov.exe
