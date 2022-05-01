@@ -20,7 +20,7 @@ internal class ConfiguredLightBddScopeAttribute : LightBddScopeAttribute
 
 public class MarkdownReportFormatter : IReportFormatter
 {
-    public string WriteSubSteps(IStepResult step, string prefixStep)
+    public static string WriteSubSteps(IStepResult step, string prefixStep)
     {
         var subSteps = step.GetSubSteps();
         if ((subSteps?.Count() ?? 0) == 0)

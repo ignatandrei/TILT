@@ -18,7 +18,7 @@ namespace NetTilt.Auth
         [AOPMarkerMethod]
         private async Task<string?> privateLogin(string url, string secret)
         {
-            var data = await search.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, url).ToArrayAsync(); ;
+            var data = await search.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, url).ToArrayAsync(); 
             if (data == null)
                 return null;
 
@@ -54,14 +54,14 @@ namespace NetTilt.Auth
         [AOPMarkerMethod]
         private async Task<string?> privateCreateEndpoint(string url, string secret)
         {
-            var data = await search.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, url).ToArrayAsync(); ;
+            var data = await search.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, url).ToArrayAsync(); 
             if (data?.Length>0)
             {
                 //maybe he wants to login ?
                 return await privateLogin(url, secret);
             }
 
-            var val = await insert.InsertTILT_URL(new TILT_URL_Table() { Secret=secret, URLPart=url});
+            await insert.InsertTILT_URL(new TILT_URL_Table() { Secret=secret, URLPart=url});
             return await privateLogin(url, secret);
 
         }
@@ -96,13 +96,15 @@ namespace NetTilt.Auth
         {
             return privateDecrypt(token);
         }
-        public long? MainUrlId(Claim[] claims)
+        public long? MainUrlId(Claim[]? claims)
         {
             return privateMainUrlId(claims);
         }
         [AOPMarkerMethod]
-        private long? privateMainUrlId(Claim[] claims)
+        private long? privateMainUrlId(Claim[]? claims)
         {
+            if (claims == null)
+                return null;
             var c = claims?.FirstOrDefault(it => it.Type == TokenId);
             if (c == null)
                 return null;

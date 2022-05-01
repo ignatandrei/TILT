@@ -48,7 +48,7 @@ partial  class TestAdd: FeatureFixture
         }
         else
         {
-            retArray = new TILT_Note[0];
+            retArray = Array.Empty<TILT_Note>();
         }
         
         searchNote.Setup(it => it.TILT_NoteFind_AsyncEnumerable(It.IsAny<SearchTILT_Note?>())).Returns(retArray.ToAsyncEnumerable());
