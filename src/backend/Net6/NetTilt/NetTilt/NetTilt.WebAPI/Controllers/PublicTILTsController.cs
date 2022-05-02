@@ -23,7 +23,6 @@ public class PublicTILTsController : ControllerBase
     [HttpGet("{urlPart}/{numberTILTS}")]
     public async Task<ActionResult<TILT_Note_Table[]?>> LatestTILTs(string urlPart, int numberTILTS, [FromServices] ISearchDataTILT_Note searchNotes)
     {        
-        //TB: 2022-05-02 to be moved into a class - skinny controllers
         var data = await publicTILTS.LatestTILTs(urlPart,numberTILTS);
 
         if (data== null)
