@@ -170,5 +170,17 @@ public partial class RealSqlite : FeatureFixture
             Assert.AreEqual(1, data.Length);
         }
     }
-
+    public async Task Then_The_Users_Have_Tilts(InputTable<TILT_URL> urls)
+    {
+        var auth = serviceProvider.GetRequiredService<IAuthUrl>();
+        var myTilt = serviceProvider.GetRequiredService<MyTilts>();
+        foreach (var item in urls)
+        {
+            var jwt = await auth.Login(item.URLPart, item.Secret);
+            var claim = auth.Decrypt(jwt);            
+            var existsTilt = await myTilt.AllMyTILTs(claim);
+            Assert.NotNull(existsTilt);
+            Assert.Equals(1,existsTilt!.Length);
+        }
+    }
 }
