@@ -33,8 +33,6 @@
         private async Task<TILT_Note_Table[]?> privateLatestTILTs(string urlPart, int numberTILTS)
         {
 
-        
-            //TB: 2022-05-02 to be moved into a class - skinny controllers
             var dataUrls = await searchUrl.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, urlPart).ToArrayAsync();
 
             if ((dataUrls?.Length ?? 0) == 0)
