@@ -3,7 +3,7 @@ namespace NetTilt.Tests;
 
 [FeatureDescription(@"Test add a new TILT")]
 [Label("FakesMocks")]
-public partial class TestAdd
+public partial class TestAddNewTilt
 {
     ServiceProvider? serviceProvider;
     
