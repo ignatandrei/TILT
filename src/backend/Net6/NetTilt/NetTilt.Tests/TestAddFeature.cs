@@ -4,7 +4,7 @@ using LightBDD.Framework.Formatting.Values;
 
 namespace NetTilt.Tests;
 
-partial  class TestAdd: FeatureFixture
+partial  class TestAddNewTilt: FeatureFixture
 {
     Task Then_Can_Add_A_New_TILT()
     {
