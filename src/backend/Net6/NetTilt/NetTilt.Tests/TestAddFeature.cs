@@ -6,6 +6,8 @@ namespace NetTilt.Tests;
 
 partial  class TestAddNewTilt: FeatureFixture
 {
+    ServiceProvider? serviceProvider;
+
     Task Then_Can_Add_A_New_TILT()
     {
         return Then_Can_Add_A_New_TILT_WithResult(true);

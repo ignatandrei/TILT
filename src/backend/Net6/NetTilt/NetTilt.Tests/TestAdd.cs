@@ -5,7 +5,6 @@ namespace NetTilt.Tests;
 [Label("FakesMocks")]
 public partial class TestAddNewTilt
 {
-    ServiceProvider? serviceProvider;
     
     [SetUp]
     public void Setup()
