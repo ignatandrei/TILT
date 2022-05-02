@@ -19,6 +19,8 @@ global using System.IO;
 global using NetTilt.Tests;
 global using LightBDD.Framework.Configuration;
 global using System.Text;
+global using Generated;
+global using Microsoft.Extensions.Configuration;
 
 //[assembly: LightBddScope]
 [assembly: ConfiguredLightBddScope]
