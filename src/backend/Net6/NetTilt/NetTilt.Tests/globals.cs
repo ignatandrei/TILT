@@ -21,6 +21,7 @@ global using LightBDD.Framework.Configuration;
 global using System.Text;
 global using Generated;
 global using Microsoft.EntityFrameworkCore;
+global using LightBDD.Framework.Parameters;
 
 global using Microsoft.Extensions.Configuration;
 

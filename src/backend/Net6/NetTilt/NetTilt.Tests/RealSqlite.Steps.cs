@@ -3,13 +3,13 @@ namespace NetTilt.Tests;
 
 public partial class RealSqlite : FeatureFixture
 {
-    string guid=Guid.NewGuid().ToString("x");
-
     ServiceProvider? serviceProvider;
 
     public void Given_Empty_Database_Setup()
     {
-        var inMemorySettings = new Dictionary<string, string> {
+        string guid = Guid.NewGuid().ToString("x");
+
+            var inMemorySettings = new Dictionary<string, string> {
 {"TopLevelKey", "TopLevelValue"},
 {"MySettings:secretToken", "AnotherKeySettingsForGeneratingJwtForAuthenticationAndAuthorization"},
 //...populate as needed for the test
@@ -23,7 +23,7 @@ public partial class RealSqlite : FeatureFixture
 .AddDbContextFactory<ApplicationDBContext>(
     options =>
     {
-        options.UseSqlite("Data Source={g}.db");
+        options.UseSqlite($"Data Source={guid   }.db");
     }
      )
 .AddSingleton<IConfiguration>(configuration)
@@ -33,7 +33,7 @@ public partial class RealSqlite : FeatureFixture
 .AddScoped<I_InsertDataApplicationDBContext, InsertDataApplicationDBContext>()
 .AddScoped<ISearchDataTILT_URL, SearchDataTILT_URL>()
 .AddScoped<ISearchDataTILT_Note, SearchDataTILT_Note>()
- .AddScoped<IPublicTILTS, PublicTILTS>()
+.AddScoped<IPublicTILTS, PublicTILTS>()
 .BuildServiceProvider();
         using (var scope = serviceProvider.CreateScope())
         {
@@ -57,4 +57,57 @@ public partial class RealSqlite : FeatureFixture
         var data = await auth.Login("asdad", "asdasd");
         Assert.Null(data);
     }
+    async Task Given_Those_Users_URL_To_Be_Registerer(InputTable<TILT_URL> urls)
+    {
+        var auth = serviceProvider.GetRequiredService<IAuthUrl>();
+        foreach (var item in urls)
+        {
+            await auth.CreateEndpoint(item.URLPart, item.Secret);
+        }
+    }
+    public async Task Then_The_Users_Could_Login(InputTable<TILT_URL> urls)
+    {
+        var auth = serviceProvider.GetRequiredService<IAuthUrl>();
+        foreach (var item in urls)
+        {
+            var jwt= await auth.Login(item.URLPart, item.Secret);
+            Assert.IsNotEmpty(jwt);
+        }        
+    }
+    public async Task Then_The_JWT_Can_Be_Decrypted(InputTable<TILT_URL> urls)
+    {
+        var auth = serviceProvider.GetRequiredService<IAuthUrl>();
+        foreach (var item in urls)
+        {
+            var jwt = await auth.Login(item.URLPart, item.Secret);
+            var c = auth.Decrypt(jwt);
+            Assert.IsNotEmpty(c);
+        }
+    }
+    public async Task Then_The_JWT_Can_Be_Decrypted_And_Have_Ids(InputTable<TILT_URL> urls)
+    {
+        List<long> ids = new();
+        var auth = serviceProvider.GetRequiredService<IAuthUrl>();
+        foreach (var item in urls)
+        {
+            var jwt = await auth.Login(item.URLPart, item.Secret);
+            var c = auth.Decrypt(jwt);
+            var id = auth.MainUrlId(c);
+            Assert.IsNotNull(id);
+            ids.Add(id.Value);
+        }
+        var all = Enumerable.Range(1, urls.Count ).Select(it=>(long)it).ToArray();
+        Assert.AreEqual(all, ids.ToArray());
+    }
+    public async Task Then_Exists_Public_Tilts(InputTable<TILT_URL> urls)
+    {
+        List<long> ids = new();
+        var tilts = serviceProvider.GetRequiredService<IPublicTILTS>();
+        var data = await tilts.PublicTiltsURL().ToArrayAsync();
+        data = data.OrderBy(it => it).ToArray();
+
+        var all = urls.Select(it => it.URLPart).OrderBy(it => it).ToArray();
+        Assert.AreEqual(all, data);
+    }
+
 }
