@@ -74,15 +74,11 @@ namespace NetTilt.Auth
         {
             JwtSecurityTokenHandler tokenHandler = new();
             var jwtSecurityToken = tokenHandler.ReadJwtToken(token);
-            if (jwtSecurityToken == null)
+            if ((jwtSecurityToken?.Claims?.Count() ?? 0) == 0)
             {
                 return null;
             }
-            if ((jwtSecurityToken.Claims?.Count() ?? 0) == 0)
-            {
-                return null;
-            }
-            var claims = jwtSecurityToken.Claims?.ToArray();
+            var claims = jwtSecurityToken!.Claims!.ToArray();
             var webPage = claims?.FirstOrDefault(it => it.Type == TokenId);
             if (webPage == null)
             {
