@@ -15,4 +15,8 @@ export class TILT {
     public text?: string | null;
     public link?: string | null;
     public forDate?: string | null;
+
+    public get TheDate(): Date{
+      return new Date(this.forDate!);
+    }
   }
