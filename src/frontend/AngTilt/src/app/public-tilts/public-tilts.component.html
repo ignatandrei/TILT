@@ -1,0 +1,13 @@
+<form [formGroup]="profileForm">
+<div formArrayName="publicUrls">
+    <h2>Public URLS</h2>
+    <!-- <button type="button" (click)="addAlias()">+ Add another alias</button> -->
+  
+    <div *ngFor="let alias of publicUrls.controls; let i=index">
+      
+      <!-- <input id="alias-{{ i }}" type="text" [formControlName]="i"/> -->
+
+      <a id="alias-{{ i }}"  href="/tilt/public/{{publicUrls.controls[i].value.url}}"   >{{publicUrls.controls[i].value.url}}</a>
+    </div>
+  </div>
+</form>
