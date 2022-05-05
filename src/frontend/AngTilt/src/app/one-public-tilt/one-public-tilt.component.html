@@ -8,11 +8,10 @@
       profileForm.value.url
     }}</a>
   </h1>
-  <div *ngFor="let item of tiltsFormArray.controls;let i=index">
-
-    on <i>{{item.value.forDate}} </i> TILT is 
-       <b>{{item.value.text }} </b> 
-       <!-- {{item.value | json}} -->
+  <div *ngFor="let item of tiltsFormArray.controls; let i = index">
+    on <i>{{ item.value.forDate }} </i> TILT is
+    <b>{{ item.value.text }} </b>
+    <hr />
+    <!-- {{item.value | json}} -->
   </div>
-
 </form>
