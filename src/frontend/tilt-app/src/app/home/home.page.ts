@@ -9,16 +9,18 @@ import { TILT } from '../classes/tilt'
 })
 export class HomePage {
 
-  public tilts: TILT[];
+  public allPublicTilts: string[];
   constructor(
     private publicTiltsService: PublicTiltsService 
   ) {}
 
-    // ngOnInit() {
-    //   this.publicTiltsService.getUrls().subscribe(data => {
-    //     this.tilts = data;
-    //   })
-    // }
+    ngOnInit() {
+      this.publicTiltsService.getUrls().subscribe(data => {
+        
+        this.allPublicTilts = data;
+        
+      })
+    }
 
 
 }
