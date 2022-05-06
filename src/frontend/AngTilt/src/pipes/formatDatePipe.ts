@@ -1,0 +1,11 @@
+import { Pipe, PipeTransform } from '@angular/core';
+import { formatDistance, subDays } from 'date-fns'
+@Pipe({name: 'formatDate'})
+export class FormatDatePipe implements PipeTransform {
+  transform(value: string| null): string {
+    if(value == null) return "";
+    var date= new Date(value);
+
+    return formatDistance(date, new Date(), { addSuffix: true });
+  }
+}

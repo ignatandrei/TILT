@@ -16,6 +16,7 @@ import { PublicTiltsComponent } from './public-tilts/public-tilts.component';
 import { OnePublicTiltComponent } from './one-public-tilt/one-public-tilt.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormatDatePipe } from 'src/pipes/formatDatePipe';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     TiltMainComponent,
     MyTiltComponent,
     PublicTiltsComponent,
-    OnePublicTiltComponent
+    OnePublicTiltComponent,
+    FormatDatePipe
   ],
   imports: [
     ReactiveFormsModule,
