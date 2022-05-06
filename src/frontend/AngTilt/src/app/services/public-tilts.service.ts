@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { TILT } from '../classes/TILT';
 
@@ -35,6 +35,11 @@ export class PublicTiltsService {
   //   arr.push(t);    
     // return of(arr)
 
-    return this.http.get<TILT[]>(this.baseUrl+'PublicTILTs/LatestTILTs/'+id + '/'+nr);
+    return this.http.get<TILT[]>(this.baseUrl+'PublicTILTs/LatestTILTs/'+id + '/'+nr)
+    .pipe(
+      tap(it=>console.log('received',it)),
+      map(arr=>arr.map(it=>new TILT(it)))
+    )
+    ;
   }
 }

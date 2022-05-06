@@ -39,7 +39,7 @@ export class OnePublicTiltComponent implements OnInit {
     ).subscribe(
       it=>{
         this.tiltsFormArray.clear();
-        it=it.map(it=>new TILT(it)).sort((a,b)=>b.forDate!.localeCompare(a.forDate!));
+        it=it.sort((a,b)=>b.forDate!.localeCompare(a.forDate!));
         // this.tiltsFormArray.push(...it.map(it=>this.fb.control(it)));
         it.forEach(it=>this.tiltsFormArray.push(this.fb.control(it)));
         // this.tiltsFormArray.push(new TILT());
