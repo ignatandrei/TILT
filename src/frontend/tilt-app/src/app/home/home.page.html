@@ -1,12 +1,15 @@
 <app-main-menu></app-main-menu>
    
+<h1>Public TILTS</h1>
 
-
-<ion-content>
-
-  <!-- <div id="container" *ngFor="let tilt of tilts">
-    <h1>Public TILTS</h1>
-    <h1>{tilt}</h1>
-  </div> -->
-</ion-content>
+<span *ngFor="let publicTilt of allPublicTilts">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ publicTilt }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Latest tilt
+    </ion-card-content>
+  </ion-card>
+</span>
 
