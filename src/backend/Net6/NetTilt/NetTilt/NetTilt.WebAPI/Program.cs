@@ -85,6 +85,7 @@ builder.Services.AddScoped<IMyTilts, MyTilts>();
 builder.Services.AddScoped<I_InsertDataApplicationDBContext, InsertDataApplicationDBContext>();
 builder.Services.AddScoped<ISearchDataTILT_URL, SearchDataTILT_URL>();
 builder.Services.AddScoped<ISearchDataTILT_Note, SearchDataTILT_Note>();
+builder.Services.AddScoped<IPublicTILTS, PublicTILTS>();
 builder.Services
      .AddHealthChecksUI(setup =>
      {

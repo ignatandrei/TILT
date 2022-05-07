@@ -5,7 +5,7 @@ namespace NetTilt.Auth
     [AutoGenerateInterface]
     public partial class AuthUrl : IAuthUrl
     {
-        const string TokenId = "TokenId";
+        public const string TokenId = "TokenId";
         private readonly ISearchDataTILT_URL search;
         private readonly I_InsertDataApplicationDBContext insert;
         private string SecretKey;
@@ -18,7 +18,7 @@ namespace NetTilt.Auth
         [AOPMarkerMethod]
         private async Task<string?> privateLogin(string url, string secret)
         {
-            var data = await search.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, url).ToArrayAsync(); ;
+            var data = await search.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, url).ToArrayAsync(); 
             if (data == null)
                 return null;
 
@@ -54,14 +54,14 @@ namespace NetTilt.Auth
         [AOPMarkerMethod]
         private async Task<string?> privateCreateEndpoint(string url, string secret)
         {
-            var data = await search.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, url).ToArrayAsync(); ;
+            var data = await search.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, url).ToArrayAsync(); 
             if (data?.Length>0)
             {
                 //maybe he wants to login ?
                 return await privateLogin(url, secret);
             }
 
-            var val = await insert.InsertTILT_URL(new TILT_URL_Table() { Secret=secret, URLPart=url});
+            await insert.InsertTILT_URL(new TILT_URL_Table() { Secret=secret, URLPart=url});
             return await privateLogin(url, secret);
 
         }
@@ -74,15 +74,11 @@ namespace NetTilt.Auth
         {
             JwtSecurityTokenHandler tokenHandler = new();
             var jwtSecurityToken = tokenHandler.ReadJwtToken(token);
-            if (jwtSecurityToken == null)
+            if ((jwtSecurityToken?.Claims?.Count() ?? 0) == 0)
             {
                 return null;
             }
-            if ((jwtSecurityToken.Claims?.Count() ?? 0) == 0)
-            {
-                return null;
-            }
-            var claims = jwtSecurityToken.Claims?.ToArray();
+            var claims = jwtSecurityToken!.Claims!.ToArray();
             var webPage = claims?.FirstOrDefault(it => it.Type == TokenId);
             if (webPage == null)
             {
@@ -96,13 +92,15 @@ namespace NetTilt.Auth
         {
             return privateDecrypt(token);
         }
-        public long? MainUrlId(Claim[] claims)
+        public long? MainUrlId(Claim[]? claims)
         {
             return privateMainUrlId(claims);
         }
         [AOPMarkerMethod]
-        private long? privateMainUrlId(Claim[] claims)
+        private long? privateMainUrlId(Claim[]? claims)
         {
+            if (claims == null)
+                return null;
             var c = claims?.FirstOrDefault(it => it.Type == TokenId);
             if (c == null)
                 return null;

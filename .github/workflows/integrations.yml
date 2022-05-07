@@ -1,0 +1,72 @@
+name: Integrations
+on:
+  push:
+    branches:
+      - main
+#  pull_request:
+#    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build sonar
+    runs-on: windows-latest
+    steps:
+      - name: Install coverage
+        shell: powershell
+        run: |
+          dotnet tool install --global dotnet-coverage
+    
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.11
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~\sonar\cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache SonarCloud scanner
+        id: cache-sonar-scanner
+        uses: actions/cache@v1
+        with:
+          path: .\.sonar\scanner
+          key: ${{ runner.os }}-sonar-scanner
+          restore-keys: ${{ runner.os }}-sonar-scanner
+      - name: Install SonarCloud scanner
+        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+        shell: powershell
+        run: |
+          New-Item -Path .\.sonar\scanner -ItemType Directory
+          dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        shell: powershell
+        run: |
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"ignatandrei_TILT" /o:"ignatandrei-github" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=src/backend/Net6/NetTilt/NetTilt.Tests/coverage.xml
+          dotnet build src/backend/Net6/NetTilt/NetTilt.sln
+          #dotnet-coverage collect 'dotnet test src\backend\Net6\NetTilt\NetTilt.Tests\NetTilt.Tests.csproj' -f xml  -o 'coverage.xml'
+          #dotnet test ./src/backend/Net6/NetTilt/NetTilt.Tests/NetTilt.Tests.csproj  --collect "Code Coverage"
+          dotnet test --no-build src/backend/Net6/NetTilt/NetTilt.sln  /p:AltCover=true /p:AltCoverAssemblyExcludeFilter="Humanizer|Moq|NUnit3|System|DB2GUI|AltCover|NetTilt.Tests" 
+          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+      # - name: Install codecov
+      #   shell: powershell        
+      #   run: |
+      #     dir coverage.xml
+      #     $ProgressPreference = 'SilentlyContinue' 
+      #     Invoke-WebRequest -Uri https://uploader.codecov.io/latest/windows/codecov.exe -Outfile codecov.exe 
+      #     .\codecov.exe
+      - name: Codecov
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}  
+        uses: codecov/codecov-action@v2.1.0
+        with:
+          files: src/backend/Net6/NetTilt/NetTilt.Tests/coverage.xml
+          fail_ci_if_error: true # optional (default = false)
+          #verbose: true # optional (default = false)
