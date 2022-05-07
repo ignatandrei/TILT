@@ -109,6 +109,23 @@ namespace NetTilt.Auth
 
             return long.Parse(c.Value);
         }
-        
+
+
+        public Task<string?> MainUrl(Claim[]? claims)
+        {
+            return privateMainUrl(claims);
+        }
+        [AOPMarkerMethod]
+        private async Task<string?> privateMainUrl(Claim[]? claims)
+        {
+            var id= MainUrlId(claims);
+            if (id == null)
+                return null;
+            var s = await search.TILT_URLSimpleSearch_ID(SearchCriteria.Equal, id.Value).ToArrayAsync();
+            if(s.Length != 1)
+                return null;
+            return s[0].URLPart;
+        }
+
     }
 }

@@ -49,6 +49,7 @@ namespace NetTilt.Logic
 
 
         }
+        
         public Task<TILT_Note_Table[]?> AllMyTILTs(Claim[]? c)
         {
             return privateAllMyTILTs(c);
@@ -113,5 +114,12 @@ namespace NetTilt.Logic
             var ret = data.Select(it => { var n = new TILT_Note_Table(); n.CopyFrom(it); return n; }).ToArray();
             return ret;
         }
+
+
+        Task<string?> GetMainUrl(Claim[]? c)
+        {
+            return auth.MainUrl(c);
+        }
+        
     }
 }

@@ -22,7 +22,7 @@ public class PublicTILTsController : ControllerBase
     [HttpGet("{urlPart}/{numberTILTS}")]
     public async Task<ActionResult<TILT_Note_Table[]?>> LatestTILTs(string urlPart, int numberTILTS, [FromServices] ISearchDataTILT_Note searchNotes)
     {
-        //TB: 2022-05-01 to be moved into a class - skinny controllers
+        //TB: 2022-05-11 to be moved into a class - skinny controllers
         var dataUrls = await searchUrl.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, urlPart).ToArrayAsync();
 
         if ((dataUrls?.Length ?? 0) == 0)

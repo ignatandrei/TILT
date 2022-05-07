@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { catchError, of, switchMap, tap } from 'rxjs';
 import { TILT } from '../classes/TILT';
 import { LoginUrlService } from '../services/login-url.service';
-import { formatDistance, subDays } from 'date-fns'
+import { formatDistance, subDays ,differenceInHours} from 'date-fns'
 
 @Component({
   selector: 'app-my-tilt',
@@ -39,9 +39,17 @@ export class MyTiltComponent implements OnInit {
 
       var sec : string|null = null;
       if(it!=null){
-        //console.log('local', new Date());
-        //console.log('next',nextDate);
+        var localDateStart=new Date(it.LocalDate.setHours(0,0,0,0));
+        console.log('local', localDateStart);
+        console.log('next',nextDate);
+        var h = differenceInHours(nextDate,localDateStart);
+        console.log("diff",h);
+        if(h>24){
+
+        }
+
         sec=formatDistance(nextDate, new Date(), { addSuffix: true }) ;
+
         //console.log(sec);
       }
       this.profileForm.patchValue({
