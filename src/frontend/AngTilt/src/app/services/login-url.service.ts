@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, of, switchMapTo, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { TILT } from '../classes/TILT';
 import { BrowserStorageService } from '../general/storage/browseStorage';
 
 @Injectable({
@@ -52,6 +53,31 @@ export class LoginUrlService {
            'Content-Type': 'application/json'
         }),        
       responseType: 'text' as 'json'});
+
+
+  }
+  public LastTilt():Observable<TILT|null>{
+    
+    if(!this.wasLoggedIn)return of(null);
+
+    return this.http.get<TILT[]>(this.baseUrl+'/TILT/MyLatestTILTs/1', {
+      headers: new HttpHeaders(
+        {
+          'Authorization': 'CustomBearer ' + this.jwt,
+           'Content-Type': 'application/json'
+        }),        
+      })
+      
+      .pipe(
+        map(tilt=>{
+          if(tilt == null)
+              return null;     
+          if(tilt.length == 0) 
+            return null;    
+          return new TILT(tilt[0]);
+        })
+      );
+      
 
 
   }

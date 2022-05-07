@@ -19,6 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormatDatePipe } from 'src/app/general/pipes/formatDatePipe';
 import { LoginUrlComponent } from './login-url/login-url.component';
 import { BrowserStorageService} from './general/storage/browseStorage';
+import { DisplayTILTComponent } from './display-tilt/display-tilt.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { BrowserStorageService} from './general/storage/browseStorage';
     PublicTiltsComponent,
     OnePublicTiltComponent,
     FormatDatePipe,
-    LoginUrlComponent
+    LoginUrlComponent,
+    DisplayTILTComponent
   ],
   imports: [
     ReactiveFormsModule,

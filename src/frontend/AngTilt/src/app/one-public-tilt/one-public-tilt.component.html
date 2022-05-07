@@ -9,8 +9,7 @@
     }}</a>
   </h1>
   <div *ngFor="let item of tiltsFormArray.controls; let i = index">
-    TILT on <i>{{ item.value.forDate | formatDate }} </i> is
-    <b>{{ item.value.text }} </b>
+    <app-display-tilt [tilt]="item.value"></app-display-tilt>
     <hr />
     <!-- {{item.value | json}} -->
   </div>
