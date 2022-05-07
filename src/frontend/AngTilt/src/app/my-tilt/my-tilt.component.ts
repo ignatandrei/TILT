@@ -15,7 +15,7 @@ export class MyTiltComponent implements OnInit {
   profileForm = this.fb.group({
     hasTodayTilt: false,
     lastTilt:null,
-    nextTiltSeconds:null,
+    nextTiltSecondsString:null,
     nextTilt:this.fb.group({
       text:['', [Validators.required, Validators.maxLength(100)]]
     })
@@ -33,10 +33,20 @@ export class MyTiltComponent implements OnInit {
     var nextDate=new Date();
     nextDate.setDate(nextDate.getDate()+1);
     nextDate=new Date(nextDate.setHours(0,0,0,0));
-    this.myTiltService.LastTilt().subscribe(it=>{
+    
+    this.myTiltService.LastTilt().subscribe(it=>
+      {
+
+      var sec : string|null = null;
+      if(it!=null){
+        //console.log('local', new Date());
+        //console.log('next',nextDate);
+        sec=formatDistance(nextDate, new Date(), { addSuffix: true }) ;
+        //console.log(sec);
+      }
       this.profileForm.patchValue({
         lastTilt:it, 
-        nextTiltSeconds: (it != null)? formatDistance(nextDate, it.TheDate, { addSuffix: true }) : null
+        nextTiltSecondsString: sec
       });
       
     });

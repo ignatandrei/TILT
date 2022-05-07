@@ -22,4 +22,7 @@ export class TILT {
     public get LocalDateString(): string{
       return this.TheDate.toLocaleString();
     }
+    public get LocalDate(): Date{
+      return new Date(this.LocalDateString);
+    }
   }

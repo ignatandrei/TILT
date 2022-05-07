@@ -6,7 +6,7 @@ export class FormatDatePipe implements PipeTransform {
     if(value == null) return "";
     if(value == undefined) return "";
     
-    var date= new Date(value);
+    var date= new Date(value+'Z');
 
     return formatDistance(date, new Date(), { addSuffix: true });
   }
