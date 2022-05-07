@@ -23,6 +23,20 @@ export class LoginUrlService {
     return this.jwt.length>0;
   };
 
+  public addTILT(tilt:TILT):Observable<TILT>{
+    return this.http.post<TILT>(this.baseUrl+'TILT/AddTILT', tilt, {
+      headers: new HttpHeaders(
+        {
+          'Authorization': 'CustomBearer ' + this.jwt,
+           'Content-Type': 'application/json'
+        })
+      }      
+      ).pipe
+      (
+        map(it=>new TILT(it))
+      );
+  }
+
   public  isLoggedIn():Observable<boolean> {
     if (this.jwt.length == 0)
       return of(false);

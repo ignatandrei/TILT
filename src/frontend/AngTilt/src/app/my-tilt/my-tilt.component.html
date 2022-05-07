@@ -1,7 +1,6 @@
 <h1>My TILTS</h1>
-<form [formGroup]="profileForm">
 
-<h2 *ngIf="profileForm.value.hasTodayTilt">Posted today TILT ( next one in 
+<h2 *ngIf="profileForm.value.hasTodayTilt">Posted today TILT ( next one 
     {{this.profileForm.value.nextTiltSeconds}}
 )
 </h2>
@@ -12,4 +11,11 @@ Last TILT:
 <app-display-tilt [tilt]="this.profileForm.value.lastTilt"></app-display-tilt>
 </div>
 
+<form [formGroup]="profileForm">
+    <div formGroupName="nextTilt">
+    <!-- <label for="name">TILT</label> -->
+        <input id="name" type="text" formControlName="text">
+  
+        <button type="button" [disabled]="!profileForm.valid" (click)="saveTILT()">SAVE TILT</button>
+    </div>
 </form> 

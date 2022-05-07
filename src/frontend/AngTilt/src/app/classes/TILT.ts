@@ -17,6 +17,9 @@ export class TILT {
     public forDate?: string | null;
 
     public get TheDate(): Date{
-      return new Date(this.forDate!);
+      return new Date(this.forDate!+'Z');
+    }
+    public get LocalDateString(): string{
+      return this.TheDate.toLocaleString();
     }
   }
