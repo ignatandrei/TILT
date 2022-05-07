@@ -16,8 +16,9 @@ import { PublicTiltsComponent } from './public-tilts/public-tilts.component';
 import { OnePublicTiltComponent } from './one-public-tilt/one-public-tilt.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormatDatePipe } from 'src/pipes/formatDatePipe';
+import { FormatDatePipe } from 'src/app/general/pipes/formatDatePipe';
 import { LoginUrlComponent } from './login-url/login-url.component';
+import { BrowserStorageService} from './general/storage/browseStorage';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,10 @@ import { LoginUrlComponent } from './login-url/login-url.component';
     MatIconModule,
     MatListModule
   ],
-  providers: [],
+  providers: [
+    BrowserStorageService,
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

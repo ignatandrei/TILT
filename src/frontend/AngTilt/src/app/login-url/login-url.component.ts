@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { catchError, of, switchMapTo } from 'rxjs';
+import { LoginUrlService } from '../services/login-url.service';
 
 @Component({
   selector: 'app-login-url',
@@ -9,17 +12,29 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class LoginUrlComponent implements OnInit {
 
   profileForm = this.fb.group({
-    urlPath: ['', Validators.required],
-    secret: ['', Validators.required],
+    urlPath: ['ignatandrei', Validators.required],
+    secret: ['qwe123', Validators.required],
     
   });
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private authUrl: LoginUrlService, private router: Router ) { }
 
   ngOnInit(): void {
     
   }
   onSubmit() {
-    console.log(this.profileForm.value);
+    this.authUrl.LoginOrCreate(this.profileForm.value.urlPath, this.profileForm.value.secret)
+    .pipe(
+      catchError((err,caught)=>{
+        window.alert('please try again');
+        return of('');
+      }
+    )
+    )
+    .subscribe(it=>{
+        this.router.navigate([this.authUrl.redirectUrl]);
+      
+    }, 
+    )
   }
 
 }
