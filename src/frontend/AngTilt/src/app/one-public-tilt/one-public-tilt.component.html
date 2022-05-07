@@ -1,0 +1,16 @@
+<form [formGroup]="profileForm">
+  <!-- <input type="text" class="form-control" id="name"
+    formControlName="url">    -->
+  <h1>
+    TILTS for
+
+    <a href="/tilt/public/{{ profileForm.value.url }}">{{
+      profileForm.value.url
+    }}</a>
+  </h1>
+  <div *ngFor="let item of tiltsFormArray.controls; let i = index">
+    <app-display-tilt [tilt]="item.value"></app-display-tilt>
+    <hr />
+    <!-- {{item.value | json}} -->
+  </div>
+</form>

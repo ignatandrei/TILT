@@ -1,0 +1,7 @@
+{
+  "name": "tilt-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
