@@ -20,10 +20,23 @@ jobs:
           dotnet-version: '6.0.x'
           include-prerelease: false
 
+      - name: Set up npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.13.0'
+          cache: 'npm'
+
       - name: Build with dotnet
         run: |
             cd src/backend/Net6/NetTilt 
             dotnet build --configuration Release
+
+      - name: Build Angular Site 1
+        run: |
+            cd src/frontend/AngTilt/
+            npm i
+            npm run build
+            ls -lh dist/AngTilt
 
       - name: dotnet publish
         shell: pwsh
