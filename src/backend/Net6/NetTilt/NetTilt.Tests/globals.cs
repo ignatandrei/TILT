@@ -5,7 +5,6 @@ global using NetTilt.Logic;
 global using NUnit.Framework;
 global using Generated;
 global using System.Threading.Tasks;
-global using System.Security.Claims;
 global using System.Linq;
 global using LightBDD.Framework;
 global using LightBDD.NUnit3;
@@ -19,7 +18,6 @@ global using System.IO;
 global using NetTilt.Tests;
 global using LightBDD.Framework.Configuration;
 global using System.Text;
-global using Generated;
 global using Microsoft.EntityFrameworkCore;
 global using LightBDD.Framework.Parameters;
 
