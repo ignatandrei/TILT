@@ -1,7 +1,7 @@
 <h1>My TILTS 
   
-{{profileForm.value.hasTodayTilt}}
-{{profileForm.controls["hasTodayTilt"].value}}
+<!-- {{profileForm.value.hasTodayTilt}} -->
+<!-- {{profileForm.controls["hasTodayTilt"].value}} -->
 </h1>
 <form [formGroup]="profileForm" >
 
@@ -27,5 +27,9 @@
   Last TILT:
   <app-display-tilt [tilt]="this.profileForm.value.lastTilt"></app-display-tilt>
 
+URL : 
+<a href="/tilt/public/{{this.profileForm.value.mainUrl}}">
+  {{this.profileForm.value.mainUrl}}  
+</a>
 
 </div>

@@ -1,0 +1,1 @@
+wt new-tab --title webapi -d backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI PowerShell -noexit -c "dotnet watch run --no-hot-reload"  ; new-tab --title ang -d "frontend\AngTilt" PowerShell -noexit -c "ng serve -o"
