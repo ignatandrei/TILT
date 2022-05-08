@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetTilt.Logic", "NetTilt.Lo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetTilt.Tests", "NetTilt.Tests\NetTilt.Tests.csproj", "{9164F436-5565-4D80-8B56-D01969697672}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{B20FDA68-0FCC-4EFE-A4C9-959277F3BFE6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,10 +52,6 @@ Global
 		{9164F436-5565-4D80-8B56-D01969697672}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9164F436-5565-4D80-8B56-D01969697672}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9164F436-5565-4D80-8B56-D01969697672}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B20FDA68-0FCC-4EFE-A4C9-959277F3BFE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B20FDA68-0FCC-4EFE-A4C9-959277F3BFE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B20FDA68-0FCC-4EFE-A4C9-959277F3BFE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B20FDA68-0FCC-4EFE-A4C9-959277F3BFE6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
