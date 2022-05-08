@@ -74,8 +74,11 @@ namespace NetTilt.Logic
             var all = await MyLatestTILTs(1, c);
             if (all == null)
                 return false;
+            if (all.Length == 0)
+                return false;
             var now = DateTime.UtcNow.Date;
-            return all.FirstOrDefault(it => it.ForDate.HasValue && now.Subtract(it.ForDate.Value.Date).TotalDays == 0) != null;
+            var  it = all[0];
+            return ( it.ForDate.HasValue && now.Subtract(it.ForDate.Value.Date).TotalDays == 0) ;
         }
         public Task<TILT_Note_Table[]?> MyLatestTILTs(int numberTILTS, Claim[]? c)
         {

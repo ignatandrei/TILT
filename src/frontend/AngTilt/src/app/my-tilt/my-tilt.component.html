@@ -1,14 +1,18 @@
-<h1>My TILTS</h1>
+<h1>My TILTS 
+  
+{{profileForm.value.hasTodayTilt}}
+{{profileForm.controls["hasTodayTilt"].value}}
+</h1>
+<form [formGroup]="profileForm" >
 
-<h2 *ngIf="profileForm.value.hasTodayTilt">
+<h2 [hidden]="profileForm.value.hasTodayTilt">
   Posted today TILT ( next one
   <!-- {{ this.profileForm.value.nextTiltSecondsString }} -->
   )
 </h2>
 
-<h2 *ngIf="!profileForm.value.hasTodayTilt">Please add TILT for today</h2>
+<h2 [hidden]="!profileForm.value.hasTodayTilt">Please add TILT for today</h2>
 
-<form [formGroup]="profileForm" *ngIf="!profileForm.value.hasTodayTilt">
   <div formGroupName="nextTilt">
     <!-- <label for="name">TILT</label> -->
     <input id="name" type="text" formControlName="text" />
@@ -23,5 +27,5 @@
   Last TILT:
   <app-display-tilt [tilt]="this.profileForm.value.lastTilt"></app-display-tilt>
 
-  
+
 </div>
