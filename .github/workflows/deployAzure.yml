@@ -24,7 +24,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '16.13.0'
-          cache: 'npm'
+          
 
       - name: Build with dotnet
         run: |
@@ -33,6 +33,8 @@ jobs:
 
       - name: Build Angular Site 1
         run: |
+            node -v
+            npm -v
             cd src/frontend/AngTilt/
             npm i
             npm run buildAzure
