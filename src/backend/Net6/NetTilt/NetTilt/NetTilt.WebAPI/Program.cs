@@ -235,5 +235,6 @@ using (var activity = source.StartActivity("StartApp"))
     activity?.SetTag("On", DateTime.UtcNow);
     activity?.SetStatus(Status.Ok);
 }
-app.MapFallbackToFile("angTilt/*", "index.html");
+
+app.MapFallbackToFile("AngTilt/{*path:nonfile}", "/AngTilt/index.html");
 app.Run();
