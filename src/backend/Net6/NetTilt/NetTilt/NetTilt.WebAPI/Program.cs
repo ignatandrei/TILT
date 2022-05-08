@@ -178,7 +178,7 @@ builder.Services.AddCors(options =>
                       });
 });
 var app = builder.Build();
-
+app.UseDefaultFiles();
 app.UseStaticFiles();
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
@@ -236,4 +236,5 @@ using (var activity = source.StartActivity("StartApp"))
     activity?.SetStatus(Status.Ok);
 }
 
+app.MapFallbackToFile("AngTilt/{*path:nonfile}", "/AngTilt/index.html");
 app.Run();

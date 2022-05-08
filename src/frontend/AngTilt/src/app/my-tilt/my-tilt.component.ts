@@ -35,13 +35,14 @@ export class MyTiltComponent implements OnInit {
         var localDateStart=new Date(lastTilt.LocalDate.setHours(0,0,0,0));
         console.log('local', localDateStart);
         console.log('next',nextDate);
+        console.log('tilt',lastTilt.LocalDate);
+        
         var h = differenceInHours(nextDate,localDateStart);
         console.log("diff",h);
         if(h>24){
 
         }
-
-        sec=formatDistance(nextDate, new Date(), { addSuffix: true }) ;
+        sec=formatDistance(nextDate, lastTilt.LocalDate, { addSuffix: true }) ;
 
         //console.log(sec);
       }
@@ -66,9 +67,9 @@ export class MyTiltComponent implements OnInit {
     var lastTilt$= this.myTiltService.LastTilt()
     var obs=zip(tiltToday$, mainUrl$, lastTilt$)
     .pipe(
-      tap(([hasTodayTilt,mainUrl,lastTilt])=> this.patchData(hasTodayTilt,mainUrl,lastTilt)),
+      // tap(([hasTodayTilt,mainUrl,lastTilt])=> this.patchData(hasTodayTilt,mainUrl,lastTilt)),
     )
-    .subscribe();
+    .subscribe(([hasTodayTilt,mainUrl,lastTilt])=> this.patchData(hasTodayTilt,mainUrl,lastTilt));
 
       
       
