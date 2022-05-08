@@ -32,15 +32,15 @@ jobs:
             dotnet build --configuration Release
 
       - name: Build Angular Site 1
+        shell: pwsh
         run: |
             node -v
             npm -v
             cd src/frontend/AngTilt/
             npm i
             npm run buildAzure
-            ls -lh dist
-            ls -lh dist/AngTilt
-
+            remove-item ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\AngTilt\index.html
+            Copy-Item .\dist\AngTilt\* ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\AngTilt\
       - name: dotnet publish
         shell: pwsh
         run: |
