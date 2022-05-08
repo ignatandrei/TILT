@@ -12,8 +12,8 @@ import { LoginUrlService } from '../services/login-url.service';
 export class LoginUrlComponent implements OnInit {
 
   profileForm = this.fb.group({
-    urlPath: ['ignatandrei', Validators.required],
-    secret: ['qwe123', Validators.required],
+    urlPath: ['test', Validators.required],
+    secret: ['test', Validators.required],
     
   });
   constructor(private fb: FormBuilder, private authUrl: LoginUrlService, private router: Router ) { }

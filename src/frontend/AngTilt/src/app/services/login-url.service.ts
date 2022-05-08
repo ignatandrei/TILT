@@ -22,7 +22,19 @@ export class LoginUrlService {
   private get wasLoggedIn():boolean {
     return this.jwt.length>0;
   };
+  public MyUrl():Observable<string>{
+    if (this.jwt.length == 0)
+      return of('');
 
+    return this.http.get<string>(this.baseUrl+'/TILT/MainUrl',{
+        headers: new HttpHeaders(
+          {
+            'Authorization': 'CustomBearer ' + this.jwt,
+             'Content-Type': 'application/json'
+          }),        
+        responseType: 'text' as 'json'})
+    
+  }
   public addTILT(tilt:TILT):Observable<TILT>{
     return this.http.post<TILT>(this.baseUrl+'TILT/AddTILT', tilt, {
       headers: new HttpHeaders(
@@ -48,7 +60,12 @@ export class LoginUrlService {
              'Content-Type': 'application/json'
           }),        
         responseType: 'text' as 'json'})
-      
+      .pipe(
+        catchError((err:any,caught:Observable<boolean>)=>{
+          console.log('auth failed',err);
+          return of(false);
+        }
+      ));
   };
   
   public redirectUrl :string = 'tilt/my';
@@ -56,7 +73,7 @@ export class LoginUrlService {
   constructor(private http: HttpClient, private storage: BrowserStorageService) { 
     this.baseUrl=environment.url;
   }
-
+  
   public HasTILTToday():Observable<boolean>{
     if(!this.wasLoggedIn)return of(false);
 

@@ -48,16 +48,8 @@ public class AuthAllController : ControllerBase
         return data;
     }
 
-    [Authorize(Policy = "CustomBearer")]
-    [HttpGet]
-    public int WebPageFromClaim()
-    {
-        var c = this.User?.Claims.ToArray();
-        if ((c?.Length ?? 0) == 0)
-            return -1;
+    
 
-        return c.Length;
-    }
     [Authorize(Policy = "CustomBearer")]
     [HttpGet]
     public bool IsUserAuthenticated()

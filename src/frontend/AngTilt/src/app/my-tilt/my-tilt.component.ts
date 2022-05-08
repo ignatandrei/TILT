@@ -14,6 +14,7 @@ export class MyTiltComponent implements OnInit {
 
   profileForm = this.fb.group({
     hasTodayTilt: false,
+    mainUrl:'',
     lastTilt:null,
     nextTiltSecondsString:null,
     nextTilt:this.fb.group({
@@ -30,6 +31,12 @@ export class MyTiltComponent implements OnInit {
       }
 
     ));
+
+
+    this.myTiltService.MyUrl().subscribe(url=> this.profileForm.patchValue({
+      mainUrl:url
+    }));
+
     var nextDate=new Date();
     nextDate.setDate(nextDate.getDate()+1);
     nextDate=new Date(nextDate.setHours(0,0,0,0));
