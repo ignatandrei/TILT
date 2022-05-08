@@ -6,11 +6,12 @@ namespace NetTilt.WebAPI.Controllers;
 public class TILTController : ControllerBase
 {
     private readonly IMyTilts addLogic;
-    
+    private readonly IAuthUrl auth;
 
-    public TILTController(IMyTilts addLogic)
+    public TILTController(IMyTilts addLogic, IAuthUrl auth)
     {
-        this.addLogic = addLogic;        
+        this.addLogic = addLogic;
+        this.auth = auth;
     }
     [Authorize(Policy = "CustomBearer", Roles = "Editor")]
     [HttpPost]
@@ -53,6 +54,30 @@ public class TILTController : ControllerBase
             return new UnauthorizedResult();
         }
         return data;
+    }
+
+    [Authorize(Policy = "CustomBearer")]
+    [HttpGet]
+    public ActionResult<long> WebPageID()
+    {
+
+        var data = auth.MainUrlId(this.User?.Claims?.ToArray());
+        if (!data.HasValue)
+            return NotFound("cannot find id from claims");
+
+        return data;
+    }
+
+    [Authorize(Policy = "CustomBearer")]
+    [HttpGet]
+    public async Task<ActionResult<string>> MainUrl()
+    {
+
+        var data = await auth.MainUrl(this.User?.Claims?.ToArray());
+        if (string.IsNullOrWhiteSpace(data))
+            return NotFound("cannot find webpage from claims");
+
+        return data!;
     }
 }
 

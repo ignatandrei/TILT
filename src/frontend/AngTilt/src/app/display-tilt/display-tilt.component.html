@@ -1,3 +1,8 @@
+<div *ngIf="tilt != null">
 TILT on <i title="{{ tilt?.LocalDateString}} utc:{{ tilt?.forDate}}">{{ tilt?.forDate | formatDate }} </i> is
     <b>{{ tilt?.text }} </b>
+</div>
+<div *ngIf="tilt == null">
+    No tilt!
+</div>
     

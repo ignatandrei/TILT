@@ -1,4 +1,3 @@
-<p>login-url works!</p>
 <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
 
     <label for="urlPath">URL</label>
@@ -7,5 +6,5 @@
     <label for="secret">Secret</label>
     <input id="secret" type="text" formControlName="secret">
   
-    <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+    <button type="submit" [disabled]="!profileForm.valid">Login</button>
   </form>
