@@ -108,6 +108,20 @@ public partial class RealSqlite : FeatureFixture
         var all = urls.Select(it => it.URLPart).OrderBy(it => it).ToArray();
         Assert.AreEqual(all, data);
     }
+    public async Task And_The_Url_Is_Correct(InputTable<TILT_URL> urls)
+    {
+        List<long> ids = new();
+        var auth = serviceProvider.GetRequiredService<IAuthUrl>();
+        foreach (var item in urls)
+        {
+            var jwt = await auth.Login(item.URLPart, item.Secret);
+            var c = auth.Decrypt(jwt);
+            var id = auth.MainUrl(c);
+            Assert.IsNotNull(id);
+            Assert.AreEqual(item.URLPart, id);
+        }
+    }
+
     public async Task And_No_Tilts_Yet(InputTable<TILT_URL> urls)
     {
         List<long> ids = new();
