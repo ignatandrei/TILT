@@ -33,7 +33,7 @@ export class OnePublicTiltComponent implements OnInit {
        map(it=>it[id]),
       tap(it => this.profileForm.controls['url'].setValue(it)),
        tap(it  => console.log("id is ",it)),
-       switchMap(it => this.publicService.getTilts(it,10)),
+       switchMap(it => this.publicService.getTilts(it,100000)),
        tap(it  => console.log("tilts are ",it))
 
     ).subscribe(

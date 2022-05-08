@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { catchError, last, of, switchMap, tap, zip } from 'rxjs';
 import { TILT } from '../classes/TILT';
 import { LoginUrlService } from '../services/login-url.service';
-import { formatDistance, subDays ,differenceInHours} from 'date-fns'
+import { formatDistance, subDays ,differenceInHours, formatDistanceToNowStrict} from 'date-fns'
 
 @Component({
   selector: 'app-my-tilt',
@@ -37,12 +37,13 @@ export class MyTiltComponent implements OnInit {
         console.log('next',nextDate);
         console.log('tilt',lastTilt.LocalDate);
         
-        var h = differenceInHours(nextDate,localDateStart);
+        var h = differenceInHours(nextDate,new Date());
         console.log("diff",h);
-        if(h>24){
-
+        sec=formatDistance(nextDate, new Date(), { addSuffix: true }) ;
+        if(h>=24 || h <2){
+          sec=formatDistanceToNowStrict(nextDate, { addSuffix: true, unit:'minute' }) ;
+          console.log('here',sec);
         }
-        sec=formatDistance(nextDate, lastTilt.LocalDate, { addSuffix: true }) ;
 
         //console.log(sec);
       }

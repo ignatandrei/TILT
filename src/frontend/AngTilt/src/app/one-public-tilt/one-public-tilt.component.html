@@ -9,7 +9,7 @@
     }}</a>
   </h1>
   <div *ngFor="let item of tiltsFormArray.controls; let i = index">
-    <app-display-tilt [tilt]="item.value"></app-display-tilt>
+   {{tiltsFormArray.controls.length - i }}  <app-display-tilt [tilt]="item.value"></app-display-tilt>
     <hr />
     <!-- {{item.value | json}} -->
   </div>
