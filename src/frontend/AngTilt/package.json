@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "buildAzure": "ng build --base-href /AngTilt/",
+    "buildAzure": "ng build --base-href /AngTilt/ --output-path dist/AngTilt",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
