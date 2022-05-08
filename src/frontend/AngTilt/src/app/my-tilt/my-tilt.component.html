@@ -1,19 +1,18 @@
-<h1>My TILTS 
-  
+<h1>My TILTS   
 <!-- {{profileForm.value.hasTodayTilt}} -->
 <!-- {{profileForm.controls["hasTodayTilt"].value}} -->
 </h1>
 <form [formGroup]="profileForm" >
 
-<h2 [hidden]="profileForm.value.hasTodayTilt">
+<h2 [hidden]="!profileForm.value.hasTodayTilt">
   Posted today TILT ( next one
-  <!-- {{ this.profileForm.value.nextTiltSecondsString }} -->
+  {{ this.profileForm.value.nextTiltSecondsString }}
   )
 </h2>
 
-<h2 [hidden]="!profileForm.value.hasTodayTilt">Please add TILT for today</h2>
+<h2 [hidden]="profileForm.value.hasTodayTilt">Please add TILT for today</h2>
 
-  <div formGroupName="nextTilt">
+  <div formGroupName="nextTilt" [hidden]="profileForm.value.hasTodayTilt">
     <!-- <label for="name">TILT</label> -->
     <input id="name" type="text" formControlName="text" />
 
