@@ -73,7 +73,8 @@
 	  <Folder Include="wwwroot\AngTilt\" />
 	</ItemGroup>
 	<PropertyGroup>
-		<GenerateStep>Controller</GenerateStep>
+		<!--<GenerateStep>Controller</GenerateStep>-->
+		<GenerateStep>NoStep</GenerateStep>
 	</PropertyGroup>
 	<PropertyGroup>
 		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
