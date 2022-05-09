@@ -16,7 +16,7 @@ export class PublicTiltsService {
   }
 
   public getUrls():Observable<string[]>{
-    return this.http.get<string[]>(this.baseUrl+'PublicTILTs/PublicTiltsURL');
+    return this.http.get<string[]>(this.baseUrl + 'PublicTILTs/PublicTiltsURL');
   }
 
   public getTilts(id:string, nr:number): Observable<TILT[]>{
@@ -35,6 +35,6 @@ export class PublicTiltsService {
   //   arr.push(t);    
     // return of(arr)
 
-    return this.http.get<TILT[]>(this.baseUrl+'PublicTILTs/LatestTILTs/'+id + '/'+nr);
+    return this.http.get<TILT[]>(this.baseUrl+'PublicTILTs/LatestTILTs/' + id + '/' + nr);
   }
 }

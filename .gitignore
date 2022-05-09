@@ -369,3 +369,5 @@ src/frontend/tilt-app/.angular/cache/13.2.6/angular-webpack/3ecbb85ee94158e20d7d
 src/frontend/tilt-app/.angular/cache/13.2.6/angular-webpack/3ecbb85ee94158e20d7d1875daf99225b95a6bc1/9.pack
 src/frontend/tilt-app/.angular/cache/13.2.6/angular-webpack/3ecbb85ee94158e20d7d1875daf99225b95a6bc1/index.pack
 src/frontend/tilt-app/.angular/cache/13.2.6/angular-webpack/3ecbb85ee94158e20d7d1875daf99225b95a6bc1/index.pack.old
+*.old
+*.pack

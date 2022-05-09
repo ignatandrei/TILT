@@ -8,19 +8,20 @@
     </ion-toolbar>
   </ion-header>
   
-  <ion-menu side="start" menuId="custom" contentId="main" class="my-custom-menu">
-    <ion-header>
-      <ion-toolbar color="tertiary">
-        <ion-title>Custom Menu</ion-title>
-      </ion-toolbar>
-    </ion-header>
+  <ion-menu side="start" menuId="custom" contentId="main">
     <ion-content>
       <ion-list>
-        <ion-item>Menu Item</ion-item>
-        <ion-item>Menu Item</ion-item>
-        <ion-item>Menu Item</ion-item>
-        <ion-item>Menu Item</ion-item>
-        <ion-item>Menu Item</ion-item>
+        
+        <ion-item href="">
+          <ion-icon name="layers" slot="start"></ion-icon>
+          <ion-label>Public TILTs</ion-label>
+        </ion-item>
+     
+        <ion-item href="">
+            <ion-icon name="id-card" slot="start"></ion-icon>
+            <ion-label>My TILTs</ion-label>
+        </ion-item>
+     
       </ion-list>
     </ion-content>
   </ion-menu>
