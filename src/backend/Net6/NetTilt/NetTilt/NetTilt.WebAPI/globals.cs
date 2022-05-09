@@ -23,3 +23,4 @@ global using NetTilt.Logic;
 
 
 [assembly: AMS_Base.VersionReleased(Name = "FutureRelease", ISODateTime = "9999-04-16", recordData = AMS_Base.RecordData.Merges)]
+[assembly: AMS_Base.VersionReleased(Name = "MVP", ISODateTime = "2022-05-09", recordData = AMS_Base.RecordData.Merges)]
