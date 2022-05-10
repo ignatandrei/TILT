@@ -77,13 +77,16 @@ export class LoginUrlService {
   public HasTILTToday():Observable<boolean>{
     if(!this.wasLoggedIn)return of(false);
 
-    return this.http.get<boolean>(this.baseUrl+'TILT/HasTILTToday', {
+    return this.http.get<string>(this.baseUrl+'TILT/HasTILTToday', {
       headers: new HttpHeaders(
         {
           'Authorization': 'CustomBearer ' + this.jwt,
            'Content-Type': 'application/json'
         }),        
-      responseType: 'text' as 'json'});
+      responseType: 'text' as 'json'})
+      .pipe(
+        map(it=>it==='true')
+      );
 
 
   }
