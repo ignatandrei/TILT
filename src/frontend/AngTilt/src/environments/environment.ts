@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: 'http://localhost:9900/api/'
+  url: 'https://tiltwebapp.azurewebsites.net/api/'
 };
 
 /*
