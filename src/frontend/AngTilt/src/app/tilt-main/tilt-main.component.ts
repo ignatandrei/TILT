@@ -22,8 +22,10 @@ export class TiltMainComponent implements AfterContentInit {
     private shepherdService: ShepherdService
   ) {}
   ngAfterContentInit(): void {
-    
-    console.log(document.getElementsByClassName('publicUrls'));
+    this.showTutorial();    
+  }
+  showTutorial() {
+    console.log('showTutorial');
     // this.shepherdService.requiredElements = [
     //   {
     //     selector: '.publicUrls',

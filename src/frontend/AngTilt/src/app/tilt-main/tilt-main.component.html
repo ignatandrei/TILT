@@ -20,6 +20,12 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span style="color: red">TILT</span>( <i style="color: red">T</i>hing &nbsp; <i style="color: red">I</i>&nbsp;<i style="color: red">L</i>earnt &nbsp;<i style="color: red">T</i>oday)
+      <button mat-button [matMenuTriggerFor]="menu">Help</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="showTutorial()">Show Tutorial</button>
+        <a mat-menu-item routerLink="/tilt/public/">Public URL</a>
+        <a mat-menu-item routerLink="/tilt/my">My TILTS</a>
+      </mat-menu>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

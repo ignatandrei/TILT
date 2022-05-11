@@ -10,6 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { MyTiltComponent } from './my-tilt/my-tilt.component';
 import { PublicTiltsComponent } from './public-tilts/public-tilts.component';
@@ -41,6 +42,7 @@ import { DisplayTILTComponent } from './display-tilt/display-tilt.component';
     LayoutModule,
     MatToolbarModule,
     MatButtonModule,
+    MatMenuModule,
     MatSidenavModule,
     MatIconModule,
     MatListModule
