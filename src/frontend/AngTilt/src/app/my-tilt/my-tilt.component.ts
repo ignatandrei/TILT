@@ -48,7 +48,7 @@ export class MyTiltComponent implements OnInit {
       var nextTiltSecondsString:string|null = null;
       console.log('hasTodayTilt', hasTodayTilt);
       console.log('mainUrl', mainUrl);
-      hasTodayTilt=false;
+      // debug purposes : hasTodayTilt=false;
       this.profileForm.patchValue(
         {
           hasTodayTilt : hasTodayTilt,
