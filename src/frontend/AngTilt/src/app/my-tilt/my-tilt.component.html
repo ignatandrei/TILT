@@ -1,5 +1,9 @@
-<h1>My TILTS   
-<!-- {{profileForm.value.hasTodayTilt}} -->
+<h1>
+  <a  routerLink="/tilt/public/{{this.profileForm.value.mainUrl}}">
+    My TILTS   : {{this.profileForm.value.mainUrl}}  
+  </a>
+  
+  <!-- {{profileForm.value.hasTodayTilt}} -->
 <!-- {{profileForm.controls["hasTodayTilt"].value}} -->
 </h1>
 <form [formGroup]="profileForm" >
