@@ -21,9 +21,7 @@ export class MyTiltComponent implements OnInit {
       text:['', [Validators.required, Validators.maxLength(100)]]
     })
   });
-  hasTodayTilt():boolean{
-    return this.profileForm.controls['hasTodayTilt'].value;
-  }
+  
   constructor(private myTiltService:LoginUrlService, private fb:FormBuilder) { }
 
   patchData(hasTodayTilt:boolean, mainUrl:string, lastTilt:TILT|null):void{
@@ -50,6 +48,7 @@ export class MyTiltComponent implements OnInit {
       var nextTiltSecondsString:string|null = null;
       console.log('hasTodayTilt', hasTodayTilt);
       console.log('mainUrl', mainUrl);
+      // debug purposes : hasTodayTilt=false;
       this.profileForm.patchValue(
         {
           hasTodayTilt : hasTodayTilt,

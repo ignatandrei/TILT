@@ -1,5 +1,9 @@
-<h1>My TILTS   
-<!-- {{profileForm.value.hasTodayTilt}} -->
+<h1>
+  <a  routerLink="/tilt/public/{{this.profileForm.value.mainUrl}}">
+    My TILTS   : {{this.profileForm.value.mainUrl}}  
+  </a>
+  
+  <!-- {{profileForm.value.hasTodayTilt}} -->
 <!-- {{profileForm.controls["hasTodayTilt"].value}} -->
 </h1>
 <form [formGroup]="profileForm" >
@@ -14,8 +18,14 @@
 
   <div formGroupName="nextTilt" [hidden]="profileForm.value.hasTodayTilt">
     <!-- <label for="name">TILT</label> -->
-    <input id="name" type="text" formControlName="text" />
+    <textarea id="name" type="text" formControlName="text"  ></textarea>
+    {{ profileForm.controls["nextTilt"].value.text?.length }}
 
+      <div *ngIf="profileForm.value.nextTilt.touched && profileForm.value.nextTilt.invalid" class="text-danger">
+        <div *ngIf="profileForm.value.nextTilt.errors.required">Name is required.</div>
+        <div *ngIf="profileForm.value.nextTilte.errors?.minlength">Minimum 4 character are required.</div>
+      </div>
+      
     <button type="button" [disabled]="!profileForm.valid" (click)="saveTILT()">
       SAVE TILT
     </button>
