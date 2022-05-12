@@ -14,8 +14,14 @@
 
   <div formGroupName="nextTilt" [hidden]="profileForm.value.hasTodayTilt">
     <!-- <label for="name">TILT</label> -->
-    <textarea id="name" type="text" formControlName="text" ></textarea>
+    <textarea id="name" type="text" formControlName="text"  ></textarea>
+    {{ profileForm.controls["nextTilt"].value.text?.length }}
 
+      <div *ngIf="profileForm.value.nextTilt.touched && profileForm.value.nextTilt.invalid" class="text-danger">
+        <div *ngIf="profileForm.value.nextTilt.errors.required">Name is required.</div>
+        <div *ngIf="profileForm.value.nextTilte.errors?.minlength">Minimum 4 character are required.</div>
+      </div>
+      
     <button type="button" [disabled]="!profileForm.valid" (click)="saveTILT()">
       SAVE TILT
     </button>
