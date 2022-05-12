@@ -14,7 +14,7 @@
 
   <div formGroupName="nextTilt" [hidden]="profileForm.value.hasTodayTilt">
     <!-- <label for="name">TILT</label> -->
-    <input id="name" type="text" formControlName="text" />
+    <textarea id="name" type="text" formControlName="text" ></textarea>
 
     <button type="button" [disabled]="!profileForm.valid" (click)="saveTILT()">
       SAVE TILT
