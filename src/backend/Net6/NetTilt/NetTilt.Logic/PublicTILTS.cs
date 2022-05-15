@@ -1,14 +1,17 @@
-﻿namespace NetTilt.Logic
+﻿
+namespace NetTilt.Logic
 {
     [AutoMethods(CustomTemplateFileName = "../AutoMethod.txt", MethodPrefix = "auto", template = TemplateMethod.CustomTemplateFile)]
     [AutoGenerateInterface]
     public partial class PublicTILTS : IPublicTILTS
     {
+        private readonly IMemoryCache cache;
         private readonly ISearchDataTILT_Note searchNotes;
         private readonly ISearchDataTILT_URL searchUrl;
 
-        public PublicTILTS(ISearchDataTILT_Note searchNotes, ISearchDataTILT_URL searchUrl)
+        public PublicTILTS(IMemoryCache cache, ISearchDataTILT_Note searchNotes, ISearchDataTILT_URL searchUrl)
         {
+            this.cache = cache;
             this.searchNotes = searchNotes;
             this.searchUrl = searchUrl;
        }
@@ -32,6 +35,11 @@
         [AOPMarkerMethod]
         private async Task<TILT_Note_Table[]?> privateLatestTILTs(string urlPart, int numberTILTS)
         {
+            if (cache.TryGetValue<TILT_Note_Table[]>(urlPart, out var result))
+            {
+                return result;
+            }
+
 
             var dataUrls = await searchUrl.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, urlPart).ToArrayAsync();
 
@@ -63,6 +71,7 @@
             search.PageSize = numberTILTS;
             var data = await searchNotes.TILT_NoteFind_AsyncEnumerable(search).ToArrayAsync();
             var ret = data.Select(it => { var n = new TILT_Note_Table(); n.CopyFrom(it); return n; }).ToArray();
+            cache.Set(urlPart, ret,DateTimeOffset.Now.AddMinutes(10));
             return ret;
         }
     }

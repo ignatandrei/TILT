@@ -48,6 +48,7 @@ partial class TestAuth : FeatureFixture
 
         serviceProvider = new ServiceCollection()
         .AddLogging()
+        .AddMemoryCache()
         .AddSingleton<IConfiguration>(configuration)
         .AddScoped<I_InsertDataApplicationDBContext>(sp => insert.Object)
         .AddScoped<ISearchDataTILT_URL>(sp=>searchUrl.Object)

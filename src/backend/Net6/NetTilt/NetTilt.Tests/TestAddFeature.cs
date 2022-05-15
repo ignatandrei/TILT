@@ -36,10 +36,6 @@ partial  class TestAddNewTilt: FeatureFixture
         var searchUrl = new Mock<ISearchDataTILT_URL>();
         var insert = new Mock<I_InsertDataApplicationDBContext>();
         insert.Setup(x => x.InsertTILT_Note(It.IsAny<TILT_Note_Table>())).Returns(Task.FromResult(new TILT_Note_Table()));
-
-
-
-
         var searchNote = new Mock<ISearchDataTILT_Note>();
         TILT_Note[] retArray;
         if (oneTILTInTheDB.HasValue)
@@ -57,10 +53,12 @@ partial  class TestAddNewTilt: FeatureFixture
 
         var auth = new Mock<IAuthUrl>();
         auth.Setup(x => x.MainUrlId(null)).Returns(1);
+        auth.Setup(x => x.MainUrl(null)).Returns(Task.FromResult("ignatandrei"));
         //var q = new SearchDataTILT_URL(null);
 
         serviceProvider = new ServiceCollection()
         .AddLogging()
+        .AddMemoryCache()
         .AddScoped<IMyTilts, MyTilts>()
         .AddScoped<ISearchDataTILT_URL>(sp => searchUrl.Object)
         .AddScoped<I_InsertDataApplicationDBContext>(sp => insert.Object)

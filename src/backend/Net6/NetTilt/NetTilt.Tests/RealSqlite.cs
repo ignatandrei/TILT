@@ -65,4 +65,27 @@ public partial class RealSqlite
              )
              .RunAsync();
     }
+    [Scenario]
+    public async Task VerifyPublicTiltsHasTheNewTilt()
+    {
+        var users = Table.For(
+
+            new TILT_URL()
+            {
+                URLPart = "test",
+                Secret = "secretTest"
+            }
+        );
+
+        await Runner
+             .AddSteps(_ => Given_Empty_Database_Setup())
+             .AddAsyncSteps(
+            _ => When_Those_Users_URL_To_Be_Registerer(users),
+             _ => Then_Public_Tilts_Have_No_Items(users),
+             _ => Then_Public_Tilts_Have_No_Items(users),//verify caching
+             _ => When_The_Users_Make_A_Tilt(users),
+             _ => And_Have_Tilts(users)
+             )
+             .RunAsync();
+    }
 }

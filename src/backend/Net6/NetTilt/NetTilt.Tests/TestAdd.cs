@@ -78,6 +78,7 @@ public partial class TestAddNewTilt
     [Test]
     public async Task TestAddOneTilt()
     {
+        SetupTilt(null);
         var myTilt= serviceProvider.GetRequiredService<IMyTilts>();
         var data= await myTilt.AddTILT(new TILT_Note_Table(), null);
         Assert.IsNotNull(data);

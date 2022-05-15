@@ -6,12 +6,14 @@ namespace NetTilt.Logic
     [AutoMethods(CustomTemplateFileName = "../AutoMethod.txt", MethodPrefix = "auto", template = TemplateMethod.CustomTemplateFile)]
     public partial class MyTilts: IMyTilts
     {
+        private readonly IMemoryCache cache;
         private readonly I_InsertDataApplicationDBContext insert;
         private readonly IAuthUrl auth;
         private readonly ISearchDataTILT_Note searchNotes;
 
-        public MyTilts(I_InsertDataApplicationDBContext insert, IAuthUrl auth, ISearchDataTILT_Note searchNotes)
+        public MyTilts(IMemoryCache cache, I_InsertDataApplicationDBContext insert, IAuthUrl auth, ISearchDataTILT_Note searchNotes)
         {
+            this.cache = cache;
             this.insert = insert;
             this.auth = auth;
             this.searchNotes = searchNotes;
@@ -33,7 +35,11 @@ namespace NetTilt.Logic
             {
                 return null;
             }
-
+            var url = await auth.MainUrl(c);
+            if(string.IsNullOrWhiteSpace( url))
+            {
+                return null;
+            }
             note.IDURL = idUrl.Value;
             note.ID = 0;
             note.ForDate = DateTime.UtcNow;
@@ -41,6 +47,7 @@ namespace NetTilt.Logic
             noteOrig.CopyFrom(note);
             await insert.InsertTILT_Note(noteOrig);
             note.CopyFrom(noteOrig);
+            cache.Remove(url);
             return note;
 
 
