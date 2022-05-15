@@ -71,7 +71,7 @@ namespace NetTilt.Logic
             search.PageSize = numberTILTS;
             var data = await searchNotes.TILT_NoteFind_AsyncEnumerable(search).ToArrayAsync();
             var ret = data.Select(it => { var n = new TILT_Note_Table(); n.CopyFrom(it); return n; }).ToArray();
-            cache.Set(urlPart, ret,DateTimeOffset.Now.AddMinutes(10));
+            cache.Set(urlPart, ret,DateTimeOffset.Now.AddDays(10));
             return ret;
         }
     }
