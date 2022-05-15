@@ -26,6 +26,7 @@ public partial class RealSqlite : FeatureFixture
         options.UseSqlite($"Data Source={guid   }.db");
     }
      )
+.AddMemoryCache()
 .AddSingleton<IConfiguration>(configuration)
 .AddScoped<IMyTilts, MyTilts>()
 .AddScoped<IAuthUrl, AuthUrl>()
@@ -142,6 +143,24 @@ public partial class RealSqlite : FeatureFixture
             var claim = auth.Decrypt(jwt);
             var existsTilt = await myTilt.HasTILTToday(claim);
             Assert.IsFalse(existsTilt);
+        }
+    }
+    public async Task Then_Public_Tilts_Have_No_Items(InputTable<TILT_URL> urls)
+    {
+        var publicTilts = serviceProvider.GetRequiredService<IPublicTILTS>();
+        foreach (var item in urls)
+        {
+            var number = await publicTilts.LatestTILTs(item.URLPart,1);
+            Assert.AreEqual(0, number?.Length ?? 0);
+        }
+    }
+    public async Task Then_Public_Tilts_Have_1_Items(InputTable<TILT_URL> urls)
+    {
+        var publicTilts = serviceProvider.GetRequiredService<PublicTILTS>();
+        foreach (var item in urls)
+        {
+            var number = await publicTilts.LatestTILTs(item.URLPart, 1);
+            Assert.AreEqual(1, number?.Length );
         }
     }
     public async Task When_The_Users_Make_A_Tilt(InputTable<TILT_URL> urls)

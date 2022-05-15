@@ -169,6 +169,7 @@ builder.Services.AddDbContextFactory<ApplicationDBContext>(
     }
      )
    ;
+builder.Services.AddMemoryCache();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "AllowAll",
