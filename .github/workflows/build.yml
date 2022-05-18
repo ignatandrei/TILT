@@ -40,8 +40,7 @@ jobs:
          $test=(Get-Content bin/Debug/net6.0/Reports/LightBDDReport.md) 
          $test = $test -replace '"',''''
          echo "action_state=yellow"  | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
-         #echo "test_mkd=$test"  | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
-         echo "test_mkd<<EOF $test EOF"  | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+         echo "test_mkd=$test"  | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
 
     - name: mark
       run: |
@@ -52,5 +51,7 @@ jobs:
          echo "- Lets add a second bullet point" >> $GITHUB_STEP_SUMMARY
          echo "- How about a third one?" >> $GITHUB_STEP_SUMMARY
          echo "${{ env.action_state }}" >> $GITHUB_STEP_SUMMARY
-         echo "${{ env.test_mkd }}" >> $GITHUB_STEP_SUMMARY         
+         echo "mkdfile=$(cat src/backend/Net6/NetTilt/NetTilt.Tests/bin/Debug/net6.0/Reports/LightBDDReport.md)" >> $GITHUB_ENV
+         echo "${{ env.mkdfile}}" >> $GITHUB_STEP_SUMMARY         
+         #echo "${{ env.test_mkd }}" >> $GITHUB_STEP_SUMMARY         
          echo "### Hello world! :rocket:" >> $GITHUB_STEP_SUMMARY
