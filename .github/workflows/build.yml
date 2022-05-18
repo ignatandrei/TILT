@@ -33,5 +33,10 @@ jobs:
             dotnet test --no-build #--verbosity normal
 
     - name: mark
+      shell: pwsh
       run: |
+         echo ‘### Hello world! :rocket:’ >> $GITHUB_STEP_SUMMARY
+         cd src/backend/Net6/NetTilt/NetTilt.Tests
+         $test=Get-Content bin/Debug/net6.0/Reports/LightBDDReport.md
+         echo $test >> $GITHUB_STEP_SUMMARY
          echo ‘### Hello world! :rocket:’ >> $GITHUB_STEP_SUMMARY
