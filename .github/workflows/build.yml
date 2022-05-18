@@ -46,5 +46,5 @@ jobs:
       run: |
          echo ‘### Hello world! :rocket:’ >> $GITHUB_STEP_SUMMARY
          echo "${{ env.action_state }}" >> $GITHUB_STEP_SUMMARY
-         echo "${{ env.test_mkd }}" >> $GITHUB_STEP_SUMMARY         
+         # echo "${{ env.test_mkd }}" >> $GITHUB_STEP_SUMMARY         
          echo ‘### Hello world! :rocket:’ >> $GITHUB_STEP_SUMMARY
