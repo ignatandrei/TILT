@@ -35,9 +35,9 @@ jobs:
     - name: mark
       shell: pwsh
       run: |
-         echo ‘### Hello world! :rocket:’ >> $GITHUB_STEP_SUMMARY
+         echo ‘### Hello world! :rocket:’ | $GITHUB_STEP_SUMMARY
          cd src/backend/Net6/NetTilt/NetTilt.Tests
          dir bin/Debug/net6.0/Reports/*.md
          $test=Get-Content bin/Debug/net6.0/Reports/LightBDDReport.md
-         echo $test 
-         echo ‘### Hello world! :rocket:’ >> $GITHUB_STEP_SUMMARY
+         echo $test | $GITHUB_STEP_SUMMARY
+         echo ‘### Hello world! :rocket:’ | $GITHUB_STEP_SUMMARY
