@@ -1,4 +1,6 @@
-﻿namespace NetTilt.Tests;
+﻿using LightBDD.Core.Results.Parameters.Tabular;
+
+namespace NetTilt.Tests;
 
 internal class ConfiguredLightBddScopeAttribute : LightBddScopeAttribute
 {
@@ -82,7 +84,45 @@ public class MarkdownReportFormatter : IReportFormatter
                     {
                         status = $"<span style='color: red'>*{step.Status}*</span>";
                     }
-                    sb.AppendLine($"|{step.Info.Number}|{step.Info.Name}|{status}|{comments}|");
+                    var st = step.Info.Name.ToString();
+                    //TODO: modify this to make more resilient
+                    var name = step.Info.Name.ToString();
+
+                    //var s=string.Join(',',step.Info.Name.Parameters.Select(it=>it.IsEvaluated));
+                    if (name.Contains("<table>"))
+                    {
+                        string table = "";
+                        foreach(var p in step.Parameters)
+                        {
+                            var tab = p.Details as ITabularParameterDetails;
+                            if (tab == null)
+                                continue;
+                            table = "<table><thead><th>No</th>";
+                            foreach (var col in tab.Columns)
+                            {
+                                table += $"<th>{col.Name}</th>";
+                            }
+                            table += "</thead>";
+                            //table += Environment.NewLine;
+                            var iRow = 1;
+                            table += "<tbody>";
+                            foreach (var row in tab.Rows)
+                            {
+                                table += $"<tr><td>{iRow++}</td>";
+                                foreach(var valRow in row.Values)
+                                {
+                                    table += $"<td>{valRow.Value}</td>";
+                                }
+                                table += "</tr>";
+                            }
+                            table += "</tbody>";
+                            table += "</table>";
+
+                        }
+
+                        name = name.Replace("<table>", table);
+                    }
+                    sb.AppendLine($"|{step.Info.Number}|{name}|{status}|{comments}|");
                     //put also step sub steps
                     var subSteps = step.GetSubSteps();
                     if ((subSteps?.Count() ?? 0) == 0)
