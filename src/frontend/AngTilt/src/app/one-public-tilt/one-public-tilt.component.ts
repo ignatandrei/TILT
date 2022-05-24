@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { CalendarEvent } from 'angular-calendar';
+import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { startOfDay } from 'date-fns';
 import { filter, map, Subject, switchMap, tap } from 'rxjs';
 import { TILT } from '../classes/TILT';
@@ -31,6 +31,7 @@ export class OnePublicTiltComponent implements OnInit {
   activeDayIsOpen: boolean = true;
   refresh = new Subject<void>();
   viewDate: Date = new Date();
+  view: CalendarView= CalendarView.Month;
   events: CalendarEvent[] = [];
 
   profileForm = this.fb.group({
@@ -45,7 +46,9 @@ export class OnePublicTiltComponent implements OnInit {
   get tiltsFormArray(): FormArray{
     return this.profileForm.get('publicTILTS') as FormArray;
 }
-
+closeOpenMonthViewDay(): void{
+  this.activeDayIsOpen=false;
+}
 dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     this.viewDate = date;
 }
