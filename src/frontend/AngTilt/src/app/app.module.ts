@@ -21,7 +21,8 @@ import { FormatDatePipe } from 'src/app/general/pipes/formatDatePipe';
 import { LoginUrlComponent } from './login-url/login-url.component';
 import { BrowserStorageService} from './general/storage/browseStorage';
 import { DisplayTILTComponent } from './display-tilt/display-tilt.component';
-
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +35,10 @@ import { DisplayTILTComponent } from './display-tilt/display-tilt.component';
     DisplayTILTComponent
   ],
   imports: [
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
     ReactiveFormsModule,
     HttpClientModule,
     BrowserModule,

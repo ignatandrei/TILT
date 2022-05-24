@@ -1,16 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { filter, map, switchMap, tap } from 'rxjs';
+import { CalendarEvent, CalendarView } from 'angular-calendar';
+import { startOfDay } from 'date-fns';
+import { filter, map, Subject, switchMap, tap } from 'rxjs';
 import { TILT } from '../classes/TILT';
 import { PublicTiltsService } from '../services/public-tilts.service';
 
+const colors: any = {
+  red: {
+    primary: '#ad2121',
+    secondary: '#FAE3E3',
+  },
+  blue: {
+    primary: '#1e90ff',
+    secondary: '#D1E8FF',
+  },
+  yellow: {
+    primary: '#e3bc08',
+    secondary: '#FDF1BA',
+  },
+};
 @Component({
   selector: 'app-one-public-tilt',
   templateUrl: './one-public-tilt.component.html',
   styleUrls: ['./one-public-tilt.component.css']
 })
 export class OnePublicTiltComponent implements OnInit {
+
+  activeDayIsOpen: boolean = true;
+  refresh = new Subject<void>();
+  viewDate: Date = new Date();
+  view: CalendarView= CalendarView.Month;
+  events: CalendarEvent[] = [];
 
   profileForm = this.fb.group({
     url: [''],
@@ -23,6 +45,12 @@ export class OnePublicTiltComponent implements OnInit {
   }
   get tiltsFormArray(): FormArray{
     return this.profileForm.get('publicTILTS') as FormArray;
+}
+closeOpenMonthViewDay(): void{
+  this.activeDayIsOpen=false;
+}
+dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    this.viewDate = date;
 }
 
   ngOnInit(): void {
@@ -41,9 +69,25 @@ export class OnePublicTiltComponent implements OnInit {
         this.tiltsFormArray.clear();
         it=it.sort((a,b)=>b.forDate!.localeCompare(a.forDate!));
         // this.tiltsFormArray.push(...it.map(it=>this.fb.control(it)));
-        it.forEach(it=>this.tiltsFormArray.push(this.fb.control(it)));
+        it.forEach(a=>this.tiltsFormArray.push(this.fb.control(a)));
         // this.tiltsFormArray.push(new TILT());
-        
+
+        it.forEach(a=> this.events.push(
+          {
+            start:  startOfDay(a.LocalDate),
+            title: a.text||'',
+            color: colors.red,
+            allDay: true,
+            draggable: false,
+            meta:{
+              LocalJustDate: a.LocalJustDate,
+              NextJustDate: a.NextJustDate,
+              existsPrev : it.findIndex(b=> (b.NextJustDate.getDate()  ==  a.LocalJustDate.getDate()) ) != -1 ,
+              existsNext :it.findIndex(b=> (b.PrevJustDate.getDate()  ==  a.LocalJustDate.getDate()) ) != -1 ,
+            }
+          }
+        ));
+          this.refresh.next();
       }
     );
   }
