@@ -8,14 +8,35 @@
       profileForm.value.url
     }}</a>
   </h1>
-  <div *ngFor="let item of tiltsFormArray.controls; let i = index">
-   {{tiltsFormArray.controls.length - i }}  <app-display-tilt [tilt]="item.value"></app-display-tilt>
-    <hr />
-    <!-- {{item.value | json}} -->
-  </div>
+
+  <ng-template #customCellTemplate let-day="day" let-locale="locale">
+    <div class="cal-cell-top">
+      <span class="cal-day-badge" *ngIf="day.badgeTotal > 0"
+        >{{ day.badgeTotal }}</span
+      >
+      <span class="cal-day-number"
+        >{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span
+      >
+    </div>
+    <small style="margin: 5px" *ngIf="day.events?.length > 0"  title="{{day.events[0].title}}" >{{  (day.events[0].title | slice:0:12)+'..'   }} </small>
+  </ng-template>
+
 
   <mwl-calendar-month-view
     [viewDate]="viewDate"
+    [activeDayIsOpen]="activeDayIsOpen"
+    [events]="events"
+    [refresh]="refresh"
+    [cellTemplate]="customCellTemplate"
+    (dayClicked)="dayClicked($event.day)"
   ></mwl-calendar-month-view>
 
+
+  <div *ngFor="let item of tiltsFormArray.controls; let i = index">
+    {{tiltsFormArray.controls.length - i }}  <app-display-tilt [tilt]="item.value"></app-display-tilt>
+     <hr />
+     <!-- {{item.value | json}} -->
+   </div>
+ 
+ 
 </form>
