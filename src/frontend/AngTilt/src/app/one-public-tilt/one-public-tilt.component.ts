@@ -75,7 +75,13 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
             title: a.text||'',
             color: colors.red,
             allDay: true,
-            draggable: false
+            draggable: false,
+            meta:{
+              LocalJustDate: a.LocalJustDate,
+              NextJustDate: a.NextJustDate,
+              existsPrev : it.findIndex(b=> (b.NextJustDate.getDate()  ==  a.LocalJustDate.getDate()) ) != -1 ,
+              existsNext :it.findIndex(b=> (b.PrevJustDate.getDate()  ==  a.LocalJustDate.getDate()) ) != -1 ,
+            }
           }
         ));
           this.refresh.next();

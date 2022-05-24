@@ -11,14 +11,19 @@
 
   <ng-template #customCellTemplate let-day="day" let-locale="locale">
     <div class="cal-cell-top">
-      <span class="cal-day-badge" *ngIf="day.badgeTotal > 0"
-        >{{ day.badgeTotal }}</span
-      >
-      <span class="cal-day-number"
-        >{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span
+      
+      <small style="margin: 5px" *ngIf="day.events?.length > 0"  title="{{day.events[0].title}}" >      
+        <mat-icon aria-hidden="false" aria-label="" *ngIf="!(day.events[0].meta.existsPrev && day.events[0].meta.existsNext)">event_available</mat-icon>
+
+        <mat-icon aria-hidden="false" aria-label="" *ngIf="day.events[0].meta.existsPrev && day.events[0].meta.existsNext">waving_hand</mat-icon>
+
+        {{  (day.events[0].title | slice:0:12)+'..'   }} </small>
+        <span class="cal-day-number"
+        >
+        <mat-icon aria-hidden="false" aria-label="" *ngIf="!(day.badgeTotal > 0) && !day.isFuture">mood_bad</mat-icon>
+        {{ day.date | calendarDate:'monthViewDayNumber':locale }}</span
       >
     </div>
-    <small style="margin: 5px" *ngIf="day.events?.length > 0"  title="{{day.events[0].title}}" >{{  (day.events[0].title | slice:0:12)+'..'   }} </small>
   </ng-template>
 
 
