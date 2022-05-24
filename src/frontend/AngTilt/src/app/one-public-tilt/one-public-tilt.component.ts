@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { CalendarEvent } from 'angular-calendar';
 import { filter, map, switchMap, tap } from 'rxjs';
 import { TILT } from '../classes/TILT';
 import { PublicTiltsService } from '../services/public-tilts.service';
@@ -11,6 +12,11 @@ import { PublicTiltsService } from '../services/public-tilts.service';
   styleUrls: ['./one-public-tilt.component.css']
 })
 export class OnePublicTiltComponent implements OnInit {
+
+
+  
+  viewDate: Date = new Date();
+  events: CalendarEvent[] = [];
 
   profileForm = this.fb.group({
     url: [''],
