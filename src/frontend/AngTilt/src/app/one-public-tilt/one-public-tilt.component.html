@@ -14,17 +14,28 @@
     <div class="cal-cell-top">
       
       <small style="margin: 5px" *ngIf="day.events?.length > 0"  title="{{day.events[0].title}}" >      
-        <mat-icon aria-hidden="false" aria-label="" *ngIf="!(day.events[0].meta.existsPrev && day.events[0].meta.existsNext)">event_available</mat-icon>
+        
+        <mat-icon aria-hidden="false" aria-label="" *ngIf="day.events[0].meta.originalItem.isPartOfMax">lightbulb</mat-icon>
 
-        <mat-icon aria-hidden="false" aria-label="" *ngIf="day.events[0].meta.existsPrev && day.events[0].meta.existsNext">waving_hand</mat-icon>
+        <small *ngIf="!day.events[0].meta.originalItem.isPartOfMax">
+          <mat-icon aria-hidden="false" aria-label="" *ngIf="!(day.events[0].meta.originalItem.existsPrev)">restart_alt</mat-icon>
 
+          <mat-icon aria-hidden="false" aria-label="" *ngIf="day.events[0].meta.originalItem.existsPrev">waving_hand</mat-icon>
+        </small>
         {{  (day.events[0].title | slice:0:12)+'..'   }} </small>
         <span class="cal-day-number"
         >
         <mat-icon aria-hidden="false" aria-label="" *ngIf="!(day.badgeTotal > 0) && !day.isFuture">mood_bad</mat-icon>
+
+        
         {{ day.date | calendarDate:'monthViewDayNumber':locale }}</span
       >
     </div>
+    
+    <small style="margin: 5px" *ngIf="day.events?.length > 0"  title="{{day.events[0].title}}" >  
+      <span [ngStyle]="day.events[0].meta.originalItem.isPartOfMax?{color: 'red'}:{color: 'blue'}">Streak days:</span>
+      {{day.events[0].meta.originalItem.numberOfDays}}
+    </small>
   </ng-template>
   <span>
     <button
@@ -52,6 +63,12 @@
     >
       Next
     </button>
+    <button *ngIf="maxObj != null" (click)="gotoMaxStreak()"
+      mat-button color="primary"
+      
+    >
+      Max Streak : {{maxObj.MaxDaysInStreak}}
+    </button>
   </span>
   <mwl-calendar-month-view
     [viewDate]="viewDate"
@@ -67,7 +84,7 @@
   List: 
   
   <div *ngFor="let item of tiltsFormArray.controls; let i = index">
-    {{tiltsFormArray.controls.length - i }}  <app-display-tilt [tilt]="item.value"></app-display-tilt>
+    {{tiltsFormArray.controls.length - i }}  <app-display-tilt [tilt]="tiltsFormArray.controls[tiltsFormArray.controls.length-i-1].value"></app-display-tilt>
      <hr />
      <!-- {{item.value | json}} -->
    </div>

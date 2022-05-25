@@ -33,7 +33,7 @@ export class OnePublicTiltComponent implements OnInit {
   viewDate: Date = new Date();
   view: CalendarView= CalendarView.Month;
   events: CalendarEvent[] = [];
-
+  maxObj:TILT|null=null;
   profileForm = this.fb.group({
     url: [''],
     publicTILTS: this.fb.array([])
@@ -53,6 +53,12 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     this.viewDate = date;
 }
 
+  gotoMaxStreak():void{
+    if(!this.maxObj)
+      return;
+    this.viewDate = this.maxObj.LocalJustDate;
+    this.refresh.next();
+}
   ngOnInit(): void {
     var id:string="id";
     this.route.params.pipe(
@@ -67,29 +73,51 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     ).subscribe(
       it=>{
         this.tiltsFormArray.clear();
-        it=it.sort((a,b)=>b.forDate!.localeCompare(a.forDate!));
+        it=it.sort((b,a)=>b.forDate!.localeCompare(a.forDate!));
         // this.tiltsFormArray.push(...it.map(it=>this.fb.control(it)));
         it.forEach(a=>this.tiltsFormArray.push(this.fb.control(a)));
         // this.tiltsFormArray.push(new TILT());
+        it.forEach((a,index, arr)=> {
+
+          a.existsPrev =arr.findIndex(b=> (b.NextJustDate.getDate()  ==  a.LocalJustDate.getDate()) ) != -1 ;
+          a.existsNext =arr.findIndex(b=> (b.PrevJustDate.getDate()  ==  a.LocalJustDate.getDate()) ) != -1 ;
+          if(index>0){
+
+            a.prevTilt = arr[index-1];
+
+            if(a.existsPrev)
+              a.numberOfDays = arr[index-1].numberOfDays+1;
+          }
+          
+        });
+        this.maxObj = it.reduce((prev, current) => (prev.numberOfDays > current.numberOfDays) ? prev : current)
+        
+        this.maxObj.isMax = true;
+        this.maxObj.MaxDaysInStreak=this.maxObj.numberOfDays;
+        this.maxObj.isPartOfMax= true;
+        while(this.maxObj.prevTilt){
+          this.maxObj.prevTilt.isPartOfMax=true;
+          this.maxObj.prevTilt.MaxDaysInStreak=this.maxObj.MaxDaysInStreak;
+          this.maxObj = this.maxObj.prevTilt;
+        }
 
         it.forEach(a=> this.events.push(
           {
-            start:  startOfDay(a.LocalDate),
+            start:  a.LocalJustDate,
             title: a.text||'',
             color: colors.red,
             allDay: true,
             draggable: false,
             meta:{
-              LocalJustDate: a.LocalJustDate,
-              NextJustDate: a.NextJustDate,
-              existsPrev : it.findIndex(b=> (b.NextJustDate.getDate()  ==  a.LocalJustDate.getDate()) ) != -1 ,
-              existsNext :it.findIndex(b=> (b.PrevJustDate.getDate()  ==  a.LocalJustDate.getDate()) ) != -1 ,
+              originalItem:a  
             }
           }
         ));
           this.refresh.next();
       }
     );
+
   }
 
+  
 }
