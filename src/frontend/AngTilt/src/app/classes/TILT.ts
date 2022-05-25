@@ -16,6 +16,7 @@ export class TILT {
   public numberOfDays: number =1;
   public isMax : boolean=false;
   public isPartOfMax : boolean=false;
+  public MaxDaysInStreak:number=1;
   public prevTilt: TILT | null = null;
   public get TheDate(): Date {
     return new Date(this.forDate! + 'Z');

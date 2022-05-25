@@ -33,7 +33,7 @@ export class OnePublicTiltComponent implements OnInit {
   viewDate: Date = new Date();
   view: CalendarView= CalendarView.Month;
   events: CalendarEvent[] = [];
-
+  maxObj:TILT|null=null;
   profileForm = this.fb.group({
     url: [''],
     publicTILTS: this.fb.array([])
@@ -53,6 +53,12 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     this.viewDate = date;
 }
 
+  gotoMaxStreak():void{
+    if(!this.maxObj)
+      return;
+    this.viewDate = this.maxObj.LocalJustDate;
+    this.refresh.next();
+}
   ngOnInit(): void {
     var id:string="id";
     this.route.params.pipe(
@@ -84,12 +90,15 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
           }
           
         });
-        var maxObj = it.reduce((prev, current) => (prev.numberOfDays > current.numberOfDays) ? prev : current)
-        maxObj.isMax = true;
-        maxObj.isPartOfMax= true;
-        while(maxObj.prevTilt){
-          maxObj.prevTilt.isPartOfMax=true;
-          maxObj = maxObj.prevTilt;
+        this.maxObj = it.reduce((prev, current) => (prev.numberOfDays > current.numberOfDays) ? prev : current)
+        
+        this.maxObj.isMax = true;
+        this.maxObj.MaxDaysInStreak=this.maxObj.numberOfDays;
+        this.maxObj.isPartOfMax= true;
+        while(this.maxObj.prevTilt){
+          this.maxObj.prevTilt.isPartOfMax=true;
+          this.maxObj.prevTilt.MaxDaysInStreak=this.maxObj.MaxDaysInStreak;
+          this.maxObj = this.maxObj.prevTilt;
         }
 
         it.forEach(a=> this.events.push(
@@ -107,6 +116,8 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
           this.refresh.next();
       }
     );
+
   }
 
+  
 }

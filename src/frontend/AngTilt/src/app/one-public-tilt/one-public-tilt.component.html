@@ -63,6 +63,12 @@
     >
       Next
     </button>
+    <button *ngIf="maxObj != null" (click)="gotoMaxStreak()"
+      mat-button color="primary"
+      
+    >
+      Max Streak : {{maxObj.MaxDaysInStreak}}
+    </button>
   </span>
   <mwl-calendar-month-view
     [viewDate]="viewDate"
