@@ -81,7 +81,16 @@ export class TiltMainComponent implements AfterContentInit {
           on: 'right',
         },
         title: 'TILT!',
-        text: ['here you can find all public urls'],
+        text: ['here you can find all public TILTS'],
+      },
+      {
+        id: 'myTilts',
+        attachTo: {
+          element: '.myTilts',
+          on: 'right',
+        },
+        title: 'TILT!',
+        text: ['here you can add your own TILTS'],
       },
       {
         id: 'publicUrl',
@@ -89,6 +98,7 @@ export class TiltMainComponent implements AfterContentInit {
           element: 'a[name="ignatandrei"]',
           on: 'right',
         },
+        showOn:function (){ return false;},
         title: 'TILT!',
         text: ['Click on one- mine is ignatandrei'],
       }
