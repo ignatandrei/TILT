@@ -67,17 +67,31 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     ).subscribe(
       it=>{
         this.tiltsFormArray.clear();
-        it=it.sort((a,b)=>b.forDate!.localeCompare(a.forDate!));
+        it=it.sort((b,a)=>b.forDate!.localeCompare(a.forDate!));
         // this.tiltsFormArray.push(...it.map(it=>this.fb.control(it)));
         it.forEach(a=>this.tiltsFormArray.push(this.fb.control(a)));
         // this.tiltsFormArray.push(new TILT());
-        it.forEach(a=> {
+        it.forEach((a,index, arr)=> {
 
-          a.existsPrev =it.findIndex(b=> (b.NextJustDate.getDate()  ==  a.LocalJustDate.getDate()) ) != -1 ;
-          a.existsNext =it.findIndex(b=> (b.PrevJustDate.getDate()  ==  a.LocalJustDate.getDate()) ) != -1 ;
-       
+          a.existsPrev =arr.findIndex(b=> (b.NextJustDate.getDate()  ==  a.LocalJustDate.getDate()) ) != -1 ;
+          a.existsNext =arr.findIndex(b=> (b.PrevJustDate.getDate()  ==  a.LocalJustDate.getDate()) ) != -1 ;
+          if(index>0){
 
+            a.prevTilt = arr[index-1];
+
+            if(a.existsPrev)
+              a.numberOfDays = arr[index-1].numberOfDays+1;
+          }
+          
         });
+        var maxObj = it.reduce((prev, current) => (prev.numberOfDays > current.numberOfDays) ? prev : current)
+        maxObj.isMax = true;
+        maxObj.isPartOfMax= true;
+        while(maxObj.prevTilt){
+          maxObj.prevTilt.isPartOfMax=true;
+          maxObj = maxObj.prevTilt;
+        }
+
         it.forEach(a=> this.events.push(
           {
             start:  a.LocalJustDate,

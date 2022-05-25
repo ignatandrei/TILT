@@ -1,10 +1,15 @@
 <span *ngIf="tilt != null">
-        <mat-icon aria-hidden="false" aria-label="" *ngIf="!(tilt.existsPrev && tilt.existsNext)">event_available</mat-icon>
+        <mat-icon aria-hidden="false" aria-label="" *ngIf="!(tilt.existsPrev)">restart_alt</mat-icon>
 
-        <mat-icon aria-hidden="false" aria-label="" *ngIf="tilt.existsPrev && tilt.existsNext">waving_hand</mat-icon>
+        <mat-icon aria-hidden="false" aria-label="" *ngIf="tilt.existsPrev && !tilt.isPartOfMax">waving_hand</mat-icon>
+
+        <mat-icon aria-hidden="false" aria-label="" *ngIf="tilt.isPartOfMax">lightbulb</mat-icon>
 
     TILT on <i title="{{ tilt?.LocalDateString}} utc:{{ tilt?.forDate}}">{{ tilt?.forDate | formatDate }} </i> is
     <b>{{ tilt?.text }} </b>
+    <span [ngStyle]="tilt.isMax?{color: 'red'}:{color: 'blue'}">Streak days:</span>
+    {{tilt.numberOfDays}}
+  
 </span>
 <span *ngIf="tilt == null">
     No tilt!

@@ -13,8 +13,10 @@ export class TILT {
   public forDate?: string | null;
   public existsPrev?: boolean | null ;
   public existsNext?: boolean | null ;
-  
-
+  public numberOfDays: number =1;
+  public isMax : boolean=false;
+  public isPartOfMax : boolean=false;
+  public prevTilt: TILT | null = null;
   public get TheDate(): Date {
     return new Date(this.forDate! + 'Z');
   }
