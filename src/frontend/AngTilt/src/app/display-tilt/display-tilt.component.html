@@ -1,5 +1,9 @@
 <span *ngIf="tilt != null">
-TILT on <i title="{{ tilt?.LocalDateString}} utc:{{ tilt?.forDate}}">{{ tilt?.forDate | formatDate }} </i> is
+        <mat-icon aria-hidden="false" aria-label="" *ngIf="!(tilt.existsPrev && tilt.existsNext)">event_available</mat-icon>
+
+        <mat-icon aria-hidden="false" aria-label="" *ngIf="tilt.existsPrev && tilt.existsNext">waving_hand</mat-icon>
+
+    TILT on <i title="{{ tilt?.LocalDateString}} utc:{{ tilt?.forDate}}">{{ tilt?.forDate | formatDate }} </i> is
     <b>{{ tilt?.text }} </b>
 </span>
 <span *ngIf="tilt == null">

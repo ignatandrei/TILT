@@ -71,19 +71,22 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
         // this.tiltsFormArray.push(...it.map(it=>this.fb.control(it)));
         it.forEach(a=>this.tiltsFormArray.push(this.fb.control(a)));
         // this.tiltsFormArray.push(new TILT());
+        it.forEach(a=> {
 
+          a.existsPrev =it.findIndex(b=> (b.NextJustDate.getDate()  ==  a.LocalJustDate.getDate()) ) != -1 ;
+          a.existsNext =it.findIndex(b=> (b.PrevJustDate.getDate()  ==  a.LocalJustDate.getDate()) ) != -1 ;
+       
+
+        });
         it.forEach(a=> this.events.push(
           {
-            start:  startOfDay(a.LocalDate),
+            start:  a.LocalJustDate,
             title: a.text||'',
             color: colors.red,
             allDay: true,
             draggable: false,
             meta:{
-              LocalJustDate: a.LocalJustDate,
-              NextJustDate: a.NextJustDate,
-              existsPrev : it.findIndex(b=> (b.NextJustDate.getDate()  ==  a.LocalJustDate.getDate()) ) != -1 ,
-              existsNext :it.findIndex(b=> (b.PrevJustDate.getDate()  ==  a.LocalJustDate.getDate()) ) != -1 ,
+              originalItem:a  
             }
           }
         ));

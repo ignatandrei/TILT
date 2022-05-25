@@ -14,9 +14,9 @@
     <div class="cal-cell-top">
       
       <small style="margin: 5px" *ngIf="day.events?.length > 0"  title="{{day.events[0].title}}" >      
-        <mat-icon aria-hidden="false" aria-label="" *ngIf="!(day.events[0].meta.existsPrev && day.events[0].meta.existsNext)">event_available</mat-icon>
+        <mat-icon aria-hidden="false" aria-label="" *ngIf="!(day.events[0].meta.originalItem.existsPrev && day.events[0].meta.originalItem.existsNext)">event_available</mat-icon>
 
-        <mat-icon aria-hidden="false" aria-label="" *ngIf="day.events[0].meta.existsPrev && day.events[0].meta.existsNext">waving_hand</mat-icon>
+        <mat-icon aria-hidden="false" aria-label="" *ngIf="day.events[0].meta.originalItem.existsPrev && day.events[0].meta.originalItem.existsNext">waving_hand</mat-icon>
 
         {{  (day.events[0].title | slice:0:12)+'..'   }} </small>
         <span class="cal-day-number"
