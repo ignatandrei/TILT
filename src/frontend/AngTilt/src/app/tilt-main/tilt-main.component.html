@@ -19,11 +19,19 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span style="color: red">TILT</span>( <i style="color: red">T</i>hing &nbsp; <i style="color: red">I</i>&nbsp;<i style="color: red">L</i>earnt &nbsp;<i style="color: red">T</i>oday)
-      <button mat-button [matMenuTriggerFor]="menu">Help</button>
+      <span><span style="color: red">TILT</span><sup>( <i style="color: red">T</i>hing &nbsp; <i style="color: red">I</i>&nbsp;<i style="color: red">L</i>earnt &nbsp;<i style="color: red">T</i>oday)
+      </sup>
+    
+    </span>
+    
+      <button mat-raised-button color="primary"  (click)="showTutorial()">Show Tutorial</button> &nbsp;
+      <button mat-raised-button  color="accent" class="publicUrls"  routerLink="/tilt/public/">Public TILTS</button>&nbsp;
+      <button mat-raised-button  color="warn" class="myTilts" routerLink="/tilt/my">My TILTS</button>
+
+      <button mat-button [matMenuTriggerFor]="menu" *ngIf="false">Help</button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="showTutorial()">Show Tutorial</button>
-        <a mat-menu-item routerLink="/tilt/public/">Public URL</a>
+        <a mat-menu-item routerLink="/tilt/public/">Public TILTS</a>
         <a mat-menu-item routerLink="/tilt/my">My TILTS</a>
       </mat-menu>
     </mat-toolbar>

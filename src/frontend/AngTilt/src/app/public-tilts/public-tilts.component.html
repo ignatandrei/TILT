@@ -1,6 +1,6 @@
 <form [formGroup]="profileForm">
 <div formArrayName="publicUrls">
-    <h2 class="publicUrls">Public URLS</h2>
+    <h2>Public URLS</h2>
     <!-- <button type="button" (click)="addAlias()">+ Add another alias</button> -->
   
     <div *ngFor="let alias of publicUrls.controls; let i=index">
