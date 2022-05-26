@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CalendarEvent, CalendarView } from 'angular-calendar';
-import { startOfDay } from 'date-fns';
+import { startOfDay,format} from 'date-fns';
 import { filter, map, Subject, switchMap, tap } from 'rxjs';
 import { TILT } from '../classes/TILT';
 import { PublicTiltsService } from '../services/public-tilts.service';
-
+import { Clipboard } from '@angular/cdk/clipboard';
+import { environment } from 'src/environments/environment';
 const colors: any = {
   red: {
     primary: '#ad2121',
@@ -40,7 +41,7 @@ export class OnePublicTiltComponent implements OnInit {
   });
   
 
-  constructor(private publicService:PublicTiltsService,private route: ActivatedRoute, private fb:FormBuilder) { 
+  constructor(private publicService:PublicTiltsService,private route: ActivatedRoute, private fb:FormBuilder, private clipboard: Clipboard) { 
 
   }
   get tiltsFormArray(): FormArray{
@@ -119,6 +120,29 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
 
   }
   copyWeek(nr: number): void{
+
+    var str="TILTS for week "+nr;
+    var tilts = this.tiltsFormArray.controls
+      .map(it=>it.value as TILT)
+    .filter(it=> it != null && it.WeekNumber==nr)
+    .map(it=>`TILT for ${format(it.LocalDate,'dd MMM yyyy')} => ${it.text}`)
+    .join('\n');
+    ;
+    str += '\n'+tilts;
+    str += '\n See my tilts at '+ environment.url+'public/'+this.profileForm.controls['url'].value;
+    const pending = 
+            this.clipboard.beginCopy(str);
+    let remainingAttempts = 3;
+    const attempt = () => {
+      const result = pending.copy();
+      if (!result && --remainingAttempts) {
+        setTimeout(attempt);
+      } else {
+        window.alert('Copied to clipboard');
+        pending.destroy();
+      }
+    };
+    attempt();
     return ;
   }
   
