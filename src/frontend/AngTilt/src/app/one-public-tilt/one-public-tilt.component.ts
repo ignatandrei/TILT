@@ -118,6 +118,8 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     );
 
   }
-
+  copyWeek(nr: number): void{
+    return ;
+  }
   
 }
