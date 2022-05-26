@@ -71,7 +71,7 @@ export class LoginUrlService {
   public redirectUrl :string = 'tilt/my';
   baseUrl:string = '';
   constructor(private http: HttpClient, private storage: BrowserStorageService) { 
-    this.baseUrl=environment.url;
+    this.baseUrl=environment.url+"api/";
   }
   
   public HasTILTToday():Observable<boolean>{
