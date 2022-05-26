@@ -3,6 +3,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { ShepherdService } from 'angular-shepherd';
+import { AmsService } from '../ams/ams.service';
+import { AMSData } from '../ams/AMSData';
 
 @Component({
   selector: 'app-tilt-main',
@@ -19,13 +21,28 @@ export class TiltMainComponent implements AfterContentInit {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private shepherdService: ShepherdService
+    private shepherdService: ShepherdService,
+    private amsService: AmsService
   ) {}
+  ams: AMSData|undefined=undefined;
+
   ngAfterContentInit(): void {
     this.showTutorial();    
+    this.showAmsVersion();
+  }
+  
+  showAmsVersion() {
+    this.amsService.AmsDataValues().subscribe(
+      it=>{
+        console.log('amsService.AmsDataValues()',it);
+        this.ams=it.sort((a,b)=>a!.TheDate!.getDate()-b!.TheDate!.getDate())?.pop();
+      }
+    )
   }
   showTutorial() {
-    console.log('showTutorial');
+    
+    
+    //console.log('showTutorial');
     // this.shepherdService.requiredElements = [
     //   {
     //     selector: '.publicUrls',

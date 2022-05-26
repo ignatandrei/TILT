@@ -35,6 +35,12 @@
         <a mat-menu-item routerLink="/tilt/my">My TILTS</a>
       </mat-menu>
     </mat-toolbar>
+    
     <router-outlet></router-outlet>
+    <footer><small>
+      Repo: <a  target="_blank" href="{{ams?.sourceCommit}}">{{ams?.repoUrl}}</a>
+      Deployed on {{ams?.TheDate}}
+      
+    </small></footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

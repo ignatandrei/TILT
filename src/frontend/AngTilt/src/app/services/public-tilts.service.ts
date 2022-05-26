@@ -11,7 +11,7 @@ export class PublicTiltsService {
 
   baseUrl:string = '';
   constructor(private http: HttpClient) { 
-    this.baseUrl=environment.url;
+    this.baseUrl=environment.url+'api/';
 
   }
 
