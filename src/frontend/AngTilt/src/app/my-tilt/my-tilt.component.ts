@@ -30,15 +30,19 @@ export class MyTiltComponent implements OnInit {
     nextDate=new Date(nextDate.setHours(0,0,0,0));
     var sec : string|null = null;
       if(lastTilt!=null){
+        
         var localDateStart=new Date(lastTilt.LocalDate.setHours(0,0,0,0));
+        var day = 60 * 60 * 24 * 1000;
+        nextDate=new Date(localDateStart.getTime()+day);
+        
         console.log('local', localDateStart);
         console.log('next',nextDate);
         console.log('tilt',lastTilt.LocalDate);
         
-        var h = differenceInHours(nextDate,new Date());
+        var h = differenceInHours(new Date(),nextDate);
         console.log("diff",h);
-        sec=formatDistance(nextDate, new Date(), { addSuffix: true }) ;
-        if(h>=24 || h <2){
+        sec=formatDistance(new Date(),nextDate, { addSuffix: true }) ;
+        if(h>=24 ){
           sec=formatDistanceToNowStrict(nextDate, { addSuffix: true, unit:'minute' }) ;
           console.log('here',sec);
         }
