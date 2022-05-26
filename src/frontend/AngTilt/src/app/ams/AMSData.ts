@@ -8,9 +8,10 @@ export class AMSData {
 
   constructor(copyData: Partial<AMSData> | null = null) {
     if (copyData != null) {
-      Object.keys(copyData).forEach((key) => {
-        (this as any)[key] = (copyData as any)[key];
-      });
+      // Object.keys(copyData).forEach((key) => {
+      //   (this as any)[key] = (copyData as any)[key];
+      // });
+      Object.assign(this,copyData);
     }
   }
   public version: string|null = null;

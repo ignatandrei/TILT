@@ -4,9 +4,10 @@ const THURSDAY:number = 4;
 export class TILT {
   constructor(tilt: Partial<TILT> | null = null) {
     if (tilt != null) {
-      Object.keys(tilt).forEach((key) => {
-        (this as any)[key] = (tilt as any)[key];
-      });
+      // Object.keys(tilt).forEach((key) => {
+      //   (this as any)[key] = (tilt as any)[key];
+      // });
+      Object.assign(this,tilt);
     }
   }
   public id?: number;
