@@ -28,12 +28,10 @@ export class TILT {
   public get LocalDateString(): string {
     return this.TheDate.toLocaleString();
   }
-  public get LocalDate(): Date {
-    return new Date(this.LocalDateString);
-  }
+  
 
   public get LocalJustDate(): Date {
-    var d = this.LocalDate;
+    var d = this.TheDate;
     d.setHours(0);
     d.setMinutes(0);
     d.setSeconds(0);
