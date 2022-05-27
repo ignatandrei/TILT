@@ -129,7 +129,7 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     .join('\n');
     ;
     str += '\n'+tilts;
-    str += '\n See my tilts at '+ environment.url+'public/AngTilt/'+this.profileForm.controls['url'].value;
+    str += '\n See my tilts at '+ environment.url+'AngTilt/public/'+this.profileForm.controls['url'].value;
     const pending = 
             this.clipboard.beginCopy(str);
     let remainingAttempts = 3;
