@@ -1,7 +1,4 @@
 ﻿
-using LightBDD.Framework.Expectations;
-using LightBDD.Framework.Formatting.Values;
-
 namespace NetTilt.Tests;
 
 partial  class TestAddNewTilt: FeatureFixture
@@ -55,10 +52,12 @@ partial  class TestAddNewTilt: FeatureFixture
         auth.Setup(x => x.MainUrlId(null)).Returns(1);
         auth.Setup(x => x.MainUrl(null)).Returns(Task.FromResult("ignatandrei"));
         //var q = new SearchDataTILT_URL(null);
+        var st = new Mock<IServerTiming>();
 
         serviceProvider = new ServiceCollection()
         .AddLogging()
         .AddMemoryCache()
+        .AddScoped<IServerTiming>(sp=>st.Object )
         .AddScoped<IMyTilts, MyTilts>()
         .AddScoped<ISearchDataTILT_URL>(sp => searchUrl.Object)
         .AddScoped<I_InsertDataApplicationDBContext>(sp => insert.Object)
