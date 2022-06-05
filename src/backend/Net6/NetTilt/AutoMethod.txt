@@ -72,8 +72,8 @@ namespace {{NamespaceName}} {
             }
             finally{
                 span?.Stop();
-                var milleElapsed = System.DateTime.UtcNow.Substract(utcTime).TotalMilliSeconds();
-                serverTiming.Metrics.Add(new ServerTimingMetric("a",milleElapsed ))
+                var milleElapsed = System.DateTime.UtcNow.Subtract(utcTime).TotalMilliSeconds();
+                serverTiming.Metrics.Add(new ServerTimingMetric("a",milleElapsed ));
             }
 
 
