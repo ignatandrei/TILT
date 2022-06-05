@@ -19,6 +19,7 @@ global using Azure.Monitor.OpenTelemetry.Exporter;
 global using OpenTelemetry.Resources;
 global using OpenTelemetry.Trace;
 global using NetTilt.Logic;
+global using Lib.AspNetCore.ServerTiming;
 
 
 

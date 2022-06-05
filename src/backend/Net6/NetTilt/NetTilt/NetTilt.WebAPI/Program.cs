@@ -17,6 +17,7 @@ builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =
     options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     options.SerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
 });
+builder.Services.AddServerTiming();
 builder.Services.AddSwaggerGen();
 bool IsBuildFromCI = new XAboutMySoftware_78102118871091131225395110108769286().IsInCI;
 var cnSqlite = "Data Source=Tilt.db";
@@ -179,6 +180,7 @@ builder.Services.AddCors(options =>
                       });
 });
 var app = builder.Build();
+app.UseServerTiming();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 // Configure the HTTP request pipeline.

@@ -7,17 +7,20 @@ namespace NetTilt.WebAPI.Controllers;
 [ApiController]
 public class PublicTILTsController : ControllerBase
 {
+    private readonly IServerTiming serverTiming;
     private readonly ISearchDataTILT_URL searchUrl;
     private readonly IPublicTILTS publicTILTS;
 
-    public PublicTILTsController([FromServices] ISearchDataTILT_URL searchUrl, IPublicTILTS publicTILTS)
+    public PublicTILTsController([FromServices]IServerTiming serverTiming, [FromServices] ISearchDataTILT_URL searchUrl, IPublicTILTS publicTILTS)
     {
+        this.serverTiming = serverTiming;
         this.searchUrl = searchUrl;
         this.publicTILTS = publicTILTS;
     }
     [HttpGet]
     public IAsyncEnumerable<string> PublicTiltsURL()
     {
+
         return publicTILTS.PublicTiltsURL();
     }
     [HttpGet("{urlPart}/{numberTILTS}")]

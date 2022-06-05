@@ -1,4 +1,3 @@
-
 namespace NetTilt.Auth
 {
     [AutoMethods(CustomTemplateFileName = "../AutoMethod.txt", MethodPrefix = "auto", template = TemplateMethod.CustomTemplateFile)]
@@ -6,18 +5,23 @@ namespace NetTilt.Auth
     public partial class AuthUrl : IAuthUrl
     {
         public const string TokenId = "TokenId";
+        private readonly IServerTiming serverTiming;
         private readonly ISearchDataTILT_URL search;
         private readonly I_InsertDataApplicationDBContext insert;
         private string SecretKey;
-        public AuthUrl(ISearchDataTILT_URL searchUrl, IConfiguration configuration, I_InsertDataApplicationDBContext insert)
+        public AuthUrl(IServerTiming serverTiming,  ISearchDataTILT_URL searchUrl, IConfiguration configuration, I_InsertDataApplicationDBContext insert)
         {
+            
+            this.serverTiming = serverTiming;
             search = searchUrl;
             this.insert = insert;
             SecretKey = configuration["MySettings:secretToken"];
+            
         }
         [AOPMarkerMethod]
         private async Task<string?> privateLogin(string url, string secret)
         {
+            
             var data = await search.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, url).ToArrayAsync(); 
             if (data == null)
                 return null;
