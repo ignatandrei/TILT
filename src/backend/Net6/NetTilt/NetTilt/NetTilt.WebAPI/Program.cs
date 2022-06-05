@@ -183,22 +183,11 @@ builder.Services.AddScoped<ServerTiming>();
 var app = builder.Build();
 app.UseServerTiming();
 app.UseMiddleware<ServerTiming>();
-//app.Use(async (context, next) =>
-//{
-//    //var st= app.Services.GetRequiredService<IServerTiming>();
-//    using var sc = app.Services.CreateScope();
-//    var st = sc.ServiceProvider.GetRequiredService<IServerTiming>();
-//    st.AddMetric((decimal)0.002, "yrequest");
-//    await next(context);
-//});
 app.UseDefaultFiles();
 app.UseStaticFiles();
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+
 app.UseBlocklyUI(app.Environment);
 app.UseCors("AllowAll");
 app.UseAuthorization();
