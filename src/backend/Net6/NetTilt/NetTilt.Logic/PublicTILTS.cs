@@ -5,12 +5,14 @@ namespace NetTilt.Logic
     [AutoGenerateInterface]
     public partial class PublicTILTS : IPublicTILTS
     {
+        private readonly IServerTiming serverTiming;
         private readonly IMemoryCache cache;
         private readonly ISearchDataTILT_Note searchNotes;
         private readonly ISearchDataTILT_URL searchUrl;
 
-        public PublicTILTS(IMemoryCache cache, ISearchDataTILT_Note searchNotes, ISearchDataTILT_URL searchUrl)
+        public PublicTILTS(IServerTiming serverTiming, IMemoryCache cache, ISearchDataTILT_Note searchNotes, ISearchDataTILT_URL searchUrl)
         {
+            this.serverTiming = serverTiming;
             this.cache = cache;
             this.searchNotes = searchNotes;
             this.searchUrl = searchUrl;

@@ -21,6 +21,7 @@
 	  <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="6.0.4" />
 	  <PackageReference Include="Azure.Communication.Identity" Version="1.0.1" />
 	  <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.0.0-beta.3" />
+	  <PackageReference Include="Lib.AspNetCore.ServerTiming" Version="5.0.1" />
 	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.4" />
 	  <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.2.0" />
 	  <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.3" />

@@ -18,12 +18,16 @@ public partial class RealSqlite : FeatureFixture
         IConfiguration configuration = new ConfigurationBuilder()
 .AddInMemoryCollection(inMemorySettings)
 .Build();
+
+        var st = new Mock<IServerTiming>();
+
         serviceProvider = new ServiceCollection()
+.AddScoped<IServerTiming>(sp=>st.Object)
 .AddLogging()
 .AddDbContextFactory<ApplicationDBContext>(
     options =>
     {
-        options.UseSqlite($"Data Source={guid   }.db");
+        options.UseSqlite($"Data Source={guid}.db");
     }
      )
 .AddMemoryCache()

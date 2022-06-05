@@ -44,10 +44,12 @@ partial class TestAuth : FeatureFixture
 
         var insert = new Mock<I_InsertDataApplicationDBContext>();
         //insert.Setup(x => x.InsertTILT_Note(It.IsAny<TILT_Note_Table>())).Returns(Task.FromResult(new TILT_Note_Table()));
+        var st = new Mock<IServerTiming>();
 
 
         serviceProvider = new ServiceCollection()
         .AddLogging()
+        .AddScoped<IServerTiming>(sp=>st.Object)
         .AddMemoryCache()
         .AddSingleton<IConfiguration>(configuration)
         .AddScoped<I_InsertDataApplicationDBContext>(sp => insert.Object)

@@ -13,6 +13,7 @@
 	  <PackageReference Include="AOPMethodsCommon" Version="2021.6.11.907" />
 	  <PackageReference Include="AOPMethodsGenerator" Version="2021.6.11.907" />
 	  <AdditionalFiles Include="../AutoMethod.txt" />
+	  <PackageReference Include="Lib.AspNetCore.ServerTiming.Abstractions" Version="1.0.0" />
 
 
   </ItemGroup>

@@ -22,6 +22,9 @@ global using Microsoft.EntityFrameworkCore;
 global using LightBDD.Framework.Parameters;
 
 global using Microsoft.Extensions.Configuration;
+global using Lib.AspNetCore.ServerTiming;
+global using LightBDD.Framework.Expectations;
+global using LightBDD.Framework.Formatting.Values;
 
 //[assembly: LightBddScope]
 [assembly: ConfiguredLightBddScope]

@@ -1,18 +1,19 @@
 ﻿
-
 namespace NetTilt.Logic
 {
     [AutoGenerateInterface]
     [AutoMethods(CustomTemplateFileName = "../AutoMethod.txt", MethodPrefix = "auto", template = TemplateMethod.CustomTemplateFile)]
     public partial class MyTilts: IMyTilts
     {
+        private readonly IServerTiming serverTiming;
         private readonly IMemoryCache cache;
         private readonly I_InsertDataApplicationDBContext insert;
         private readonly IAuthUrl auth;
         private readonly ISearchDataTILT_Note searchNotes;
 
-        public MyTilts(IMemoryCache cache, I_InsertDataApplicationDBContext insert, IAuthUrl auth, ISearchDataTILT_Note searchNotes)
+        public MyTilts(IServerTiming serverTiming, IMemoryCache cache, I_InsertDataApplicationDBContext insert, IAuthUrl auth, ISearchDataTILT_Note searchNotes)
         {
+            this.serverTiming = serverTiming;
             this.cache = cache;
             this.insert = insert;
             this.auth = auth;

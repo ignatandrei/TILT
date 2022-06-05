@@ -17,6 +17,7 @@ builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =
     options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     options.SerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
 });
+builder.Services.AddServerTiming();
 builder.Services.AddSwaggerGen();
 bool IsBuildFromCI = new XAboutMySoftware_78102118871091131225395110108769286().IsInCI;
 var cnSqlite = "Data Source=Tilt.db";
@@ -178,7 +179,18 @@ builder.Services.AddCors(options =>
                           policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().SetIsOriginAllowed(it => true);
                       });
 });
+builder.Services.AddScoped<ServerTiming>();
 var app = builder.Build();
+app.UseServerTiming();
+app.UseMiddleware<ServerTiming>();
+//app.Use(async (context, next) =>
+//{
+//    //var st= app.Services.GetRequiredService<IServerTiming>();
+//    using var sc = app.Services.CreateScope();
+//    var st = sc.ServiceProvider.GetRequiredService<IServerTiming>();
+//    st.AddMetric((decimal)0.002, "yrequest");
+//    await next(context);
+//});
 app.UseDefaultFiles();
 app.UseStaticFiles();
 // Configure the HTTP request pipeline.
