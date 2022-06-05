@@ -73,7 +73,7 @@ namespace {{NamespaceName}} {
             finally{
                 span?.Stop();
                 var milleElapsed = System.DateTime.UtcNow.Subtract(utcTime).TotalMilliseconds;
-                this.serverTiming.Metrics.Add(new Lib.AspNetCore.ServerTiming.Http.Headers.ServerTimingMetric("a",(decimal)milleElapsed ));
+                this.serverTiming.Metrics.Add(new Lib.AspNetCore.ServerTiming.Http.Headers.ServerTimingMetric("{{ClassName}}.{{mi.NewName}}",(decimal)milleElapsed ));
             }
 
 
