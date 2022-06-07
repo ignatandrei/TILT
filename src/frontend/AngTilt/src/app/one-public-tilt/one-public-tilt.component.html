@@ -19,9 +19,9 @@
             <mat-icon aria-hidden="false" aria-label="" *ngIf="day.events[0].meta.originalItem.isPartOfMax">lightbulb</mat-icon>
     
             <small *ngIf="!day.events[0].meta.originalItem.isPartOfMax">
-              <mat-icon aria-hidden="false" aria-label="" *ngIf="!(day.events[0].meta.originalItem.existsPrev)">restart_alt</mat-icon>
+              <mat-icon aria-hidden="false" aria-label="" *ngIf="!(day.events[0].meta.originalItem.existsPrevStreak)">restart_alt</mat-icon>
     
-              <mat-icon aria-hidden="false" aria-label="" *ngIf="day.events[0].meta.originalItem.existsPrev">waving_hand</mat-icon>
+              <mat-icon aria-hidden="false" aria-label="" *ngIf="day.events[0].meta.originalItem.existsPrevStreak">waving_hand</mat-icon>
             </small>
             {{  (day.events[0].title | slice:0:12)+'..'   }} </small>
             <span class="cal-day-number"
@@ -87,7 +87,7 @@
   
       <div *ngFor="let item of tiltsFormArray.controls.slice().reverse(); let i = index;let f=first">
         {{tiltsFormArray.controls.length - i }}  <app-display-tilt [tilt]="item.value"></app-display-tilt>
-        {{item.value.WeekNumber}}
+        
         <span *ngIf="item?.value?.prevTilt?.WeekNumber  != item.value.WeekNumber">
           <h1>Start week {{item.value.WeekNumber }}</h1>  <button mat-raised-button color="primary"  (click)="copyWeek(item.value.WeekNumber-1)">Copy week {{item.value.WeekNumber-1 }} tilts </button> 
         </span>

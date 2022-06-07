@@ -78,16 +78,14 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
         // this.tiltsFormArray.push(...it.map(it=>this.fb.control(it)));
         it.forEach(a=>this.tiltsFormArray.push(this.fb.control(a)));
         // this.tiltsFormArray.push(new TILT());
-        it.forEach((a,index, arr)=> {
-
-          a.existsPrev =arr.findIndex(b=> (b.NextJustDate.getDate()  ==  a.LocalJustDate.getDate()) ) != -1 ;
-          a.existsNext =arr.findIndex(b=> (b.PrevJustDate.getDate()  ==  a.LocalJustDate.getDate()) ) != -1 ;
+        it.forEach((a,index, arr)=> {                      
+          a.numberOfDaysStreak = 1;          
           if(index>0){
 
             a.prevTilt = arr[index-1];
 
-            if(a.existsPrev)
-              a.numberOfDaysStreak = arr[index-1].numberOfDaysStreak+1;
+            if(a.existsPrevStreak)
+              a.numberOfDaysStreak = arr[index-1].numberOfDaysStreak+1;              
           }
           
         });

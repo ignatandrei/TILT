@@ -9,14 +9,34 @@ export class TILT {
       // });
       Object.assign(this,tilt);
     }
+    const d = new Date();
+    this.timeZomeOffset=d.getTimezoneOffset();
   }
   public id?: number;
   public idurl?: number;
   public text?: string | null;
   public link?: string | null;
   public forDate?: string | null;
-  public existsPrev?: boolean | null ;
-  public existsNext?: boolean | null ;
+  public get existsPrevStreak(): boolean | null {
+    var d=this.diffHoursStreak;
+    if(d==null)
+      return null;
+
+    return d<=24;
+  }
+  private timeZomeOffset: number = 0;
+
+  public get diffHoursStreak(): number| null{
+
+    if(this.prevTilt == null)
+      return null;
+
+    var diffSeconds= Math.abs(this.prevTilt.TheDate.getTime() - this.TheDate.getTime())/1000; 
+    var diffMinutes= Math.floor(diffSeconds/60);
+    diffMinutes+=this.timeZomeOffset;
+    var diffHours = Math.floor(diffMinutes/60);
+    return diffHours;
+  }
   public numberOfDaysStreak: number =1;
   public isMax : boolean=false;
   public isPartOfMax : boolean=false;
