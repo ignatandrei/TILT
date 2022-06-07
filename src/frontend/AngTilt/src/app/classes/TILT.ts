@@ -17,7 +17,7 @@ export class TILT {
   public forDate?: string | null;
   public existsPrev?: boolean | null ;
   public existsNext?: boolean | null ;
-  public numberOfDays: number =1;
+  public numberOfDaysStreak: number =1;
   public isMax : boolean=false;
   public isPartOfMax : boolean=false;
   public MaxDaysInStreak:number=1;
@@ -28,7 +28,9 @@ export class TILT {
   public get LocalDateString(): string {
     return this.TheDate.toLocaleString();
   }
-  
+  public get LocalDateStringNoTime(): string {
+    return this.TheDate.toLocaleString(undefined, {year: 'numeric', month: 'short', day: 'numeric'});
+  }
 
   public get LocalJustDate(): Date {
     var d = this.TheDate;

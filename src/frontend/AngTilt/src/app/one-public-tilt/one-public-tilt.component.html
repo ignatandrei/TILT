@@ -35,7 +35,7 @@
         
         <small style="margin: 5px" *ngIf="day.events?.length > 0"  title="{{day.events[0].title}}" >  
           <span [ngStyle]="day.events[0].meta.originalItem.isPartOfMax?{color: 'red'}:{color: 'blue'}">Streak days:</span>
-          {{day.events[0].meta.originalItem.numberOfDays}}
+          {{day.events[0].meta.originalItem.numberOfDaysStreak}}
         </small>
       </ng-template>
       <span>

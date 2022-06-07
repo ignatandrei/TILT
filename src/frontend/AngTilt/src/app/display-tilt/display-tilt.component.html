@@ -8,7 +8,7 @@
     TILT on <i title="{{ tilt?.LocalDateString}} utc:{{ tilt?.forDate}}">{{ tilt?.forDate | formatDate }} </i> is
     <b>{{ tilt?.text }} </b>
     <span [ngStyle]="tilt.isMax?{color: 'red'}:{color: 'blue'}">Streak days:</span>
-    {{tilt.numberOfDays}}   
+    {{tilt.numberOfDaysStreak}}   
 </span>
 <span *ngIf="tilt == null">
     No tilt!
