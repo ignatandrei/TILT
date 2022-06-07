@@ -87,14 +87,14 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
             a.prevTilt = arr[index-1];
 
             if(a.existsPrev)
-              a.numberOfDays = arr[index-1].numberOfDays+1;
+              a.numberOfDaysStreak = arr[index-1].numberOfDaysStreak+1;
           }
           
         });
-        this.maxObj = it.reduce((prev, current) => (prev.numberOfDays > current.numberOfDays) ? prev : current)
+        this.maxObj = it.reduce((prev, current) => (prev.numberOfDaysStreak > current.numberOfDaysStreak) ? prev : current)
         
         this.maxObj.isMax = true;
-        this.maxObj.MaxDaysInStreak=this.maxObj.numberOfDays;
+        this.maxObj.MaxDaysInStreak=this.maxObj.numberOfDaysStreak;
         this.maxObj.isPartOfMax= true;
         while(this.maxObj.prevTilt){
           this.maxObj.prevTilt.isPartOfMax=true;
@@ -125,7 +125,7 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     var tilts = this.tiltsFormArray.controls
       .map(it=>it.value as TILT)
     .filter(it=> it != null && it.WeekNumber==nr)
-    .map(it=>`TILT for ${it.LocalDateString} => ${it.text}`)
+    .map(it=>`TILT for ${it.LocalDateStringNoTime} => ${it.text}`)
     .join('\n');
     ;
     str += '\n'+tilts;
