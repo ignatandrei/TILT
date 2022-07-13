@@ -18,7 +18,8 @@ export class MyTiltComponent implements OnInit {
     lastTilt:null,
     nextTiltSecondsString:null,
     nextTilt:this.fb.group({
-      text:['', [Validators.required, Validators.maxLength(100)]]
+      text:['', [Validators.required, Validators.maxLength(100)]],
+      link:['', [Validators.maxLength(500)]],
     })
   });
   

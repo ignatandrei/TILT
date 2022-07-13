@@ -17,10 +17,13 @@
 <h2 [hidden]="profileForm.value.hasTodayTilt">Please add TILT for today</h2>
 
   <div formGroupName="nextTilt" [hidden]="profileForm.value.hasTodayTilt">
-    <!-- <label for="name">TILT</label> -->
+    <label for="name">TILT</label>
     <textarea id="name" type="text" formControlName="text"  ></textarea>
-    {{ profileForm.controls["nextTilt"].value.text?.length }}
-
+    Length : {{ profileForm.controls["nextTilt"].value.text?.length }} 
+    <div>
+      <label for="link">URL:</label>
+      <input id="link" type="text" formControlName="link" />
+    </div>
       <div *ngIf="profileForm.value.nextTilt.touched && profileForm.value.nextTilt.invalid" class="text-danger">
         <div *ngIf="profileForm.value.nextTilt.errors.required">Name is required.</div>
         <div *ngIf="profileForm.value.nextTilte.errors?.minlength">Minimum 4 character are required.</div>
