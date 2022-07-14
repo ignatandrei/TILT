@@ -44,7 +44,8 @@ export class MyTiltComponent implements OnInit {
         console.log("diff",h);
         sec=formatDistance(nextDate,new Date(), { addSuffix: true }) ;
         if(nextDate<new Date()){
-          hasTodayTilt=false;
+          //todo: fix privateHasTILTToday
+          //hasTodayTilt=false;
         }
         if(h<2 ){
           sec=formatDistanceToNowStrict(nextDate, { addSuffix: true, unit: 'minute' }) ;
