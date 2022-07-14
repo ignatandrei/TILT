@@ -20,7 +20,7 @@ public class TILTController : ControllerBase
         var data =await addLogic.AddTILT(note, this.User?.Claims.ToArray());
         if(data == null)
         {
-            return new UnauthorizedResult();
+            return new BadRequestObjectResult("add tilt was not succesfull");
         }
         return data;
     }
