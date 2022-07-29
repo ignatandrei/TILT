@@ -123,7 +123,7 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     var tilts = this.tiltsFormArray.controls
       .map(it=>it.value as TILT)
     .filter(it=> it != null && it.WeekNumber==nr)
-    .map(it=>`TILT for ${it.LocalDateStringNoTime} => ${it.text}`)
+    .map(it=>`TILT for ${it.LocalDateStringNoTime} => ${it.text}  ${it.link}` )
     .join('\n');
     ;
     str += '\n'+tilts;
