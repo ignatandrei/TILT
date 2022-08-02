@@ -10,6 +10,20 @@
 
   </h1>
   <mat-tab-group animationDuration="2000ms">
+    <mat-tab label="List">  
+  
+      <div *ngFor="let item of tiltsFormArray.controls.slice().reverse(); let i = index;let f=first">
+        {{tiltsFormArray.controls.length - i }}  <app-display-tilt [tilt]="item.value"></app-display-tilt>
+        
+        <span *ngIf="item?.value?.prevTilt?.WeekNumber  != item.value.WeekNumber">
+          <h1>Start week {{item.value.WeekNumber }}</h1>  <button mat-raised-button color="primary"  (click)="copyWeek(item?.value?.prevTilt?.WeekNumber)">Copy week {{item?.value?.prevTilt?.WeekNumber }} tilts </button> 
+        </span>
+        
+        <hr />
+
+         <!-- {{item.value | json}} -->
+       </div>
+    </mat-tab>
     <mat-tab label="Calendar">
       <ng-template #customCellTemplate let-day="day" let-locale="locale">
         <div class="cal-cell-top">
@@ -82,20 +96,6 @@
     
     
 
-    </mat-tab>
-    <mat-tab label="List">  
-  
-      <div *ngFor="let item of tiltsFormArray.controls.slice().reverse(); let i = index;let f=first">
-        {{tiltsFormArray.controls.length - i }}  <app-display-tilt [tilt]="item.value"></app-display-tilt>
-        
-        <span *ngIf="item?.value?.prevTilt?.WeekNumber  != item.value.WeekNumber">
-          <h1>Start week {{item.value.WeekNumber }}</h1>  <button mat-raised-button color="primary"  (click)="copyWeek(item?.value?.prevTilt?.WeekNumber)">Copy week {{item?.value?.prevTilt?.WeekNumber }} tilts </button> 
-        </span>
-        
-        <hr />
-
-         <!-- {{item.value | json}} -->
-       </div>
     </mat-tab>
   </mat-tab-group>
 
