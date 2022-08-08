@@ -36,7 +36,7 @@ jobs:
         run: |
             node -v
             npm -v
-            cd src/frontend/AngTilt/
+            cd src/frontend/AngTilt14/
             npm i
             npm run buildAzure
             remove-item ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\AngTilt\index.html
