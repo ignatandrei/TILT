@@ -3,9 +3,13 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "AngTilt14": {
+    "AngTilt": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -13,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ang-tilt14",
+            "outputPath": "dist/ang-tilt",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -23,7 +27,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.css",
+              "node_modules/shepherd.js/dist/css/shepherd.css"
             ],
             "scripts": []
           },
@@ -64,10 +70,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "AngTilt14:build:production"
+              "browserTarget": "AngTilt:build:production"
             },
             "development": {
-              "browserTarget": "AngTilt14:build:development"
+              "browserTarget": "AngTilt:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -75,7 +81,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "AngTilt14:build"
+            "browserTarget": "AngTilt:build"
           }
         },
         "test": {
@@ -90,12 +96,15 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.css",
+              "node_modules/shepherd.js/dist/css/shepherd.css"
             ],
             "scripts": []
           }
         }
       }
     }
-  }
+  },
+  "defaultProject": "AngTilt"
 }
