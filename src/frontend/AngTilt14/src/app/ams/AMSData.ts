@@ -22,7 +22,7 @@ export class AMSData {
   public dateGenerated: string|null = null;
   public commitId: string|null = null;
   public repoUrl: string|null = null;
-
+  public isInCI:boolean =false;
   public get TheDate(): Date|null{
     if(this.dateGenerated == null)
       return null;
