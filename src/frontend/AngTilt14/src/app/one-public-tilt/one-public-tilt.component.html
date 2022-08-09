@@ -1,0 +1,107 @@
+<form [formGroup]="profileForm">
+  <!-- <input type="text" class="form-control" id="name"
+    formControlName="url">    -->
+  <h1>
+    TILTS for
+
+    <a  routerLink="/tilt/public/{{ profileForm.value.url }}">{{
+      profileForm.value.url
+    }}</a> on {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
+
+  </h1>
+  <mat-tab-group animationDuration="2000ms">
+    <mat-tab label="List">  
+  
+      <div *ngFor="let item of tiltsFormArray.controls.slice().reverse(); let i = index;let f=first">
+        {{tiltsFormArray.controls.length - i }}  <app-display-tilt [tilt]="item.value"></app-display-tilt>
+        
+        <span *ngIf="item?.value?.prevTilt?.WeekNumber  != item.value.WeekNumber">
+          <h1>Start week {{item.value.WeekNumber }}</h1>  <button mat-raised-button color="primary"  (click)="copyWeek(item?.value?.prevTilt?.WeekNumber)">Copy week {{item?.value?.prevTilt?.WeekNumber }} tilts </button> 
+        </span>
+        
+        <hr />
+
+         <!-- {{item.value | json}} -->
+       </div>
+    </mat-tab>
+    <mat-tab label="Calendar">
+      <ng-template #customCellTemplate let-day="day" let-locale="locale">
+        <div class="cal-cell-top">
+          
+          <small style="margin: 5px" *ngIf="day.events?.length > 0"  title="{{day.events[0].title}}" >      
+            
+            <mat-icon aria-hidden="false" aria-label="" *ngIf="day.events[0].meta.originalItem.isPartOfMax">lightbulb</mat-icon>
+    
+            <small *ngIf="!day.events[0].meta.originalItem.isPartOfMax">
+              <mat-icon aria-hidden="false" aria-label="" *ngIf="!(day.events[0].meta.originalItem.existsPrevStreak)">restart_alt</mat-icon>
+    
+              <mat-icon aria-hidden="false" aria-label="" *ngIf="day.events[0].meta.originalItem.existsPrevStreak">waving_hand</mat-icon>
+            </small>
+            {{  (day.events[0].title | slice:0:12)+'..'   }} </small>
+            <span class="cal-day-number"
+            >
+            <mat-icon aria-hidden="false" aria-label="" *ngIf="!(day.badgeTotal > 0) && !day.isFuture">mood_bad</mat-icon>
+    
+            
+            {{ day.date | calendarDate:'monthViewDayNumber':locale }}</span
+          >
+        </div>
+        
+        <small style="margin: 5px" *ngIf="day.events?.length > 0"  title="{{day.events[0].title}}" >  
+          <span [ngStyle]="day.events[0].meta.originalItem.isPartOfMax?{color: 'red'}:{color: 'blue'}">Streak days:</span>
+          {{day.events[0].meta.originalItem.numberOfDaysStreak}}
+        </small>
+      </ng-template>
+      <span>
+        <button
+          mat-button color="primary"
+          mwlCalendarPreviousView
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()"
+        >
+          Previous
+        </button>
+        <button
+          mat-button color="primary"
+          mwlCalendarToday
+          [(viewDate)]="viewDate"
+        >
+          Today
+        </button>
+        <button
+          mat-button color="primary"
+          mwlCalendarNextView
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="closeOpenMonthViewDay()"
+        >
+          Next
+        </button>
+        <button *ngIf="maxObj != null" (click)="gotoMaxStreak()"
+          mat-button color="primary"
+          
+        >
+          Max Streak : {{maxObj.MaxDaysInStreak}}
+        </button>
+      </span>
+      <mwl-calendar-month-view
+        [viewDate]="viewDate"
+        [activeDayIsOpen]="activeDayIsOpen"
+        [events]="events"
+        [refresh]="refresh"
+        [cellTemplate]="customCellTemplate"
+        (dayClicked)="dayClicked($event.day)"
+      ></mwl-calendar-month-view>
+    
+    
+
+    </mat-tab>
+  </mat-tab-group>
+
+
+  
+
+ 
+ 
+</form>

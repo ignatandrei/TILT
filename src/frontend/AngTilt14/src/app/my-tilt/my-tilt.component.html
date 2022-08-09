@@ -1,0 +1,47 @@
+<h1>
+  <a  routerLink="/tilt/public/{{this.profileForm.value.mainUrl}}">
+    My TILTS   : {{this.profileForm.value.mainUrl}}  
+  </a>
+  
+  <!-- {{profileForm.value.hasTodayTilt}} -->
+<!-- {{profileForm.controls["hasTodayTilt"].value}} -->
+</h1>
+<form [formGroup]="profileForm" >
+
+<h2 [hidden]="!profileForm.value.hasTodayTilt">
+  Posted today TILT ( next one
+  {{ this.profileForm.value.nextTiltSecondsString }}
+  )
+</h2>
+
+<h2 [hidden]="profileForm.value.hasTodayTilt">Please add TILT for today</h2>
+
+  <div formGroupName="nextTilt" [hidden]="profileForm.value.hasTodayTilt">
+    <label for="name">TILT</label>
+    <textarea id="name" type="text" formControlName="text"  ></textarea>
+    Length : {{ profileForm.controls["nextTilt"].value.text?.length }} 
+    <div>
+      <label for="link">URL:</label>
+      <input id="link" type="text" formControlName="link" />
+    </div>
+      <div *ngIf="f['nextTilt'].touched && f['nextTilt'].invalid" class="text-danger">
+        <div *ngIf="HasError('nextTilt','required')">Name is required.</div>
+        <div *ngIf="HasError('nextTilt','minlength')">Minimum 4 character are required.</div>
+      </div>
+      
+    <button type="button" [disabled]="!profileForm.valid" (click)="saveTILT()">
+      SAVE TILT
+    </button>
+  </div>
+</form>
+
+<div>
+  Last TILT:
+  <app-display-tilt [tilt]="lastTiltNotNull"></app-display-tilt>
+<div>
+URL : 
+<a  routerLink="/tilt/public/{{this.profileForm.value.mainUrl}}">
+  {{this.profileForm.value.mainUrl}}  
+</a>
+</div>
+</div>
