@@ -35,7 +35,8 @@ export class TiltMainComponent implements AfterContentInit {
     this.amsService.AmsDataValues().subscribe(
       it=>{
         console.log('amsService.AmsDataValues()',it);
-        this.ams=it.sort((a,b)=>a!.TheDate!.getDate()-b!.TheDate!.getDate())?.pop();
+        //console.log('amsService.AmsDataValues()',it.length);
+        this.ams=it.sort((a,b)=>b!.TheDate!.getDate()-a!.TheDate!.getDate())?.pop();
       }
     )
   }
