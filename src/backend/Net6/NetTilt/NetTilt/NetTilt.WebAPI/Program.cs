@@ -217,6 +217,54 @@ if (!IsBuildFromCI)
             URLPart = "test"
         });
         await dbcontext.SaveChangesAsync();
+
+        dbcontext.TILT_Note.Add(new TILT_Note()
+        {
+            ForDate = DateTime.UtcNow.AddDays(-9),
+            IDURL = 1,
+            Text = "I learned how to make an web app with .NET core on backend"
+        });
+        dbcontext.TILT_Note.Add(new TILT_Note()
+        {
+            ForDate = DateTime.UtcNow.AddDays(-8),
+            IDURL = 1,
+            Text = "I learned how to make an web app with Angular on frontend"
+        });
+        dbcontext.TILT_Note.Add(new TILT_Note()
+        {
+            ForDate = DateTime.UtcNow.AddDays(-7),
+            IDURL = 1,
+            Text = "and learned how to deploy bundled together"
+        });
+        dbcontext.TILT_Note.Add(new TILT_Note()
+        {
+            ForDate = DateTime.UtcNow.AddDays(-6),
+            IDURL = 1,
+            Text = "so I made this app - Things I Learned Today - TILT"
+        });
+        dbcontext.TILT_Note.Add(new TILT_Note()
+        {
+            ForDate = DateTime.UtcNow.AddDays(-6),
+            IDURL = 1,
+            Text = "see link",
+            Link = "http://tiltwebapp.azurewebsites.net/"
+        });
+        dbcontext.TILT_Note.Add(new TILT_Note()
+        {
+            ForDate = DateTime.UtcNow.AddDays(-3),
+            IDURL = 1,
+            Text = "it has also swagger",
+            Link = "http://tiltwebapp.azurewebsites.net/swagger"
+        });
+        dbcontext.TILT_Note.Add(new TILT_Note()
+        {
+            ForDate = DateTime.UtcNow.AddDays(-2),
+            IDURL = 1,
+            Text = "it has also BlocklyAutomation",
+            Link = "http://tiltwebapp.azurewebsites.net/BlocklyAutomation"
+        });
+        await dbcontext.SaveChangesAsync();
+
     }
 }
 
