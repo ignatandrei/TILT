@@ -23,7 +23,12 @@ export class TiltMainComponent implements AfterContentInit {
     private breakpointObserver: BreakpointObserver,
     private shepherdService: ShepherdService,
     private amsService: AmsService
-  ) {}
+  ) {
+
+var x=Intl.DateTimeFormat().resolvedOptions().timeZone;
+console.log(x);
+
+  }
   ams: AMSData|undefined=undefined;
 
   ngAfterContentInit(): void {

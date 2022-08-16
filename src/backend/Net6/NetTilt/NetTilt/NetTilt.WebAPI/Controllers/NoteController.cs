@@ -25,10 +25,10 @@ public class TILTController : ControllerBase
         return data;
     }
     [Authorize(Policy = "CustomBearer", Roles = "Editor")]
-    [HttpGet()]
-    public async Task<ActionResult<bool>> HasTILTToday([FromServices] ISearchDataTILT_Note searchNotes)
+    [HttpGet("{timeZone}")]
+    public async Task<ActionResult<bool>> HasTILTToday([FromServices] ISearchDataTILT_Note searchNotes,string timeZone)
     {
-        var data = await addLogic.HasTILTToday(this.User?.Claims.ToArray());
+        var data = await addLogic.HasTILTToday(this.User?.Claims.ToArray(),timeZone);
         return data;
     }
     [Authorize(Policy = "CustomBearer", Roles = "Editor")]

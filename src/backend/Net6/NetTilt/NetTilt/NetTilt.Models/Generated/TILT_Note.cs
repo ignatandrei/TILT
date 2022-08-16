@@ -11,6 +11,7 @@ namespace Generated
         public TILT_Note()
         {
             TILT_Tag_Note = new HashSet<TILT_Tag_Note>();
+            TimeZoneString = "";
         }
 
         [Key]
@@ -28,5 +29,8 @@ namespace Generated
         public virtual TILT_URL IDURLNavigation { get; set; } = null!;
         [InverseProperty("IDNoteNavigation")]
         public virtual ICollection<TILT_Tag_Note> TILT_Tag_Note { get; set; }
+        
+        [StringLength(150)]
+        public string TimeZoneString { get; set; }
     }
 }

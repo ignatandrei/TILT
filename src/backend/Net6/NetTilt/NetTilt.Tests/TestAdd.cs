@@ -64,7 +64,7 @@ public partial class TestAddNewTilt
     {
         var run =  Runner
               .AddSteps(_ => Given_Today_Is(DateTime.UtcNow))
-              .AddSteps(_ => Given_Exists_One_TILT_ForDate(DateTime.UtcNow.Date.AddDays(1).AddMinutes(-minutes)));
+              .AddSteps(_ => Given_Exists_One_TILT_ForDate(DateTime.Now.Date.AddDays(1).AddMinutes(-minutes)));
 
         if (canAdd)
             run = run
