@@ -23,8 +23,10 @@ CREATE TABLE [dbo].[TILT_Note](
 	[ID] [bigint] IDENTITY(1,1) NOT NULL,
 	[IDURL] [bigint] NOT NULL,
 	[Text] [nvarchar](150) NOT NULL,
-	[Link] [nvarchar](150) NULL,
+	[Link] [nvarchar](500) NULL,
 	[ForDate] [datetime] NULL,
+	[TimeZoneString] [nvarchar](350) NULL,
+	
  CONSTRAINT [PK_TILT_Note] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
