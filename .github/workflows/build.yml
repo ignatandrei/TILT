@@ -14,11 +14,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: szenius/set-timezone@v1.0
+    - name: Setup timezone
+      uses: zcong1993/setup-timezone@master
       with:
-        timezoneLinux: "Europe/Bucharest"
-        timezoneMacos: "Europe/Bucharest"
-        timezoneWindows: "Europe/Bucharest"
+        timezone: Asia/Shanghai
+    # - uses: szenius/set-timezone@v1.0
+      # with:
+        # timezoneLinux: "Europe/Bucharest"
+        # timezoneMacos: "Europe/Bucharest"
+        # timezoneWindows: "Europe/Bucharest"
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
