@@ -17,6 +17,7 @@ export class TILT {
   public text?: string | null;
   public link?: string | null;
   public forDate?: string | null;
+  public timeZoneString?: string | null;
   public get existsPrevStreak(): boolean | null {
     var d=this.diffHoursStreak;
     if(d==null)
