@@ -4,7 +4,7 @@ partial class TestAuth : FeatureFixture
 {
     ServiceProvider? serviceProvider;
     int idUrl = 100;
-    string jwt = null;
+    string? jwt = null;
     void SetupTilt(string? url,string? secret, int idUrl)
     {
         var inMemorySettings = new Dictionary<string, string> {

@@ -256,7 +256,7 @@ if (!IsBuildFromCI)
             ForDate = DateTime.UtcNow.AddDays(-6),
             IDURL = 2,
             Text = "see link",
-            Link = "http://tiltwebapp.azurewebsites.net/",
+            Link = "https://tiltwebapp.azurewebsites.net/",
             TimeZoneString = "Europe/Bucharest"
         });
         dbcontext.TILT_Note.Add(new TILT_Note()
@@ -264,7 +264,7 @@ if (!IsBuildFromCI)
             ForDate = DateTime.UtcNow.AddDays(-3),
             IDURL = 2,
             Text = "it has also swagger",
-            Link = "http://tiltwebapp.azurewebsites.net/swagger",
+            Link = "https://tiltwebapp.azurewebsites.net/swagger",
             TimeZoneString = "Europe/Bucharest"
         });
         dbcontext.TILT_Note.Add(new TILT_Note()
@@ -272,7 +272,7 @@ if (!IsBuildFromCI)
             ForDate = DateTime.UtcNow.AddDays(-2),
             IDURL = 2,
             Text = "it has also BlocklyAutomation",
-            Link = "http://tiltwebapp.azurewebsites.net/BlocklyAutomation",
+            Link = "https://tiltwebapp.azurewebsites.net/BlocklyAutomation",
             TimeZoneString = "Europe/Bucharest"
         });
         await dbcontext.SaveChangesAsync();

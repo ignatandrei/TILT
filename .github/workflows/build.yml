@@ -9,11 +9,16 @@ on:
 jobs:
   build:
 
-    #runs-on: ubuntu-latest
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
+    #runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v3
+    - uses: szenius/set-timezone@v1.0
+      with:
+        timezoneLinux: "Europe/Bucharest"
+        timezoneMacos: "Europe/Bucharest"
+        timezoneWindows: "Europe/Bucharest"
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:

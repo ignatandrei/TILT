@@ -49,10 +49,11 @@ namespace NetTilt.Logic
                 throw new TimeZoneNotFoundException("cannot find " + note.TimeZoneString);
             
             var ser = tz.ToSerializedString();
-            //note.TimeZoneString = ser;
+            if(string.IsNullOrWhiteSpace(ser))
+                throw new TimeZoneNotFoundException("cannot serialize " + note.TimeZoneString);
 
-            
-            
+
+
             note.IDURL = idUrl.Value;
             note.ID = 0;
             note.ForDate = DateTime.UtcNow;
@@ -96,7 +97,7 @@ namespace NetTilt.Logic
                 return false;
             if (all.Length == 0)
                 return false;
-            var now = DateTime.UtcNow.Date;
+            //var now = DateTime.UtcNow.Date;
             var  it = all[0];
 
             var dateNowUTC = DateTime.UtcNow;
