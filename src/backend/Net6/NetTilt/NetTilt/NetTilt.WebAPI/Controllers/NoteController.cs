@@ -36,7 +36,7 @@ public class TILTController : ControllerBase
             return NotFound("cannot find timezone:" + timeZone);
         var ser = tz.ToSerializedString();
         Console.WriteLine(ser);
-        var data = await addLogic.HasTILTToday(this.User?.Claims.ToArray(),tz.ToSerializedString());
+        var data = await addLogic.HasTILTToday(this.User?.Claims.ToArray(),timeZone);
         Console.WriteLine("HAS TILT TODAY:" + data);
         return data;
     }
