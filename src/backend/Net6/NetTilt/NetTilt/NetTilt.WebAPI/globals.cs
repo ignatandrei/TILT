@@ -26,6 +26,7 @@ global using System.Diagnostics;
 
 
 [assembly: AMS_Base.VersionReleased(Name = "FutureRelease", ISODateTime = "9999-04-16", recordData = AMS_Base.RecordData.Merges)]
+[assembly: AMS_Base.VersionReleased(Name = "AddTimeZone for Today TILT -and more improvements", ISODateTime = "2022-08-17", recordData = AMS_Base.RecordData.Merges)]
 [assembly: AMS_Base.VersionReleased(Name = "ServerTiming,Export", ISODateTime = "2022-06-07", recordData = AMS_Base.RecordData.Merges)]
 [assembly: AMS_Base.VersionReleased(Name = "MVP", ISODateTime = "2022-05-09", recordData = AMS_Base.RecordData.Merges)]
 [assembly: AMS_Base.VersionReleased(Name = "Calendar,help,streak", ISODateTime = "2022-05-25", recordData = AMS_Base.RecordData.Merges)]
