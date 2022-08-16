@@ -43,6 +43,27 @@ public partial class TestAddNewTilt
              .RunAsync();
     }
     [Scenario]
+    public async Task ExistingTILT_PriorMidnight() //scenario name
+    {
+        var run = Runner
+              .AddSteps(_ => Given_Today_Is(DateTime.Now))
+              .AddSteps(_ => Given_Exists_One_TILT_ForDate(DateTime.Now.Date.AddSeconds(-1)))
+              .AddAsyncSteps(_ => Then_Can_Add_A_New_TILT());
+
+        await run.RunAsync();
+    }
+    [Scenario]
+    public async Task ExistingTILT_AtStartDay() //scenario name
+    {
+        var run = Runner
+              .AddSteps(_ => Given_Today_Is(DateTime.Now))
+              .AddSteps(_ => Given_Exists_One_TILT_ForDate(DateTime.Now.Date.AddSeconds(1)))
+              .AddAsyncSteps(_ => Then_Can_NOT_Add_A_New_TILT());
+
+        await run.RunAsync();
+    }
+
+    [Scenario]
     [TestCase(1,false)]
     [TestCase(2, false)]
     [TestCase(20, false)]
@@ -63,7 +84,7 @@ public partial class TestAddNewTilt
     public async Task ExistingTILT_MinutesAgo(int minutes, bool canAdd) //scenario name
     {
         var run =  Runner
-              .AddSteps(_ => Given_Today_Is(DateTime.UtcNow))
+              .AddSteps(_ => Given_Today_Is(DateTime.Now))
               .AddSteps(_ => Given_Exists_One_TILT_ForDate(DateTime.Now.Date.AddDays(1).AddMinutes(-minutes)));
 
         if (canAdd)
