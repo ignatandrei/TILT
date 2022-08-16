@@ -19,7 +19,7 @@ namespace Generated
         public long IDURL { get; set; }
         [StringLength(150)]
         public string Text { get; set; } = null!;
-        [StringLength(150)]
+        [StringLength(500)]
         public string? Link { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? ForDate { get; set; }
@@ -30,7 +30,7 @@ namespace Generated
         [InverseProperty("IDNoteNavigation")]
         public virtual ICollection<TILT_Tag_Note> TILT_Tag_Note { get; set; }
         
-        [StringLength(250)]
+        [StringLength(350)]
         public string TimeZoneString { get; set; }
     }
 }
