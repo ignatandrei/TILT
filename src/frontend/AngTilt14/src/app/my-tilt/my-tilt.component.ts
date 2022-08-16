@@ -43,8 +43,15 @@ export class MyTiltComponent implements OnInit {
 
         return false;
   }
-  
-  constructor(private myTiltService:LoginUrlService, private fb:FormBuilder) { }
+  public logOff(){
+    this.authUrl.LogOff().subscribe(it=>{
+      if(it){
+        //console.log('exit');
+        window.location=window.location;
+      }
+    });
+  }
+  constructor(private myTiltService:LoginUrlService, private fb:FormBuilder, private authUrl: LoginUrlService) { }
 
   patchData(hasTodayTilt:boolean, mainUrl:string, lastTilt:TILT|null):void{
     var nextDate=new Date();

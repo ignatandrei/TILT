@@ -112,7 +112,7 @@
                 <next>
                   <block type="text_print">
                     <value name="TEXT">
-                      <block type="convertHtml">
+                      <block type="convertToTable">
                         <value name="ArrayToConvert">
                           <block type="get__api_TILT_AllMyTILTs">
                             <value name="override_Host">

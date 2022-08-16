@@ -16,5 +16,11 @@
         "description":  "public Tilts",
         "categories":  "see",
         "blocks":  "converttojson;get__api_PublicTILTs_PublicTiltsURL;text;math_number;text_print;lists_getIndex;convertHtml;get__api_PublicTILTs_LatestTILTs___urlPart___numberTILTS"
+    },
+    {
+        "id":  "hasTilt",
+        "description":  "find has tilt today",
+        "categories":  "see",
+        "blocks":  "converttojson;get__api_PublicTILTs_PublicTiltsURL;text;math_number;text_print;lists_getIndex;convertHtml;get__api_PublicTILTs_LatestTILTs___urlPart___numberTILTS"
     }
 ]

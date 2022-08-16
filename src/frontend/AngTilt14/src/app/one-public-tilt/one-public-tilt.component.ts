@@ -89,17 +89,17 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
           }
           
         });
-        this.maxObj = it.reduce((prev, current) => (prev.numberOfDaysStreak > current.numberOfDaysStreak) ? prev : current)
-        
-        this.maxObj.isMax = true;
-        this.maxObj.MaxDaysInStreak=this.maxObj.numberOfDaysStreak;
-        this.maxObj.isPartOfMax= true;
-        while(this.maxObj.prevTilt){
-          this.maxObj.prevTilt.isPartOfMax=true;
-          this.maxObj.prevTilt.MaxDaysInStreak=this.maxObj.MaxDaysInStreak;
-          this.maxObj = this.maxObj.prevTilt;
+        if(it.length>0){
+            this.maxObj = it.reduce((prev, current) => (prev.numberOfDaysStreak > current.numberOfDaysStreak) ? prev : current)
+          this.maxObj.isMax = true;
+          this.maxObj.MaxDaysInStreak=this.maxObj.numberOfDaysStreak;
+          this.maxObj.isPartOfMax= true;
+          while(this.maxObj.prevTilt){
+            this.maxObj.prevTilt.isPartOfMax=true;
+            this.maxObj.prevTilt.MaxDaysInStreak=this.maxObj.MaxDaysInStreak;
+            this.maxObj = this.maxObj.prevTilt;
+          }
         }
-
         it.forEach(a=> this.events.push(
           {
             start:  a.LocalJustDate,

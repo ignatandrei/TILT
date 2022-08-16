@@ -25,8 +25,9 @@ export class TiltMainComponent implements AfterContentInit {
     private amsService: AmsService
   ) {
 
-var x=Intl.DateTimeFormat().resolvedOptions().timeZone;
-console.log(x);
+
+
+
 
   }
   ams: AMSData|undefined=undefined;

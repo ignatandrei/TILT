@@ -106,6 +106,39 @@
                         </value>
                       </block>
                     </value>
+                    <next>
+                      <block type="text_print">
+                        <value name="TEXT">
+                          <block type="get__api_TILT_HasTILTToday___arg1___arg2___arg3">
+                            <value name="val_arg1">
+                              <block type="text">
+                                <field name="TEXT">Europe</field>
+                              </block>
+                            </value>
+                            <value name="val_arg2">
+                              <block type="text">
+                                <field name="TEXT">Bucharest</field>
+                              </block>
+                            </value>
+                            <value name="val_arg3">
+                              <block type="text">
+                                <field name="TEXT"></field>
+                              </block>
+                            </value>
+                            <value name="override_Host">
+                              <block type="text">
+                                <field name="TEXT"> </field>
+                              </block>
+                            </value>
+                            <value name="override_Port">
+                              <block type="math_number">
+                                <field name="NUM">0</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
                   </block>
                 </next>
               </block>

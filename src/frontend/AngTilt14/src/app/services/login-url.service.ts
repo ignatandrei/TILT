@@ -76,8 +76,10 @@ export class LoginUrlService {
   
   public HasTILTToday():Observable<boolean>{
     if(!this.wasLoggedIn)return of(false);
+    var x=Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-    return this.http.get<string>(this.baseUrl+'TILT/HasTILTToday', {
+
+    return this.http.get<string>(this.baseUrl+'TILT/HasTILTToday/'+x, {
       headers: new HttpHeaders(
         {
           'Authorization': 'CustomBearer ' + this.jwt,
@@ -130,6 +132,11 @@ export class LoginUrlService {
 
     );
 
+  }
+  public LogOff():Observable<boolean>{
+    this.jwt='';
+    //this.storage.set(this.sessionName,''); 
+    return of(true);
   }
   public LoginOrCreate(urlPart: string, secret:string):Observable<string>{
     if(urlPart == '')
