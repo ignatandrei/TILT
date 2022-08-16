@@ -21,6 +21,8 @@ global using OpenTelemetry.Trace;
 global using NetTilt.Logic;
 global using Lib.AspNetCore.ServerTiming;
 
+global using Hellang.Middleware.ProblemDetails;
+global using System.Diagnostics;
 
 
 [assembly: AMS_Base.VersionReleased(Name = "FutureRelease", ISODateTime = "9999-04-16", recordData = AMS_Base.RecordData.Merges)]

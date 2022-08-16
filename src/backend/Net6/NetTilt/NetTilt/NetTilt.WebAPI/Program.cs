@@ -1,4 +1,3 @@
-using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +18,11 @@ builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =
 });
 builder.Services.AddServerTiming();
 builder.Services.AddSwaggerGen();
+builder.Services.AddProblemDetails(options =>
+{
+    options.IncludeExceptionDetails = (ctx, ex) => true;
+});
+
 bool IsBuildFromCI = new XAboutMySoftware_78102118871091131225395110108769286().IsInCI;
 var cnSqlite = "Data Source=Tilt.db";
 
@@ -181,6 +185,7 @@ builder.Services.AddCors(options =>
 });
 builder.Services.AddScoped<ServerTiming>();
 var app = builder.Build();
+app.UseProblemDetails(); 
 app.UseServerTiming();
 app.UseMiddleware<ServerTiming>();
 app.UseDefaultFiles();
