@@ -60,7 +60,7 @@
                 <next>
                   <block type="text_print">
                     <value name="TEXT">
-                      <block type="convertHtml">
+                      <block type="convertToTable">
                         <value name="ArrayToConvert">
                           <block type="get__api_PublicTILTs_LatestTILTs___urlPart___numberTILTS">
                             <value name="val_urlPart">

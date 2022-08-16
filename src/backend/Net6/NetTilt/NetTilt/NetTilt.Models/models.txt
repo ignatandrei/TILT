@@ -1,8 +1,11 @@
-﻿//version 2022.4.25.615 NEW
+﻿//version 2022.8.16.615 NEW
 #nullable enable
 using Microsoft.EntityFrameworkCore;
 namespace Generated;
 {{ for classLoop in classes }}
+{{ if  classLoop.Name | string.ends_with "_Table" }}
+{{ continue }}
+{{ end }}
 public interface I_{{classLoop.Name}}_Table {
     {{ for prop in classLoop.Props }}
             {{ if prop.RawKindType == "PredefinedType" || prop.RawKindType == "NullableType"}}
@@ -12,6 +15,7 @@ public interface I_{{classLoop.Name}}_Table {
 }
 
 public partial class {{classLoop.Name}}_Table: I_{{classLoop.Name}}_Table  {
+
     {{ for prop in classLoop.Props }}
             {{ if prop.RawKindType == "PredefinedType" || prop.RawKindType == "NullableType"}}
             public {{prop.Type}} {{prop.Name}} {get;set;}

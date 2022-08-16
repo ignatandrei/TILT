@@ -9,7 +9,7 @@ partial  class TestAddNewTilt: FeatureFixture
     {
         return Then_Can_Add_A_New_TILT_WithResult(true);
     }
-    Task Then_Can_NOT_Add_A_New_TILT()
+    Task Then_Can_NOT_Add_A_New_TILT()  
     {
         return Then_Can_Add_A_New_TILT_WithResult(false);
     }
@@ -39,7 +39,8 @@ partial  class TestAddNewTilt: FeatureFixture
         {
             retArray = new TILT_Note[1];
             retArray[0] = new TILT_Note();
-            retArray[0].ForDate= oneTILTInTheDB.Value;
+            var currentUTC = oneTILTInTheDB.Value.ToUniversalTime();
+            retArray[0].ForDate= currentUTC;
         }
         else
         {

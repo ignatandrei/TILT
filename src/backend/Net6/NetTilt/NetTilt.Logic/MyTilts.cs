@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace NetTilt.Logic
 {
     [AutoGenerateInterface]
@@ -32,7 +34,7 @@ namespace NetTilt.Logic
             {
                 return null;
             }
-            if (await HasTILTToday(c))
+            if (await HasTILTToday(c,note.TimeZoneString))
             {
                 return null;
             }
@@ -40,6 +42,18 @@ namespace NetTilt.Logic
             if(string.IsNullOrWhiteSpace( url))
             {
                 return null;
+            }
+            try
+            {
+                //verify if there is a timezone
+                var tz = TimeZoneInfo.FindSystemTimeZoneById(note.TimeZoneString);
+                var ser = tz.ToSerializedString();
+                note.TimeZoneString = ser;
+
+            }
+            catch (Exception)
+            {
+
             }
             note.IDURL = idUrl.Value;
             note.ID = 0;
@@ -72,12 +86,12 @@ namespace NetTilt.Logic
             return ret;
         }
 
-        public Task<bool> HasTILTToday(Claim[]? c)
+        public Task<bool> HasTILTToday(Claim[]? c, string timezone)
         {
-            return privateHasTILTToday(c);
+            return privateHasTILTToday(c, timezone);
         }
         [AOPMarkerMethod]
-        async Task<bool> privateHasTILTToday(Claim[]? c)
+        async Task<bool> privateHasTILTToday(Claim[]? c, string timezone)
         {
             var all = await MyLatestTILTs(1, c);
             if (all == null)
@@ -86,7 +100,18 @@ namespace NetTilt.Logic
                 return false;
             var now = DateTime.UtcNow.Date;
             var  it = all[0];
-            return ( it.ForDate.HasValue && now.Subtract(it.ForDate.Value.Date).TotalDays == 0) ;
+
+            var dateNowUTC = DateTime.UtcNow;
+            
+            var tz = TimeZoneInfo.FromSerializedString(timezone);
+            if (tz == null)
+                throw new TimeZoneNotFoundException(" cannote deserialize " + timezone);
+            
+            var localTimeNow= TimeZoneInfo.ConvertTimeFromUtc(dateNowUTC, tz);
+            var data = it.ForDate ?? DateTime.UtcNow;
+            var localTimeWhenPosted = TimeZoneInfo.ConvertTimeFromUtc(data, tz);
+
+            return ( localTimeNow.Date.Subtract(localTimeWhenPosted.Date).TotalDays == 0) ;
         }
         public Task<TILT_Note_Table[]?> MyLatestTILTs(int numberTILTS, Claim[]? c)
         {

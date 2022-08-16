@@ -141,11 +141,12 @@ public partial class RealSqlite : FeatureFixture
     {
         var auth = serviceProvider.GetRequiredService<IAuthUrl>();
         var myTilt = serviceProvider.GetRequiredService<IMyTilts>();
+        var tz = TimeZoneInfo.Local.ToSerializedString();
         foreach (var item in urls)
         {
             var jwt = await auth.Login(item.URLPart, item.Secret);
             var claim = auth.Decrypt(jwt);
-            var existsTilt = await myTilt.HasTILTToday(claim);
+            var existsTilt = await myTilt.HasTILTToday(claim,tz);
             Assert.IsFalse(existsTilt);
         }
     }
@@ -177,11 +178,12 @@ public partial class RealSqlite : FeatureFixture
             var jwt = await auth.Login(item.URLPart, item.Secret);
             var claim = auth.Decrypt(jwt);
             var idUrl = auth.MainUrlId(claim).Value;
+
            var data= await myTilt.AddTILT(new TILT_Note_Table()
             {
                 IDURL = idUrl,
-                Text = $"A TILT for {item.URLPart}"
-            }, claim);
+                Text = $"A TILT for {item.URLPart}",              
+           }, claim);
             Assert.GreaterOrEqual(data.ID, 0);
         }
     }
@@ -189,11 +191,12 @@ public partial class RealSqlite : FeatureFixture
     {
         var auth = serviceProvider.GetRequiredService<IAuthUrl>();
         var myTilt = serviceProvider.GetRequiredService<IMyTilts>();
+        var tz = TimeZoneInfo.Local.ToSerializedString();
         foreach (var item in urls)
         {
             var jwt = await auth.Login(item.URLPart, item.Secret);
             var claim = auth.Decrypt(jwt);
-            var existsTilt = await myTilt.HasTILTToday(claim);
+            var existsTilt = await myTilt.HasTILTToday(claim,tz);
             Assert.IsTrue(existsTilt);
         }
     }
