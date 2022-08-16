@@ -25,8 +25,8 @@ public partial class TestAddNewTilt
         var minutes = DateTime.UtcNow.Subtract(DateTime.UtcNow.Date).TotalMinutes;
         minutes--;
         await Runner
-              .AddSteps(_ => Given_Today_Is(DateTime.UtcNow))
-             .AddSteps(_ => Given_Exists_One_TILT_ForDate(DateTime.UtcNow.AddMinutes(-minutes)))
+              .AddSteps(_ => Given_Today_Is(DateTime.Now.Date))
+             .AddSteps(_ => Given_Exists_One_TILT_ForDate(DateTime.Now.Date.AddMinutes(1)))
              .AddAsyncSteps(_ => Then_Can_NOT_Add_A_New_TILT())
              .RunAsync();
     }

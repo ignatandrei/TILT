@@ -6,7 +6,7 @@
         {
             Text = "";
             var tz = TimeZoneInfo.Local;
-            this.TimeZoneString = tz.ToSerializedString();
+            this.TimeZoneString = tz.StandardName;
         }
     }
 }

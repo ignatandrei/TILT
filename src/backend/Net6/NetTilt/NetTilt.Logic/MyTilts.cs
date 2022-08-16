@@ -43,18 +43,16 @@ namespace NetTilt.Logic
             {
                 return null;
             }
-            try
-            {
-                //verify if there is a timezone
-                var tz = TimeZoneInfo.FindSystemTimeZoneById(note.TimeZoneString);
-                var ser = tz.ToSerializedString();
-                note.TimeZoneString = ser;
+            //verify if there is a timezone
+            var tz = TimeZoneInfo.FindSystemTimeZoneById(note.TimeZoneString);
+            if (tz == null)
+                throw new TimeZoneNotFoundException("cannot find " + note.TimeZoneString);
+            
+            var ser = tz.ToSerializedString();
+            //note.TimeZoneString = ser;
 
-            }
-            catch (Exception)
-            {
-
-            }
+            
+            
             note.IDURL = idUrl.Value;
             note.ID = 0;
             note.ForDate = DateTime.UtcNow;
