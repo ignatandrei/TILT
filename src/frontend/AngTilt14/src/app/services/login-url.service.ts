@@ -36,6 +36,8 @@ export class LoginUrlService {
     
   }
   public addTILT(tilt:TILT):Observable<TILT>{
+    var x=Intl.DateTimeFormat().resolvedOptions().timeZone;
+    tilt.timeZoneString= x;
     return this.http.post<TILT>(this.baseUrl+'TILT/AddTILT', tilt, {
       headers: new HttpHeaders(
         {

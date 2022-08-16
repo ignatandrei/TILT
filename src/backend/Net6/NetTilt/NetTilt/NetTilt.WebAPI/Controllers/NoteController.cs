@@ -34,7 +34,8 @@ public class TILTController : ControllerBase
         var tz = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
         if (tz == null)
             return NotFound("cannot find timezone:" + timeZone);
-
+        var ser = tz.ToSerializedString();
+        Console.WriteLine(ser);
         var data = await addLogic.HasTILTToday(this.User?.Claims.ToArray(),tz.ToSerializedString());
         Console.WriteLine("HAS TILT TODAY:" + data);
         return data;

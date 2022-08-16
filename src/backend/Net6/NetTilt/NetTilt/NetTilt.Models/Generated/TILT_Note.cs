@@ -30,7 +30,7 @@ namespace Generated
         [InverseProperty("IDNoteNavigation")]
         public virtual ICollection<TILT_Tag_Note> TILT_Tag_Note { get; set; }
         
-        [StringLength(150)]
+        [StringLength(250)]
         public string TimeZoneString { get; set; }
     }
 }

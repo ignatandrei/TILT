@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace NetTilt.Logic
 {
     [AutoGenerateInterface]
@@ -40,6 +42,18 @@ namespace NetTilt.Logic
             if(string.IsNullOrWhiteSpace( url))
             {
                 return null;
+            }
+            try
+            {
+                //verify if there is a timezone
+                var tz = TimeZoneInfo.FindSystemTimeZoneById(note.TimeZoneString);
+                var ser = tz.ToSerializedString();
+                note.TimeZoneString = ser;
+
+            }
+            catch (Exception)
+            {
+
             }
             note.IDURL = idUrl.Value;
             note.ID = 0;
