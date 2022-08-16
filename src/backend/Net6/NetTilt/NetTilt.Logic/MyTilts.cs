@@ -91,7 +91,7 @@ namespace NetTilt.Logic
             return privateHasTILTToday(c, timezone);
         }
         [AOPMarkerMethod]
-        async Task<bool> privateHasTILTToday(Claim[]? c, string timezone)
+        async Task<bool> privateHasTILTToday(Claim[]? c, string timeZone)
         {
             var all = await MyLatestTILTs(1, c);
             if (all == null)
@@ -102,10 +102,25 @@ namespace NetTilt.Logic
             var  it = all[0];
 
             var dateNowUTC = DateTime.UtcNow;
-            
-            var tz = TimeZoneInfo.FromSerializedString(timezone);
+            TimeZoneInfo? tz = null;
+            try
+            {
+                tz = TimeZoneInfo.FromSerializedString(timeZone);
+            }
+            catch (Exception)
+            {
+                //TODO: log
+                try
+                {
+                    tz = TimeZoneInfo.FindSystemTimeZoneById(timeZone);
+                }
+                catch (Exception)
+                {
+                    //TODO:log
+                }
+            }
             if (tz == null)
-                throw new TimeZoneNotFoundException(" cannote deserialize " + timezone);
+                throw new TimeZoneNotFoundException(" cannote deserialize " + timeZone);
             
             var localTimeNow= TimeZoneInfo.ConvertTimeFromUtc(dateNowUTC, tz);
             var data = it.ForDate ?? DateTime.UtcNow;
