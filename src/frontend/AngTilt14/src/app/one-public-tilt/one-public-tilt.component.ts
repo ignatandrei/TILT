@@ -117,8 +117,7 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     );
 
   }
-  copyWeek(nr: number): void{
-
+  private weekTilts(nr:number): string{
     var str="TILTS for week "+nr;
     var tilts = this.tiltsFormArray.controls
       .map(it=>it.value as TILT)
@@ -128,6 +127,46 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     ;
     str += '\n'+tilts;
     str += '\n See my tilts at '+ environment.url+'AngTilt/tilt/public/'+this.profileForm.controls['url'].value;
+    return str;
+  }
+  copyWeek(nr: number): void{
+
+    this.copyToClipboard(this.weekTilts(nr));
+    return ;
+  }
+  shareWeek(nr: number): void{
+
+    if(!this.share(this.weekTilts(nr)))
+    {
+      window.alert('sorry, share not available ... will improve');
+    }
+    return ;
+  }
+    private shareOrCopy(str: string){
+
+    if(!this.share(str))
+      this.copyToClipboard(str);
+  }
+  private share(str:string): boolean{
+
+    if ('share' in navigator) {
+      navigator
+      .share({
+        title: 'TILT!',
+        text: str,
+        url: environment.url + 'AngTilt/tilt/public/'+this.profileForm.controls['url'].value
+      })
+      .then(() => {
+        console.log('Callback after sharing');
+      })
+      .catch(console.error);
+      return true;
+    } else {
+      return false;
+    }
+  }
+  private copyToClipboard(str:string){
+
     const pending = 
             this.clipboard.beginCopy(str);
     let remainingAttempts = 3;
@@ -141,7 +180,8 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
       }
     };
     attempt();
-    return ;
+    
   }
+
   
 }
