@@ -36,12 +36,23 @@ jobs:
             cd src/backend/Net6/NetTilt 
             dotnet build --no-restore
 
-    - name: Test
+    - name: Test 
       run: |
             cd src/backend/Net6/NetTilt 
             cd NetTilt.Tests
             dotnet test --no-build #--verbosity normal
     
+    - name: tests for zyborg
+      uses: zyborg/dotnet-tests-report@v1
+      with:
+        project_path: src/backend/Net6/NetTilt/NetTilt.Tests/
+        report_name: tilt_tests
+        report_title: TILT Tests
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        gist_name: tilt_tests.md
+        gist_badge_label: 'TILT TESTS: %Counters_passed%/%Counters_total%'
+        gist_token: ${{ secrets.GIST_TOKEN }}
+
     - name: premark
       shell: pwsh
       run: |
