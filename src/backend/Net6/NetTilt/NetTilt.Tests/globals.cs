@@ -25,6 +25,9 @@ global using Microsoft.Extensions.Configuration;
 global using Lib.AspNetCore.ServerTiming;
 global using LightBDD.Framework.Expectations;
 global using LightBDD.Framework.Formatting.Values;
+global using Ductus.FluentDocker.Builders;
+global using Ductus.FluentDocker.Services;
+
 
 //[assembly: LightBddScope]
 [assembly: ConfiguredLightBddScope]
