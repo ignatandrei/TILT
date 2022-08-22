@@ -6,7 +6,7 @@ public partial class RealSqlite
 {
     public override void StartDatabase()
     {
-        Given_Empty_Database_Setup();
+        ConstructServiceProvider();
     }
     
     public override void StopDatabase()

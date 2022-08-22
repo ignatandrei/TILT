@@ -11,7 +11,7 @@ public  abstract partial class RealDBTests: FeatureFixture
     public abstract IServiceCollection AddDB( IServiceCollection sc);
 
 
-    public void Given_Empty_Database_Setup()
+    public void ConstructServiceProvider()
     {
         string guid = Guid.NewGuid().ToString("N");
 

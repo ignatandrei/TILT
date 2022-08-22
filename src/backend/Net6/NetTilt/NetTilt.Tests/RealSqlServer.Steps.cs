@@ -29,7 +29,7 @@ public partial class RealSqlServer : RealDBTests
     .WaitForMessageInLog("Starting up database 'tempdb'.", TimeSpan.FromSeconds(30))
     .Build()
     .Start();
-        Given_Empty_Database_Setup();
+        ConstructServiceProvider();
 
     }
     static int uniq = 0;
