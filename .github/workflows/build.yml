@@ -45,6 +45,7 @@ jobs:
     - name: tests for zyborg
       uses: zyborg/dotnet-tests-report@v1
       with:
+        skip_check_run: true
         project_path: src/backend/Net6/NetTilt/NetTilt.Tests/
         report_name: tilt_tests
         report_title: TILT Tests
@@ -54,6 +55,12 @@ jobs:
         gist_badge_label: 'TILT TESTS: %Counters_passed%/%Counters_total%'
         gist_token: ${{ secrets.GIST_TOKEN }}
         trx_xsl_path: trx2md.xsl
+
+    - name: test
+      shell: pwsh
+      run:  |
+            cd src/backend/Net6/NetTilt 
+            Get-ChildItem -Filter trx2md.xsl
 
     - name: premark
       shell: pwsh
