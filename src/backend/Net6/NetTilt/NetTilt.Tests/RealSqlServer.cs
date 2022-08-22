@@ -1,10 +1,10 @@
-﻿using System.Text;
-
-namespace NetTilt.Tests;
-[FeatureDescription(@"All tests")]
-[Label("Sqlite")]
-public partial class RealSqlServer
+﻿namespace NetTilt.Tests;
+public  abstract partial class RealDBTests: FeatureFixture
 {
+    public abstract void StartDatabase();
+
+    public abstract void StopDatabase();
+    
     [SetUp]
     public void Start()
     {
@@ -15,14 +15,18 @@ public partial class RealSqlServer
     {
         StopDatabase();
     }
+}
 
-
+[FeatureDescription(@"All tests")]
+[Label("Sqlite")]
+public partial class RealSqlServer
+{
+    
     [Scenario]
     public async Task NoUsers() //scenario name
     {
         await Runner
             
-            .AddSteps(_ => Given_Empty_Database_Setup())
              .AddAsyncSteps(
             _ => Then_No_User_IsRegistered(),
              _ => Then_No_Login()
@@ -42,7 +46,6 @@ public partial class RealSqlServer
         );
 
         await Runner
-             .AddSteps(_ => Given_Empty_Database_Setup())
              .AddAsyncSteps(
             _ => When_Those_Users_URL_To_Be_Registerer(users),
              _ => Then_The_Users_Could_Login(users),
@@ -68,7 +71,6 @@ public partial class RealSqlServer
         );
 
         await Runner
-             .AddSteps(_ => Given_Empty_Database_Setup())
              .AddAsyncSteps(
             _ => When_Those_Users_URL_To_Be_Registerer(users),
              _ => Then_The_Users_Have_No_Tilt_Today(users),
@@ -91,7 +93,6 @@ public partial class RealSqlServer
         );
 
         await Runner
-             .AddSteps(_ => Given_Empty_Database_Setup())
              .AddAsyncSteps(
             _ => When_Those_Users_URL_To_Be_Registerer(users),
              _ => Then_Public_Tilts_Have_No_Items(users),

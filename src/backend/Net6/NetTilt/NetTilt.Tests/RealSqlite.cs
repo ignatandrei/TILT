@@ -4,13 +4,12 @@
 
 public partial class RealSqlite
 {
-    [SetUp]
-    public void Start()
+    public override void StartDatabase()
     {
         Given_Empty_Database_Setup();
     }
-    [TearDown]
-    public void Stop()
+    
+    public override void StopDatabase()
     {
         
     }
@@ -94,4 +93,6 @@ public partial class RealSqlite
              )
              .RunAsync();
     }
+
+    
 }

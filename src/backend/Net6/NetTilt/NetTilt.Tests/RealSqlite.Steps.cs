@@ -1,13 +1,13 @@
 ﻿
 namespace NetTilt.Tests;
 
-public partial class RealSqlite : FeatureFixture
+public partial class RealSqlite : RealDBTests
 {
     ServiceProvider? serviceProvider;
 
     public void Given_Empty_Database_Setup()
     {
-        string guid = Guid.NewGuid().ToString("x");
+        string guid = Guid.NewGuid().ToString("N");
 
             var inMemorySettings = new Dictionary<string, string> {
 {"TopLevelKey", "TopLevelValue"},
