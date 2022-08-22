@@ -50,8 +50,10 @@ jobs:
         report_title: TILT Tests
         github_token: ${{ secrets.GITHUB_TOKEN }}
         gist_name: tilt_tests.md
+        gist_badge_message: '__'
         gist_badge_label: 'TILT TESTS: %Counters_passed%/%Counters_total%'
         gist_token: ${{ secrets.GIST_TOKEN }}
+        trx_xsl_path: trx2md.xsl
 
     - name: premark
       shell: pwsh
