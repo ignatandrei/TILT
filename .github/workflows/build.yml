@@ -54,14 +54,13 @@ jobs:
         gist_badge_message: '__'
         gist_badge_label: 'TILT TESTS: %Counters_passed%/%Counters_total%'
         gist_token: ${{ secrets.GIST_TOKEN }}
-        trx_xsl_path: trx2md.xsl
+        # trx_xsl_path: trx2md.xsl
 
     - name: test
       shell: pwsh
       run:  |
-            cd src/backend/Net6/NetTilt 
             Get-ChildItem -Filter trx2md.xsl -Recurse
-            
+            gci
 
     - name: premark
       shell: pwsh
