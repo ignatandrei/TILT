@@ -1,5 +1,7 @@
-﻿namespace NetTilt.Tests;
+﻿using Microsoft.Extensions.DependencyInjection;
+using NetTilt.Logic;
 
+namespace NetTilt.Tests;
 public  abstract partial class RealDBTests: FeatureFixture
 {
     public abstract void StartDatabase();
