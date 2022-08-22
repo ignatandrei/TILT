@@ -1,89 +1,39 @@
-﻿namespace NetTilt.Tests;
+﻿using System.Threading;
+
+namespace NetTilt.Tests;
 
 [FeatureDescription(@"All tests")]
 [Label("SqlServer")]
 public partial class RealSqlServer
 {
-    
-    [Scenario]
-    public async Task NoUsers() //scenario name
+
+    IContainerService? container;
+
+
+    public override void StopDatabase()
     {
-        await Runner
-            
-             .AddAsyncSteps(
-            _ => Then_No_User_IsRegistered(),
-             _ => Then_No_Login()
-             )
-             .RunAsync();
+        if (container == null)
+            return;
+        container.Dispose();
+        container = null;
     }
-    [Scenario]
-    public async Task LoginUsers() //scenario name
+    public override void StartDatabase()
     {
-        var users = Table.For(
+        //string guid = Guid.NewGuid().ToString("N");
+        string uniqueId = Interlocked.Increment(ref uniq).ToString(); //Guid.NewGuid().ToString("N");
+        container =
+    new Builder()
+    .UseContainer()
+    .WithName("sql" + uniqueId)
+    .UseImage("mcr.microsoft.com/mssql/server:2022-latest")
+    .ExposePort(1433, 1433)
+    .WithEnvironment("SA_PASSWORD=<YourStrong@Passw0rd>", "ACCEPT_EULA=Y")
+    .WaitForMessageInLog("Starting up database 'tempdb'.", TimeSpan.FromSeconds(30))
+    .Build()
+    .Start();
+        ConstructServiceProvider();
 
-            new TILT_URL()
-            {
-                URLPart = "test",
-                Secret = "secretTest"
-            }
-        );
-
-        await Runner
-             .AddAsyncSteps(
-            _ => When_Those_Users_URL_To_Be_Registerer(users),
-             _ => Then_The_Users_Could_Login(users),
-             _ => And_The_JWT_Can_Be_Decrypted(users),
-             _ => And_The_JWT_Can_Be_Decrypted_And_Have_Ids(users),
-              _ => And_Exists_Public_Tilts(users),
-              _ => And_No_Tilts_Yet(users)
-
-             )
-             .RunAsync();
     }
-
-    [Scenario]
-    public async Task CreateTilts()
-    {
-        var users = Table.For(
-
-            new TILT_URL()
-            {
-                URLPart = "test",
-                Secret = "secretTest"
-            }
-        );
-
-        await Runner
-             .AddAsyncSteps(
-            _ => When_Those_Users_URL_To_Be_Registerer(users),
-             _ => Then_The_Users_Have_No_Tilt_Today(users),
-             _ => When_The_Users_Make_A_Tilt(users),
-             _ => Then_The_Users_Have_Tilt_Today(users),
-             _ => And_Have_Tilts(users)
-             )
-             .RunAsync();
-    }
-    [Scenario]
-    public async Task VerifyPublicTiltsHasTheNewTilt()
-    {
-        var users = Table.For(
-
-            new TILT_URL()
-            {
-                URLPart = "test",
-                Secret = "secretTest"
-            }
-        );
-
-        await Runner
-             .AddAsyncSteps(
-            _ => When_Those_Users_URL_To_Be_Registerer(users),
-             _ => Then_Public_Tilts_Have_No_Items(users),
-             _ => Then_Public_Tilts_Have_No_Items(users),//verify caching
-             _ => When_The_Users_Make_A_Tilt(users),
-             _ => And_Have_Tilts(users)
-             )
-             .RunAsync();
-    }
+    static int uniq = 0;
 
 }
