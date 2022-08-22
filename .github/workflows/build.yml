@@ -42,19 +42,19 @@ jobs:
             cd NetTilt.Tests
             dotnet test --no-build #--verbosity normal
     
-    - name: tests for zyborg
-      uses: zyborg/dotnet-tests-report@v1
-      with:
-        skip_check_run: true
-        project_path: src/backend/Net6/NetTilt/NetTilt.Tests
-        report_name: csharpprolog_tests
-        report_title: CSharpProlog Tests
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        gist_name: csharpprolog_tests.md
-        gist_badge_label: 'Tests passed: %Counters_passed%/%Counters_total%'
-        gist_badge_message: '__'
-        gist_token: ${{ secrets.GIST_TOKEN }}
-        # trx_xsl_path: trx2md.xsl
+    # - name: tests for zyborg
+    #   uses: zyborg/dotnet-tests-report@v1
+    #   with:
+    #     skip_check_run: true
+    #     project_path: src/backend/Net6/NetTilt/NetTilt.Tests
+    #     report_name: csharpprolog_tests
+    #     report_title: CSharpProlog Tests
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+    #     gist_name: csharpprolog_tests.md
+    #     gist_badge_label: 'Tests passed: %Counters_passed%/%Counters_total%'
+    #     gist_badge_message: '__'
+    #     gist_token: ${{ secrets.GIST_TOKEN }}
+    #     # trx_xsl_path: trx2md.xsl
 
     - name: find trx
       shell: pwsh
