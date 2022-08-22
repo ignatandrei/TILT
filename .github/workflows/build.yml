@@ -46,20 +46,21 @@ jobs:
       uses: zyborg/dotnet-tests-report@v1
       with:
         skip_check_run: true
-        project_path: src/backend/Net6/NetTilt/NetTilt.Tests/
-        report_name: tilt_tests
-        report_title: TILT Tests
+        project_path: src/backend/Net6/NetTilt/NetTilt.Tests
+        report_name: csharpprolog_tests
+        report_title: CSharpProlog Tests
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        gist_name: tilt_tests.md
+        gist_name: csharpprolog_tests.md
+        gist_badge_label: 'Tests passed: %Counters_passed%/%Counters_total%'
         gist_badge_message: '__'
-        gist_badge_label: 'TILT TESTS: %Counters_passed%/%Counters_total%'
         gist_token: ${{ secrets.GIST_TOKEN }}
         # trx_xsl_path: trx2md.xsl
 
-    - name: test
+    - name: find trx
       shell: pwsh
       run:  |
-            Get-ChildItem -Filter trx2md.xsl -Recurse
+            Get-ChildItem -Filter *trx*.* -Recurse
+            Get-ChildItem -Filter *.trx -Recurse
             gci
 
     - name: premark
