@@ -15,11 +15,16 @@ export class AmsService {
 
   }
   public AmsDataValues():Observable<AMSData[]>{
-    return this.http.get<ReceivedAMS[]>(this.baseUrl+'ams/all')
+    var url=this.baseUrl+'ams/all';
+    return this.http.get<ReceivedAMS[]>(url)
       .pipe
       (
         tap(it=>console.log('received',it)),
-        map(it=> it.map(a=> new AMSData(a.value)))
+        map(it=> it.map(a=> {
+            var x= new AMSData(a.value);
+            x.urlOfData = url;
+            return x;
+        }))
       );
   }
 }

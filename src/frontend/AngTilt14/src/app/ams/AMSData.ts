@@ -14,6 +14,7 @@ export class AMSData {
       Object.assign(this,copyData);
     }
   }
+  public urlOfData: string|null = null;
   public version: string|null = null;
   public authors: string|null = null;
   public sourceCommit: string|null = null;

@@ -2,10 +2,13 @@
 Made by {{ams?.authors}} on {{ams?.TheDate}} <br />   
 </p>
 
-Repo:        
 <a *ngIf="ams?.isInCI"  target="_blank" href="{{ams?.sourceCommit}}">Repo: {{ams?.repoUrl}}</a><br /> 
 
-Licences Angular: <a href="/3rdpartylicenses.txt"></a>
-Licences .NET Core: <a href="/netcorelicences.txt"></a>
-Full data:
+
+ <a href="/3rdpartylicenses.txt" target="_blank">Licences Angular</a>
+&nbsp;
+ <a href="/netcorelicences.txt" target="_blank">Licences .NET Core</a>
+ &nbsp;
+ <a href="{{ams?.urlOfData}}"target="_blank">AMS</a>
+<p>Full data:</p>
 <pre>{{ ams | json }}</pre>
