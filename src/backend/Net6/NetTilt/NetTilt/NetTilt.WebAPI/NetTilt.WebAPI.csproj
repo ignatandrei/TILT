@@ -72,7 +72,7 @@
 	  <EmbeddedResource Include="controller.txt" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="wwwroot\AngTilt\" />
+	  <Folder Include="wwwroot\" />
 	</ItemGroup>
 	<PropertyGroup>
 		<!--<GenerateStep>Controller</GenerateStep>-->
