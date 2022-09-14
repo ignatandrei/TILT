@@ -50,6 +50,8 @@ jobs:
             # ls -lh
             .\AOPMethod.ps1
             cd NetTilt/NetTilt.WebAPI 
+            copy-item ./wwwroot/AngTilt/3rdpartylicenses.txt ./wwwroot/ 
+            gci wwwroot
             dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp -r linux-x64
 
       - name: Upload artifact for deployment job
