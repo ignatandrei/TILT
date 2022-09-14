@@ -45,6 +45,8 @@ jobs:
         shell: pwsh
         run: |
             cd src/backend/Net6/NetTilt
+            dotnet tool install
+            dotnet dotnet-project-licenses -i NetTilt\NetTilt.WebAPI -o --outfile NetTilt\NetTilt.WebAPI\wwwroot\netcorelicences.txt -t
             # ls -lh
             .\AOPMethod.ps1
             cd NetTilt/NetTilt.WebAPI 

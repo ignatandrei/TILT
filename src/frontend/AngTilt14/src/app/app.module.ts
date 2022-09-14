@@ -24,6 +24,7 @@ import { BrowserStorageService} from './general/storage/browseStorage';
 import { DisplayTILTComponent } from './display-tilt/display-tilt.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { AboutComponent } from './about/about.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +34,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     OnePublicTiltComponent,
     FormatDatePipe,
     LoginUrlComponent,
-    DisplayTILTComponent
+    DisplayTILTComponent,
+    AboutComponent
   ],
   imports: [
     CalendarModule.forRoot({

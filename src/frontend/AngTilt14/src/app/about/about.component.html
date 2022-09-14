@@ -1,0 +1,11 @@
+<p>
+Made by {{ams?.authors}} on {{ams?.TheDate}} <br />   
+</p>
+
+Repo:        
+<a *ngIf="ams?.isInCI"  target="_blank" href="{{ams?.sourceCommit}}">Repo: {{ams?.repoUrl}}</a><br /> 
+
+Licences Angular: <a href="/3rdpartylicenses.txt"></a>
+Licences .NET Core: <a href="/netcorelicences.txt"></a>
+Full data:
+<pre>{{ ams | json }}</pre>
