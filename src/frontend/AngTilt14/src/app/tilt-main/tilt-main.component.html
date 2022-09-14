@@ -7,6 +7,7 @@
     <mat-nav-list>
       <a mat-list-item  routerLink="/tilt/public/">Public Tilts</a>
       <a mat-list-item  routerLink="/tilt/my">My Tilts</a>  
+      <a mat-list-item  routerLink="about">About</a>  
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -28,11 +29,14 @@
       <button mat-raised-button  color="accent" class="publicUrls"  routerLink="/tilt/public/">Public TILTS</button>&nbsp;
       <button mat-raised-button  color="warn" class="myTilts" routerLink="/tilt/my">My TILTS</button>
 
+      <button mat-raised-button  color="primary" class="about" routerLink="/about">About</button>
       <button mat-button [matMenuTriggerFor]="menu" *ngIf="false">Help</button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="showTutorial()">Show Tutorial</button>
         <a mat-menu-item routerLink="/tilt/public/">Public TILTS</a>
         <a mat-menu-item routerLink="/tilt/my">My TILTS</a>
+        <a mat-menu-item routerLink="/about">About</a>
+    
       </mat-menu>
     </mat-toolbar>
     

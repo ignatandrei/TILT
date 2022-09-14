@@ -5,6 +5,7 @@ import {
   Routes,
   TitleStrategy,
 } from '@angular/router';
+import { AboutComponent } from './about/about.component';
 import { LoginUrlGuard } from './login-url.guard';
 import { LoginUrlComponent } from './login-url/login-url.component';
 import { MyTiltComponent } from './my-tilt/my-tilt.component';
@@ -31,6 +32,11 @@ const routes: Routes = [
     component: LoginUrlComponent,
     title: 'Login to add a tilt',
   },
+  {
+    path:'about',
+    component: AboutComponent,
+    title:'About TILT'
+  }
 ];
 
 @Injectable()
