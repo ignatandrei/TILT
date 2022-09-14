@@ -46,7 +46,8 @@ jobs:
         run: |
             cd src/backend/Net6/NetTilt
             dotnet tool restore
-            dotnet dotnet-project-licenses -i NetTilt\NetTilt.WebAPI -o --outfile NetTilt\NetTilt.WebAPI\wwwroot\netcorelicences.txt -t
+            gci
+            dotnet dotnet-project-licenses -i ./NetTilt/NetTilt.WebAPI -o --outfile NetTilt\NetTilt.WebAPI\wwwroot\netcorelicences.txt -t
             # ls -lh
             .\AOPMethod.ps1
             cd NetTilt/NetTilt.WebAPI 
