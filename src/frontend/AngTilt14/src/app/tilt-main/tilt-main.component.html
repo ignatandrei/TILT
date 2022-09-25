@@ -41,7 +41,9 @@
     </mat-toolbar>
     
     <router-outlet></router-outlet>
-    <footer><small>
+    <footer>
+      <p></p>
+      <small>
       
       <a *ngIf="ams?.isInCI"  target="_blank" href="{{ams?.sourceCommit}}">Repo: {{ams?.repoUrl}}</a><br /> 
       Made by {{ams?.authors}} on {{ams?.TheDate}} <br /> 
