@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { AmsService } from '../ams/ams.service';
 import { AMSData } from '../ams/AMSData';
 
@@ -10,8 +11,11 @@ import { AMSData } from '../ams/AMSData';
 export class AboutComponent implements OnInit {
 
   ams: AMSData|undefined=undefined;
+  public urlAPI: string=''; 
 
-  constructor(private amsService: AmsService) { }
+  constructor(private amsService: AmsService) { 
+      this.urlAPI= environment.url;
+  }
 
   ngOnInit(): void {
     this.amsService.AmsDataValues().subscribe(

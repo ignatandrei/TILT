@@ -1,14 +1,31 @@
-<p>
+<h1>
 Made by {{ams?.authors}} on {{ams?.TheDate}} <br />   
-</p>
+</h1>
+<h1>
+    Licences
+</h1>
 
-<a *ngIf="ams?.isInCI"  target="_blank" href="{{ams?.sourceCommit}}">Repo: {{ams?.repoUrl}}</a><br /> 
-
-
- <a href="/3rdpartylicenses.txt" target="_blank">Licences Angular</a>
+<p>
+<a href="{{urlAPI}}3rdpartylicenses.txt" target="_blank">Licences Angular</a>
 &nbsp;
- <a href="/netcorelicences.txt" target="_blank">Licences .NET Core</a>
+ <a href="{{urlAPI}}netcorelicences.txt" target="_blank">Licences .NET Core</a>
  &nbsp;
- <a href="{{ams?.urlOfData}}"target="_blank">AMS</a>
-<p>Full data:</p>
+</p>
+<h1>Programmers stuff</h1>
+
+<p>
+<a *ngIf="ams?.isInCI"  target="_blank" href="{{ams?.sourceCommit}}">Repo: {{ams?.repoUrl}}</a>
+&nbsp; 
+ <a href="{{urlAPI}}ams" target="_blank">Gui History</a>
+ &nbsp;
+ <a href="{{urlAPI}}BlocklyAutomation"  target="_blank">BlocklyAutomation</a>
+ &nbsp;
+ <a href="{{urlAPI}}swagger" target="_blank">Swagger</a>
+ &nbsp;
+ <a href="{{urlAPI}}healthchecks-ui" target="_blank">HealthCheckUI</a>
+ &nbsp;
+</p>
+<p>Full data of <a href="{{ams?.urlOfData}}" target="_blank">versioning</a>
+    </p>
+
 <pre>{{ ams | json }}</pre>
