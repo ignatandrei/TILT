@@ -1,4 +1,6 @@
 
+using UsefullExtensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -297,6 +299,7 @@ using (var activity = source.StartActivity("StartApp"))
     activity?.SetTag("On", DateTime.UtcNow);
     activity?.SetStatus(Status.Ok);
 }
+app.MapAllUsefull();
 
 app.MapFallbackToFile("AngTilt/{*path:nonfile}", "/AngTilt/index.html");
 app.Run();

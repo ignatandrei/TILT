@@ -12,20 +12,38 @@ Made by {{ams?.authors}} on {{ams?.TheDate}} <br />
  &nbsp;
 </p>
 <h1>Programmers stuff</h1>
+<p></p>
 
-<p>
+<h2> Info about versions</h2>  
 <a *ngIf="ams?.isInCI"  target="_blank" href="{{ams?.sourceCommit}}">Repo: {{ams?.repoUrl}}</a>
 &nbsp; 
- <a href="{{urlAPI}}ams" target="_blank">Gui History</a>
+ <a href="{{urlAPI}}ams" target="_blank">HistoryUI</a>
  &nbsp;
+ <a href="{{ams?.urlOfData}}" target="_blank">History Json</a>
+ 
+ <p></p>
+ 
+ <h2> Automation </h2>
+ 
  <a href="{{urlAPI}}BlocklyAutomation"  target="_blank">BlocklyAutomation</a>
  &nbsp;
- <a href="{{urlAPI}}swagger" target="_blank">Swagger</a>
+
+ <a href="{{urlAPI}}swagger" target="_blank">SwaggerUI</a>
  &nbsp;
+
+ <a href="{{urlAPI}}swagger/v1/swagger.json" target="_blank">Swagger Json</a>
+ 
+ <p></p>
+ 
+ <h2> HealthCheck</h2>
+
  <a href="{{urlAPI}}healthchecks-ui" target="_blank">HealthCheckUI</a>
  &nbsp;
-</p>
-<p>Full data of <a href="{{ams?.urlOfData}}" target="_blank">versioning</a>
+ <a href="{{urlAPI}}healthz" target="_blank">HealthCheck Json</a>
+ &nbsp;
+
+<p></p>
+ <p>Full data of <a href="{{ams?.urlOfData}}" target="_blank">versioning</a>
     </p>
 
 <pre>{{ ams | json }}</pre>
