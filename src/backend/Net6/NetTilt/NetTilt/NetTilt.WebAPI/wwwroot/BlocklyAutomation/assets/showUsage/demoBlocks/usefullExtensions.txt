@@ -1,0 +1,90 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="text_print" x="108" y="-29">
+    <value name="TEXT">
+      <block type="get__api_usefull_user">
+        <value name="override_Host">
+          <block type="text">
+            <field name="TEXT"> </field>
+          </block>
+        </value>
+        <value name="override_Port">
+          <block type="math_number">
+            <field name="NUM">0</field>
+          </block>
+        </value>
+      </block>
+    </value>
+    <next>
+      <block type="text_print">
+        <value name="TEXT">
+          <block type="get__api_usefull_environment">
+            <value name="override_Host">
+              <block type="text">
+                <field name="TEXT"> </field>
+              </block>
+            </value>
+            <value name="override_Port">
+              <block type="math_number">
+                <field name="NUM">0</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <next>
+          <block type="text_print">
+            <value name="TEXT">
+              <block type="get__api_usefull_graph_text">
+                <value name="override_Host">
+                  <block type="text">
+                    <field name="TEXT"> </field>
+                  </block>
+                </value>
+                <value name="override_Port">
+                  <block type="math_number">
+                    <field name="NUM">0</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="text_print">
+                <value name="TEXT">
+                  <block type="get__api_usefull_errorPure">
+                    <value name="override_Host">
+                      <block type="text">
+                        <field name="TEXT"> </field>
+                      </block>
+                    </value>
+                    <value name="override_Port">
+                      <block type="math_number">
+                        <field name="NUM">0</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <block type="text_print">
+                    <value name="TEXT">
+                      <block type="get__api_usefull_errorWithILogger">
+                        <value name="override_Host">
+                          <block type="text">
+                            <field name="TEXT"> </field>
+                          </block>
+                        </value>
+                        <value name="override_Port">
+                          <block type="math_number">
+                            <field name="NUM">0</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>

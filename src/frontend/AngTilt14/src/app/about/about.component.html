@@ -12,8 +12,9 @@ Made by {{ams?.authors}} on {{ams?.TheDate}} <br />
  &nbsp;
 </p>
 <h1>Programmers stuff</h1>
-<p></p>
 
+
+<p></p>
 <h2> Info about versions</h2>  
 <a *ngIf="ams?.isInCI"  target="_blank" href="{{ams?.sourceCommit}}">Repo: {{ams?.repoUrl}}</a>
 &nbsp; 
@@ -35,15 +36,15 @@ Made by {{ams?.authors}} on {{ams?.TheDate}} <br />
  
  <p></p>
  
- <h2> HealthCheck</h2>
+
+ <h2> Info about deployment</h2>  
+ 
+ <p></p>
+ <a href="{{urlAPI}}BlocklyAutomation/automation/loadexample/usefullExtensions" target="_blank">Environment,User and more</a>
+  
+ <p></p>
 
  <a href="{{urlAPI}}healthchecks-ui" target="_blank">HealthCheckUI</a>
  &nbsp;
  <a href="{{urlAPI}}healthz" target="_blank">HealthCheck Json</a>
  &nbsp;
-
-<p></p>
- <p>Full data of <a href="{{ams?.urlOfData}}" target="_blank">versioning</a>
-    </p>
-
-<pre>{{ ams | json }}</pre>
