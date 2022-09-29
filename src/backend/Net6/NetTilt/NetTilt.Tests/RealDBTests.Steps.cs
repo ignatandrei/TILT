@@ -91,8 +91,8 @@ partial class RealDBTests
         foreach (var item in urls)
         {
             
-            var q = await (tilts.LatestTILTs(item.URLPart, 10));
-            var data = await q.ToArrayAsync();
+            
+            var data = await ((tilts.LatestTILTs(item.URLPart, 10)).ToArrayAsync());
             Assert.AreEqual(0, data.Length);
         }
     }
@@ -123,9 +123,8 @@ partial class RealDBTests
         var publicTilts = serviceProvider.GetRequiredService<PublicTILTS>();
         foreach (var item in urls)
         {
-            var a= await publicTilts.LatestTILTs(item.URLPart, 1);
+            var number = await (publicTilts.LatestTILTs(item.URLPart, 1).ToArrayAsync());
             
-            var number = await (a.ToArrayAsync());
             Assert.AreEqual(1, number?.Length);
         }
     }
