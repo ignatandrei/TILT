@@ -40,7 +40,8 @@ namespace NetTilt.Logic
         {
             if (cache.TryGetValue<TILT_Note_Table[]>(urlPart, out var result))
             {
-                await foreach(var item in result.ToAsyncEnumerable())
+                //why I cant return result.ToAsyncEnumerable() ?
+                await foreach (var item in result.ToAsyncEnumerable())
                 {
                     //await Task.Delay(3000);
                     yield return item;
@@ -68,17 +69,16 @@ namespace NetTilt.Logic
             };
             search.PageNumber = 1;
             search.PageSize = numberTILTS;
-            var data = searchNotes.TILT_NoteFind_AsyncEnumerable(search);
             var ret = new List<TILT_Note_Table>();
+            
+            var dataFromDB = searchNotes.TILT_NoteFind_AsyncEnumerable(search);
+            var data= dataFromDB.Select(it => { var n = new TILT_Note_Table(); n.CopyFrom(it); return n; });
             await foreach (var it in data)
             {
                 await Task.Delay(1000);
-                var n = new TILT_Note_Table();
-                n.CopyFrom(it);
-                ret.Add(n);
-                yield return n;
+                yield return it;
             }
-            //var ret = data.Select(it => { var n = new TILT_Note_Table(); n.CopyFrom(it); return n; }).ToArray();
+            //var ret = 
             cache.Set(urlPart, ret.ToArray(),DateTimeOffset.Now.AddDays(10));
             //return ret.ToAsyncEnumerable();
         }
