@@ -2,11 +2,11 @@
   <!-- <input type="text" class="form-control" id="name"
     formControlName="url">    -->
   <h1>
-    TILTS for
+    {{tiltsFormArray.controls.length}} TILTS for
 
     <a  routerLink="/tilt/public/{{ profileForm.value.url }}">{{
       profileForm.value.url
-    }}</a> on {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
+    }}</a> until {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
 
   </h1>
   <mat-tab-group animationDuration="2000ms">
