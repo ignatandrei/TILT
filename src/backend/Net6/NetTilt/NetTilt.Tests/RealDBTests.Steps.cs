@@ -7,7 +7,7 @@ partial class RealDBTests
     public async Task Then_No_User_IsRegistered()
     {
         var tiltsUrl = serviceProvider.GetRequiredService<IPublicTILTS>();
-        var data = await tiltsUrl.PublicTiltsURL().ToArrayAsync();
+        var data = await (tiltsUrl.PublicTiltsURL().ToArrayAsync());
         Assert.NotNull(data);
         Assert.IsEmpty(data);
     }
@@ -64,7 +64,7 @@ partial class RealDBTests
     {
         List<long> ids = new();
         var tilts = serviceProvider.GetRequiredService<IPublicTILTS>();
-        var data = await tilts.PublicTiltsURL().ToArrayAsync();
+        var data = await (tilts.PublicTiltsURL().ToArrayAsync());
         data = data.OrderBy(it => it).ToArray();
 
         var all = urls.Select(it => it.URLPart).OrderBy(it => it).ToArray();
@@ -90,7 +90,9 @@ partial class RealDBTests
         var tilts = serviceProvider.GetRequiredService<IPublicTILTS>();
         foreach (var item in urls)
         {
-            var data = await tilts.LatestTILTs(item.URLPart, 10);
+            
+            var q = await (tilts.LatestTILTs(item.URLPart, 10));
+            var data = await q.ToArrayAsync();
             Assert.AreEqual(0, data.Length);
         }
     }
@@ -112,7 +114,7 @@ partial class RealDBTests
         var publicTilts = serviceProvider.GetRequiredService<IPublicTILTS>();
         foreach (var item in urls)
         {
-            var number = await publicTilts.LatestTILTs(item.URLPart, 1);
+            var number = await (publicTilts.LatestTILTs(item.URLPart, 1).ToArrayAsync());
             Assert.AreEqual(0, number?.Length ?? 0);
         }
     }
@@ -121,7 +123,9 @@ partial class RealDBTests
         var publicTilts = serviceProvider.GetRequiredService<PublicTILTS>();
         foreach (var item in urls)
         {
-            var number = await publicTilts.LatestTILTs(item.URLPart, 1);
+            var a= await publicTilts.LatestTILTs(item.URLPart, 1);
+            
+            var number = await (a.ToArrayAsync());
             Assert.AreEqual(1, number?.Length);
         }
     }
@@ -163,14 +167,14 @@ partial class RealDBTests
         var tilts = serviceProvider.GetRequiredService<IPublicTILTS>();
         foreach (var item in urls)
         {
-            var data = await tilts.LatestTILTs(item.URLPart, 10);
+            var data = await (tilts.LatestTILTs(item.URLPart, 10).ToArrayAsync());
             Assert.AreEqual(1, data.Length);
         }
     }
     public async Task Then_The_Users_Have_Tilts(InputTable<TILT_URL> urls)
     {
         var auth = serviceProvider.GetRequiredService<IAuthUrl>();
-        var myTilt = serviceProvider.GetRequiredService<MyTilts>();
+        var myTilt = serviceProvider.GetRequiredService<IMyTilts>();
         foreach (var item in urls)
         {
             var jwt = await auth.Login(item.URLPart, item.Secret);

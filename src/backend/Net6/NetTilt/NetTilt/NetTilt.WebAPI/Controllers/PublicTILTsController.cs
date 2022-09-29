@@ -24,7 +24,7 @@ public class PublicTILTsController : ControllerBase
         return publicTILTS.PublicTiltsURL();
     }
     [HttpGet("{urlPart}/{numberTILTS}")]
-    public async Task<ActionResult<TILT_Note_Table[]?>> LatestTILTs(string urlPart, int numberTILTS, [FromServices] ISearchDataTILT_Note searchNotes)
+    public async Task<ActionResult<IAsyncEnumerable<TILT_Note_Table[]>?>> LatestTILTs(string urlPart, int numberTILTS, [FromServices] ISearchDataTILT_Note searchNotes)
     {
         var data = await publicTILTS.LatestTILTs(urlPart,numberTILTS);
 
@@ -33,6 +33,6 @@ public class PublicTILTsController : ControllerBase
             return new NotFoundObjectResult($"cannot find {urlPart}");
         }
 
-        return data;
+        return Ok(data);
     }
 }
