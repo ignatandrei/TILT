@@ -35,7 +35,7 @@ namespace NetTilt.Logic
             return privateLatestTILTs(urlPart, numberTILTS);            
             
         }
-        [AOPMarkerMethod]
+        //[AOPMarkerMethod]
         private async IAsyncEnumerable<TILT_Note_Table> privateLatestTILTs(string urlPart, int numberTILTS)
         {
             if (cache.TryGetValue<TILT_Note_Table[]>(urlPart, out var result))
@@ -43,7 +43,7 @@ namespace NetTilt.Logic
                 //why I cant return result.ToAsyncEnumerable() ?
                 await foreach (var item in result.ToAsyncEnumerable())
                 {
-                    await Task.Delay(3000);
+                    await Task.Delay(1000);
                     yield return item;
                 }
             }
