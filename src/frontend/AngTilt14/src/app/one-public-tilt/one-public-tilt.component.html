@@ -2,7 +2,7 @@
   <!-- <input type="text" class="form-control" id="name"
     formControlName="url">    -->
   <h1>
-    {{tiltsFormArray.controls.length}} TILTS for
+    {{profileForm.value.publicTILTS?.length }} TILTS for
 
     <a  routerLink="/tilt/public/{{ profileForm.value.url }}">{{
       profileForm.value.url
@@ -10,20 +10,19 @@
 
   </h1>
   <mat-tab-group animationDuration="2000ms">
-    <mat-tab label="List">  
-  
-      <div *ngFor="let item of tiltsFormArray.controls.slice().reverse(); let i = index;let f=first">
-        {{tiltsFormArray.controls.length - i }}  <app-display-tilt [tilt]="item.value"></app-display-tilt>
+    <mat-tab label="List" *ngIf="profileForm.value.publicTILTS">  
+      
+      <div  *ngFor="let item of profileForm.value.publicTILTS; let i = index;let f=first">
+        {{profileForm.value.publicTILTS.length - i }}  <app-display-tilt [tilt]="item"></app-display-tilt>
         
-        <span *ngIf="item?.value?.prevTilt?.WeekNumber  != item.value.WeekNumber">
-          <h1>Start week {{item.value.WeekNumber }}</h1>  <button mat-raised-button color="primary"  (click)="copyWeek(item?.value?.prevTilt?.WeekNumber)">Copy week {{item?.value?.prevTilt?.WeekNumber }} tilts </button> 
+        <span *ngIf="item?.prevTilt?.WeekNumber  != item?.WeekNumber">
+          <h1>Start week {{item?.WeekNumber }}</h1>  <button mat-raised-button color="primary"  (click)="copyWeek(item?.prevTilt?.WeekNumber)">Copy week {{item?.prevTilt?.WeekNumber }} tilts </button> 
 &nbsp;
-          <button mat-raised-button color="primary"  (click)="shareWeek(item?.value?.prevTilt?.WeekNumber)">Share week {{item?.value?.prevTilt?.WeekNumber }} tilts </button> 
+          <button mat-raised-button color="primary"  (click)="shareWeek(item?.prevTilt?.WeekNumber)">Share week {{item?.prevTilt?.WeekNumber }} tilts </button> 
         </span>
         
         <hr />
 
-         <!-- {{item.value | json}} -->
        </div>
     </mat-tab>
     <mat-tab label="Calendar">
