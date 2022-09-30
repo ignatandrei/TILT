@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { startOfDay,format} from 'date-fns';
@@ -35,18 +35,16 @@ export class OnePublicTiltComponent implements OnInit {
   view: CalendarView= CalendarView.Month;
   events: CalendarEvent[] = [];
   maxObj:TILT|null=null;
-  profileForm = this.fb.group({
-    url: [''],
-    publicTILTS: this.fb.array([])
+  profileForm =  new FormGroup({
+    url: new FormControl<string>(''),
+    publicTILTS: new FormArray([new FormControl<TILT>(new TILT())])
   });
   
 
   constructor(private publicService:PublicTiltsService,private route: ActivatedRoute, private fb:FormBuilder, private clipboard: Clipboard) { 
 
   }
-  get tiltsFormArray(): FormArray{
-    return this.profileForm.get('publicTILTS') as FormArray;
-}
+  
 closeOpenMonthViewDay(): void{
   this.activeDayIsOpen=false;
 }
@@ -73,11 +71,11 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
 
     ).subscribe(
       it=>{
-        this.tiltsFormArray.clear();
         it=it.sort((b,a)=>b.forDate!.localeCompare(a.forDate!));
-        // this.tiltsFormArray.push(...it.map(it=>this.fb.control(it)));
-        it.forEach(a=>this.tiltsFormArray.push(this.fb.control(a)));
-        // this.tiltsFormArray.push(new TILT());
+        // console.log('patching valyues', it);
+        this.profileForm.patchValue({publicTILTS: [...it]});
+
+        console.log('patching values', it, this.profileForm.value.publicTILTS);
         it.forEach((a,index, arr)=> {                      
           a.numberOfDaysStreak = 1;          
           if(index>0){
@@ -119,8 +117,11 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
   }
   private weekTilts(nr:number): string{
     var str="TILTS for week "+nr;
-    var tilts = this.tiltsFormArray.controls
-      .map(it=>it.value as TILT)
+    if(this.profileForm.value.publicTILTS == null)
+      return '';
+
+    var tilts = this.profileForm.value.publicTILTS
+      .map(it=>it as TILT)
     .filter(it=> it != null && it.WeekNumber==nr)
     .map(it=>`TILT for ${it.LocalDateStringNoTime} => ${it.text}  ${it.link}` )
     .join('\n');
@@ -129,12 +130,16 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     str += '\n See my tilts at '+ environment.url+'AngTilt/tilt/public/'+this.profileForm.controls['url'].value;
     return str;
   }
-  copyWeek(nr: number): void{
+  copyWeek(nr: number | undefined): void{
 
+    if(nr === undefined)
+      return;    
     this.copyToClipboard(this.weekTilts(nr));
     return ;
   }
-  shareWeek(nr: number): void{
+  shareWeek(nr: number| undefined): void{
+    if(nr === undefined)
+      return;    
 
     if(!this.share(this.weekTilts(nr)))
     {
