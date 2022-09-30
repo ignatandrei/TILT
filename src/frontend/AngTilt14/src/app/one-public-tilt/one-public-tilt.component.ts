@@ -64,7 +64,7 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
        tap(it=>console.log('received',it)),
        filter(it=>it[id] != null),
        map(it=>it[id]),
-      tap(it => this.profileForm.controls['url'].setValue(it)),
+      tap(it => this.profileForm.patchValue({url:it})),
        tap(it  => console.log("id is ",it)),
        switchMap(it => this.publicService.getTilts(it,100000)),
        tap(it  => console.log("tilts are ",it))
@@ -73,8 +73,9 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
       it=>{
         it=it.sort((b,a)=>b.forDate!.localeCompare(a.forDate!));
         // console.log('patching valyues', it);
-        this.profileForm.patchValue({publicTILTS: [...it]});
-
+        // this.profileForm.patchValue({publicTILTS: [...it]});
+        //setControl<K extends string & keyof TControl>
+        this.profileForm.setControl("publicTILTS",new FormArray(it.map(a=>new FormControl(a))));
         console.log('patching values', it, this.profileForm.value.publicTILTS);
         it.forEach((a,index, arr)=> {                      
           a.numberOfDaysStreak = 1;          
