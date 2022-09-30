@@ -36,8 +36,8 @@ export class OnePublicTiltComponent implements OnInit {
   events: CalendarEvent[] = [];
   maxObj:TILT|null=null;
   profileForm =  new FormGroup({
-    url: new FormControl<string>(''),
-    publicTILTS: new FormArray([new FormControl<TILT>(new TILT())])
+    url: new FormControl(''),
+    publicTILTS: new FormArray([new FormControl(new TILT())])
   });
   
 
