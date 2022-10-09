@@ -35,22 +35,13 @@ namespace NetTilt.Logic
             return privateLatestTILTs(urlPart, numberTILTS);            
             
         }
-        private async IAsyncEnumerable<TILT_Note_Table> privateLatestTILTs(string urlPart, int numberTILTS)
+        private async Task<SearchTILT_Note?> SearchFromUrlPart(string urlPart, int numberTILTS)
         {
-            if (cache.TryGetValue<TILT_Note_Table[]>(urlPart, out var result))
-            {
-                //why I cant return result.ToAsyncEnumerable() ?
-                await foreach (var item in result.ToAsyncEnumerable())
-                {
-                    await Task.Delay(1000);
-                    yield return item;
-                }
-            }
-            
 
             var dataUrls = await searchUrl.TILT_URLSimpleSearch_URLPart(SearchCriteria.Equal, urlPart).ToArrayAsync();
 
-            
+            if (dataUrls?.Length < 1)
+                return null;
             var idUrl = dataUrls![0].ID;
             SearchTILT_Note search = new();
             search.SearchFields = new SearchField<eTILT_NoteColumns>[1];
@@ -68,9 +59,41 @@ namespace NetTilt.Logic
             };
             search.PageNumber = 1;
             search.PageSize = numberTILTS;
+            return search;
+        }
+        public Task<long> Count(string urlPart)
+        {
+            return privateCount(urlPart);
+        }
+        private  async Task<long> privateCount(string urlPart)
+        {
+            if (cache.TryGetValue<long>(nameof(privateCount)+ urlPart, out var result))
+            {
+                //why I cant return result.ToAsyncEnumerable() ?
+                return result;
+            }
+            var search = await SearchFromUrlPart(urlPart,int.MaxValue-1);
+            var dataFromDB = searchNotes.TILT_NoteFind_AsyncEnumerable(search);
+            var ret =await dataFromDB.LongCountAsync();
+            return ret;
+
+        }
+        private async IAsyncEnumerable<TILT_Note_Table> privateLatestTILTs(string urlPart, int numberTILTS)
+        {
+            if (cache.TryGetValue<TILT_Note_Table[]>(urlPart, out var result))
+            {
+                //why I cant return result.ToAsyncEnumerable() ?
+                await foreach (var item in result.ToAsyncEnumerable())
+                {
+                    await Task.Delay(1000);
+                    yield return item;
+                }
+            }
+            var search = await SearchFromUrlPart(urlPart, numberTILTS);
             var ret = new List<TILT_Note_Table>();
             
             var dataFromDB = searchNotes.TILT_NoteFind_AsyncEnumerable(search);
+            
             var data= dataFromDB.Select(it => { var n = new TILT_Note_Table(); n.CopyFrom(it); return n; });
             await foreach (var it in data)
             {
