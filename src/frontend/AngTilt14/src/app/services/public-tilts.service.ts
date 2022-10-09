@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable, of, scan, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { TILT } from '../classes/TILT';
+import { publicTilt } from '../public-tilts/publicTilt';
 
 class JsonStreamDecoder {
   /** item starts and ends at level 0 */
@@ -60,6 +61,21 @@ export class PublicTiltsService {
 
   public getUrls():Observable<string[]>{
     return this.http.get<string[]>(this.baseUrl+'PublicTILTs/PublicTiltsURL');
+  }
+
+  public nrTilts(id:string): Observable<publicTilt>{
+//https://angular.io/guide/http
+    const options = {
+      responseType: 'text' as const,
+    };
+    return this.http.get(this.baseUrl+`PublicTILTs/CountTILTs/${id}/count`,options)
+      .pipe(        
+        tap(it=>console.log(`for ${id} number of tilts is ${it}`)),
+        map(it=> isNaN(+it)? null: +it ),
+        map(it=>new publicTilt({url:id,nrTilts: it}))
+      );    
+    ;
+
   }
 
   public getTilts(id:string, nr:number): Observable<TILT[]>{

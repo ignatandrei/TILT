@@ -35,4 +35,10 @@ public class PublicTILTsController : ControllerBase
 
         return Ok(data);
     }
+    [HttpGet("{urlPart}/count")]
+    public async Task<long> CountTILTs(string urlPart,[FromServices] ISearchDataTILT_Note searchNotes)
+    {
+        var data = await publicTILTS.Count(urlPart);
+        return data;
+    }
 }

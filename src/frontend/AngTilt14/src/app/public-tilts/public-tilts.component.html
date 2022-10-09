@@ -8,6 +8,8 @@
       <!-- <input id="alias-{{ i }}" type="text" [formControlName]="i"/> -->
 
       <a name="{{publicUrls.controls[i].value.url}}" class="publicURL"  routerLink="/tilt/public/{{publicUrls.controls[i].value.url}}"   >{{publicUrls.controls[i].value.url}}</a>
+      
+      {{publicUrls.controls[i].value.nrTilts}}
     </div>
   </div>
 </form>
