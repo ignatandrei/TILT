@@ -18,7 +18,7 @@
   <mat-tab-group animationDuration="2000ms">
     <mat-tab label="List" *ngIf="profileForm.value.publicTILTS">  
       
-      <div  *ngFor="let item of profileForm.value.publicTILTS.reverse(); let i = index;let f=first">
+      <div  *ngFor="let item of orderedTILTS(); let i = index;let f=first">
         {{profileForm.value.publicTILTS.length - i }}  <app-display-tilt [tilt]="item"></app-display-tilt>
         
         <span *ngIf="item?.prevTilt?.WeekNumber  != item?.WeekNumber">

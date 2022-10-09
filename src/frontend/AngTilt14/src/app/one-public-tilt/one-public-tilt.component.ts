@@ -45,7 +45,14 @@ export class OnePublicTiltComponent implements OnInit {
   constructor(private publicService:PublicTiltsService,private route: ActivatedRoute, private fb:FormBuilder, private clipboard: Clipboard) { 
       
   }
-  
+  public orderedTILTS():(TILT|null)[]{
+    var data=this.profileForm.value.publicTILTS;
+    if(data == null)
+      return Array<TILT>(0);
+
+    return data.sort((a,b)=>b!.forDate!.localeCompare(a!.forDate!));
+
+  }
 closeOpenMonthViewDay(): void{
   this.activeDayIsOpen=false;
 }
