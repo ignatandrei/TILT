@@ -12,6 +12,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule} from '@angular/material/tabs';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule} from '@angular/material/progress-bar';
 import { MatListModule } from '@angular/material/list';
 import { MyTiltComponent } from './my-tilt/my-tilt.component';
 import { PublicTiltsComponent } from './public-tilts/public-tilts.component';
@@ -42,6 +44,8 @@ import { AboutComponent } from './about/about.component';
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatTabsModule,
     ReactiveFormsModule,
     HttpClientModule,

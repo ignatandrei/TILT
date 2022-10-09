@@ -2,13 +2,19 @@
   <!-- <input type="text" class="form-control" id="name"
     formControlName="url">    -->
   <h1>
-    {{profileForm.value.publicTILTS?.length }} TILTS for
+    
+    {{profileForm.value.publicTILTS?.length }} / {{totalNumberOfTILTS}} TILTS for
 
     <a  routerLink="/tilt/public/{{ profileForm.value.url }}">{{
       profileForm.value.url
     }}</a> until {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
 
   </h1>
+
+  <mat-spinner *ngIf="profileForm.value.publicTILTS?.length  != totalNumberOfTILTS"  mode="determinate" [value]="(100 * (profileForm.value.publicTILTS?.length??1))  / (totalNumberOfTILTS??1)"></mat-spinner>
+  <!-- <mat-progress-bar mode="determinate" *ngIf="profileForm.value.publicTILTS?.length  != totalNumberOfTILTS"  mode="determinate" [value]="(100 * (profileForm.value.publicTILTS?.length??1))  / (totalNumberOfTILTS??1)"></mat-progress-bar> -->
+
+  
   <mat-tab-group animationDuration="2000ms">
     <mat-tab label="List" *ngIf="profileForm.value.publicTILTS">  
       

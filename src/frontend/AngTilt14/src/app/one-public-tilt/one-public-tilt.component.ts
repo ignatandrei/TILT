@@ -29,6 +29,7 @@ const colors: any = {
 })
 export class OnePublicTiltComponent implements OnInit {
 
+  totalNumberOfTILTS: number|null = null;
   activeDayIsOpen: boolean = true;
   refresh = new Subject<void>();
   viewDate: Date = new Date();
@@ -42,7 +43,7 @@ export class OnePublicTiltComponent implements OnInit {
   
 
   constructor(private publicService:PublicTiltsService,private route: ActivatedRoute, private fb:FormBuilder, private clipboard: Clipboard) { 
-
+      
   }
   
 closeOpenMonthViewDay(): void{
@@ -59,12 +60,14 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     this.refresh.next();
 }
   ngOnInit(): void {
+    var self=this;
     var id:string="id";
     this.route.params.pipe(
        tap(it=>console.log('received',it)),
        filter(it=>it[id] != null),
        map(it=>it[id]),
       tap(it => this.profileForm.patchValue({url:it})),
+      tap(it => this.publicService.nrTilts(it).subscribe(a=> self.totalNumberOfTILTS = a.nrTilts)),      
        tap(it  => console.log("id is ",it)),
        switchMap(it => this.publicService.getTilts(it,100000)),
        tap(it  => console.log("tilts are ",it))
