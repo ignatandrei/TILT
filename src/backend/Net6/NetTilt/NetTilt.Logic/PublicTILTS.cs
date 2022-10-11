@@ -80,6 +80,7 @@ namespace NetTilt.Logic
         }
         private async IAsyncEnumerable<TILT_Note_Table> privateLatestTILTs(string urlPart, int numberTILTS)
         {
+            var rand = new Random(DateTime.Now.Millisecond);
             int nr = 0;
             if (cache.TryGetValue<TILT_Note_Table[]>(urlPart, out var result))
             {
@@ -88,7 +89,7 @@ namespace NetTilt.Logic
                 {
                     nr++;
                     if(nr %10 == 0)
-                        await Task.Delay(1000);
+                        await Task.Delay(rand.Next(2,1000));
                     yield return item;
                 }
             }
@@ -102,7 +103,7 @@ namespace NetTilt.Logic
             {
                 nr++;
                 if (nr % 10 == 0)
-                    await Task.Delay(1000);
+                    await Task.Delay(rand.Next(2, 1000));
                 yield return it;
             }
             //var ret = 
