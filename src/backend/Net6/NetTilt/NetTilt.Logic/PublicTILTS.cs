@@ -80,12 +80,15 @@ namespace NetTilt.Logic
         }
         private async IAsyncEnumerable<TILT_Note_Table> privateLatestTILTs(string urlPart, int numberTILTS)
         {
+            int nr = 0;
             if (cache.TryGetValue<TILT_Note_Table[]>(urlPart, out var result))
             {
                 //why I cant return result.ToAsyncEnumerable() ?
                 await foreach (var item in result.ToAsyncEnumerable())
                 {
-                    await Task.Delay(1000);
+                    nr++;
+                    if(nr %10 == 0)
+                        await Task.Delay(1000);
                     yield return item;
                 }
             }
@@ -97,7 +100,9 @@ namespace NetTilt.Logic
             var data= dataFromDB.Select(it => { var n = new TILT_Note_Table(); n.CopyFrom(it); return n; });
             await foreach (var it in data)
             {
-                await Task.Delay(1000);
+                nr++;
+                if (nr % 10 == 0)
+                    await Task.Delay(1000);
                 yield return it;
             }
             //var ret = 
