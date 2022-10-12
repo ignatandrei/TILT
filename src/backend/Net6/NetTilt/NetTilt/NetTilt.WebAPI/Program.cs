@@ -103,7 +103,7 @@ builder.Services
              health = builder.Configuration["MySettings:url"] + health;
          }
          setup.AddHealthCheckEndpoint("me",health );
-         setup.SetEvaluationTimeInSeconds (60*60);
+         setup.SetEvaluationTimeInSeconds (60);
          //setup.SetHeaderText
          setup.MaximumHistoryEntriesPerEndpoint(10);
      }
