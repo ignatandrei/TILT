@@ -20,6 +20,7 @@
     "@angular/platform-browser": "14.1.0",
     "@angular/platform-browser-dynamic": "14.1.0",
     "@angular/router": "14.1.0",
+    "@microsoft/applicationinsights-web": "2.8.8",
     "angular-calendar": "0.30.0",
     "angular-shepherd": "14.0.0",
     "date-fns": "2.29.1",
