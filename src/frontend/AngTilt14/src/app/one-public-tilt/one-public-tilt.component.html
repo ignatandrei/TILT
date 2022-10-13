@@ -110,12 +110,13 @@
           <th>Nr</th>
           <th>Date</th>          
           <th>TILT</th>
+          <th>Actions</th>
         </tr>
         <tr *ngFor="let item of orderedTILTS(); let i = index;let f=first">
           <td>{{profileForm.value.publicTILTS.length - i }}  </td>
           <td>{{item?.LocalDateString}} </td>
           <td>{{item?.text}} <a href="{{item?.link" target="_blank">{{item?.link}}</a> </td>
-
+            <td><button mat-raised-button color="primary"  (click)="copyOne(item)">Copy</button></td>
         </tr>
       </table>
     </mat-tab>

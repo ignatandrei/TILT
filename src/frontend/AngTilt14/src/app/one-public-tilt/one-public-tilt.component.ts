@@ -144,6 +144,13 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     str += '\n See my tilts at '+ environment.url+'AngTilt/tilt/public/'+this.profileForm.controls['url'].value;
     return str;
   }
+  copyOne(item: TILT| null):void{
+    if(!item)
+      return;
+
+    this.copyToClipboard(`TILT for ${item.LocalDateStringNoTime} => ${item.text}  ${item.link}`);
+    
+  }
   copyWeek(nr: number | undefined): void{
 
     if(nr === undefined)
