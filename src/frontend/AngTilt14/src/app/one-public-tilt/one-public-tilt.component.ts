@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CalendarEvent, CalendarView } from 'angular-calendar';
@@ -8,6 +8,7 @@ import { TILT } from '../classes/TILT';
 import { PublicTiltsService } from '../services/public-tilts.service';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { environment } from 'src/environments/environment';
+import { MatTable } from '@angular/material/table';
 const colors: any = {
   red: {
     primary: '#ad2121',
@@ -22,13 +23,14 @@ const colors: any = {
     secondary: '#FDF1BA',
   },
 };
+
+
 @Component({
   selector: 'app-one-public-tilt',
   templateUrl: './one-public-tilt.component.html',
   styleUrls: ['./one-public-tilt.component.css']
 })
 export class OnePublicTiltComponent implements OnInit {
-
   totalNumberOfTILTS: number|null = null;
   activeDayIsOpen: boolean = true;
   refresh = new Subject<void>();
