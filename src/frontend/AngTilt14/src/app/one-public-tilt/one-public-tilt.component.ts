@@ -109,6 +109,7 @@ dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
             this.maxObj = this.maxObj.prevTilt;
           }
         }
+        this.events.length=0;   
         it.forEach(a=> this.events.push(
           {
             start:  a.LocalJustDate,
