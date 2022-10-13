@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -27,6 +27,8 @@ import { DisplayTILTComponent } from './display-tilt/display-tilt.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { AboutComponent } from './about/about.component';
+import { ErrorHandlerService } from './classes/ErrorHandlerService';
+import { MyMonitoringService } from './classes/logging.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +64,8 @@ import { AboutComponent } from './about/about.component';
   ],
   providers: [
     BrowserStorageService,
+    { provide: ErrorHandler, useClass: ErrorHandlerService },
+    MyMonitoringService
 
   ],
   bootstrap: [AppComponent]

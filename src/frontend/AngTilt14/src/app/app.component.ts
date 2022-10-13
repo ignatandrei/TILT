@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MyMonitoringService } from './classes/logging.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'AngTilt';
+  constructor(private myMonitoringService: MyMonitoringService) {
+      myMonitoringService.logEvent("startTILTapplication");    
+  }
 }

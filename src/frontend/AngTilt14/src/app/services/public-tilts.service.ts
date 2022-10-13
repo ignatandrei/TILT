@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, of, scan, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { MyMonitoringService } from '../classes/logging.service';
 import { TILT } from '../classes/TILT';
 import { publicTilt } from '../public-tilts/publicTilt';
 
@@ -54,7 +55,7 @@ const JTOKEN_END_OBJECT = '}';
 export class PublicTiltsService {
 
   baseUrl:string = '';
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient,private monitor: MyMonitoringService ) { 
     this.baseUrl=environment.url+'api/';
 
   }
@@ -64,6 +65,9 @@ export class PublicTiltsService {
   }
 
   public nrTilts(id:string): Observable<publicTilt>{
+    this.monitor.logEvent("event nrTilts for "+id);
+    this.monitor.logEvent("trace nrTilts for "+id);
+//ht
 //https://angular.io/guide/http
     const options = {
       responseType: 'text' as const,
