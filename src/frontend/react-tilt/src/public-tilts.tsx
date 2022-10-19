@@ -5,7 +5,7 @@ import { PublicTiltsService } from './services/public-tilts.service';
 
 function PublicTilts() {
     const [publicTilts, addTilts] = useState(Array<publicTilt>(0));
-    let count = 0;
+    
     useEffect(() => {
         console.log("hello");
         return () => console.log("goodbye");

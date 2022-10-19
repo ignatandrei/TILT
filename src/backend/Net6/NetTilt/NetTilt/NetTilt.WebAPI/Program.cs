@@ -301,4 +301,5 @@ using (var activity = source.StartActivity("StartApp"))
 }
 app.MapUsefullAll();
 app.MapFallbackToFile("AngTilt/{*path:nonfile}", "/AngTilt/index.html");
+app.MapFallbackToFile("ReactTilt/{*path:nonfile}", "/ReactTilt/index.html");
 app.Run();
