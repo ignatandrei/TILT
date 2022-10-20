@@ -42,10 +42,10 @@ jobs:
             npm run buildAzure
             remove-item ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\index.html
             echo afterDelete
-            gci ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\
+            gci ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\ |  % { Write-Host $_.FullName }
             Copy-Item .\build\* ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\ -Recurse
             echo afterCopy
-            gci ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\
+            gci ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\ |  % { Write-Host $_.FullName }
       - name: Build Angular Site 1
         shell: pwsh
         run: |
