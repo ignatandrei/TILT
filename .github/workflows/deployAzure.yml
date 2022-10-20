@@ -40,8 +40,8 @@ jobs:
             cd src/frontend/react-tilt/
             npm i
             npm run buildAzure
-            remove-item ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\AngTilt\index.html
-            Copy-Item .\dist\AngTilt\* ..\..\bac
+            remove-item ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\index.html
+            Copy-Item .\build\* ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\
 
       - name: Build Angular Site 1
         shell: pwsh
