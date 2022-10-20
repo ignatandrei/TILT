@@ -41,7 +41,7 @@ jobs:
             npm i
             npm run buildAzure
             remove-item ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\index.html
-            Copy-Item .\build\* ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\
+            Copy-Item .\build\* ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\ -Recurse
 
       - name: Build Angular Site 1
         shell: pwsh
