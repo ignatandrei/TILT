@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useDebugValue, useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -20,8 +20,13 @@ function App() {
   //const isMobile = useMediaQuery('(min-width:600px)');
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [userWantshowLeftMenu, showLeftMenu] = useState(false);
+  const showMenu= (event: React.MouseEvent<HTMLElement>) =>{
+    showLeftMenu((prevState)=> !prevState )
+  }  
   return <>        
         <Box sx={{ flexGrow: 1 }}>
+        {/* <span>{userWantshowLeftMenu?"true":"false"}</span> */}
         {/* <span>{isMobile ? <>(
           mobil
         )</>: <>(not mobil)</>
@@ -29,15 +34,18 @@ function App() {
 
         <AppBar position="static">
           <Toolbar>          
+            { isMobile && 
             <IconButton
               size="large"
               edge="start"
               color="inherit"
               aria-label="menu"
               sx={{ mr: 2 }}
+              onClick={showMenu}
             >
               <MenuIcon />              
             </IconButton>
+            }
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               TILT
             </Typography>
@@ -45,7 +53,7 @@ function App() {
           </Toolbar>
         </AppBar>
       </Box>
-      {isMobile? (<span style={{float:"left"}}><MenuLeft /></span>):("")}
+      {!isMobile || userWantshowLeftMenu ? (<span style={{float:"left"}}><MenuLeft /></span>):("")}
       
       <span style={{float:"left"}}><PublicTilts /></span>
       
