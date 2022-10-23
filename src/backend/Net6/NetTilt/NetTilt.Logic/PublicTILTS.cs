@@ -88,7 +88,7 @@ namespace NetTilt.Logic
                 await foreach (var item in result.ToAsyncEnumerable())
                 {
                     nr++;
-                    if (nr % 10 == 0)
+                    if (nr % 5 == 0)
                         await Task.Delay(2500);
                     //await Task.Delay(rand.Next(2,1000));
                     yield return item;
@@ -103,7 +103,7 @@ namespace NetTilt.Logic
             await foreach (var it in data)
             {
                 nr++;
-                if (nr % 10 == 0)
+                if (nr % 5 == 0)
                     await Task.Delay(2500);
                 //await Task.Delay(rand.Next(2, 1000));
                 yield return it;
