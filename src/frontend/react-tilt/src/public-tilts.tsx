@@ -28,7 +28,6 @@ function PublicTilts() {
     },[]);//very important!
 
 
-
     if (publicTilts.length === 0) {
         return <> { <div>Loading</div> } </>;
     }
