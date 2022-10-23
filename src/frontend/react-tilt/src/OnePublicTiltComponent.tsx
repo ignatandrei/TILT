@@ -1,6 +1,6 @@
 import React, { useEffect,  useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Stack from '@mui/material/Stack';
+//import Stack from '@mui/material/Stack';
 import './App.css';
 import { TILT } from './classes/TILT';
 import { PublicTiltsService } from './services/public-tilts.service';
@@ -18,7 +18,7 @@ function OnePublicTiltComponent() : JSX.Element{
     
       useEffect(() => {
         document.title = "TILTS for "+id;
-      }, []);    
+      }, [id]);    
     useEffect(()=>{
         var publicService= new PublicTiltsService();
          var x= publicService.nrTilts(id||'').subscribe(a=> 
@@ -28,7 +28,7 @@ function OnePublicTiltComponent() : JSX.Element{
               }
               );
         return ()=> x.unsubscribe();      
-    },[]);//very important!
+    },[id]);//very important!
   
     useEffect(()=>{
         var publicService= new PublicTiltsService();
@@ -36,7 +36,7 @@ function OnePublicTiltComponent() : JSX.Element{
             addTilts(data);
         });
         return ()=>x.unsubscribe();
-      },[]);
+      },[id]);
   
     return <>
     <h1>Tilts for  {id}  {tilts.length} / {maxTilts} </h1>
