@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "build": "dotnet build --configuration Release",
+	"pretest":"dotnet r build",
+    "test": "dotnet test --configuration Release",
+	"licences" :"dotnet dotnet-project-licenses -i .",
+	"thx":"dotnet dotnet-thx",
+	"outdated" :"dotnet outdated",
+	"all":"dotnet r licences && dotnet r thx && dotnet r outdated",	
+    "ci": "dotnet r build && dotnet r test"
+  }
+}
