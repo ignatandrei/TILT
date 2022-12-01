@@ -1,5 +1,4 @@
 
-using UsefullExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
