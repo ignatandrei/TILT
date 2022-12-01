@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.AspNetCore.Http.HttpResults;
+
 namespace NetTilt.WebAPI.Controllers;
 
 [Route("api/[controller]/[action]")]
@@ -42,15 +44,16 @@ public class TILTController : ControllerBase
     }
     [Authorize(Policy = "CustomBearer", Roles = "Editor")]
     [HttpGet()]
-    public async Task<ActionResult<TILT_Note_Table[]?>> AllMyTILTs([FromServices] ISearchDataTILT_Note searchNotes)
+    public async Task<Results<UnauthorizedHttpResult, Ok<TILT_Note_Table[]>?>> AllMyTILTs([FromServices] ISearchDataTILT_Note searchNotes)
     {
+        
         var data = await addLogic.AllMyTILTs(this.User?.Claims.ToArray());
 
         if (data == null)
         {
-            return new UnauthorizedResult();
+            return TypedResults.Unauthorized();
         }
-        return data;
+        return TypedResults.Ok<TILT_Note_Table[]>( data);
     }
     [Authorize(Policy = "CustomBearer", Roles = "Editor")]
     [HttpGet("{numberTILTS}")]

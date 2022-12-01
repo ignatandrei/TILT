@@ -298,7 +298,13 @@ using (var activity = source.StartActivity("StartApp"))
 
     activity?.SetTag("On", DateTime.UtcNow);
     activity?.SetStatus(Status.Ok);
+
 }
+
+app.MapGet("/EXAMPLE/{orderId}", Results<BadRequest, Ok<string>> (int orderId)
+    => orderId > 999 ? TypedResults.BadRequest() : TypedResults.Ok("done"));
+
+
 app.MapUsefullAll();
 app.MapFallbackToFile("AngTilt/{*path:nonfile}", "/AngTilt/index.html");
 app.MapFallbackToFile("ReactTilt/{*path:nonfile}", "/ReactTilt/index.html");
