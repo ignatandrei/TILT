@@ -1,7 +1,8 @@
-﻿using NetTilt.Logic;
+﻿using Microsoft.AspNetCore.RateLimiting;
+using NetTilt.Logic;
 
 namespace NetTilt.WebAPI.Controllers;
-
+[EnableRateLimiting("UnlimitMeAndLocalHost")]
 [AllowAnonymous]
 [Route("api/[controller]/[action]")]
 [ApiController]

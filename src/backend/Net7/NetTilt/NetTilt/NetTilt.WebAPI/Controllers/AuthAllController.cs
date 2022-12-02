@@ -1,7 +1,8 @@
-﻿using System.Security.Claims;
+﻿using Microsoft.AspNetCore.RateLimiting;
+using System.Security.Claims;
 
 namespace NetTilt.WebAPI.Controllers;
-
+//[EnableRateLimiting("RequireRateLimiting")]
 [Route("api/[controller]/[action]")]
 [ApiController]
 public class AuthAllController : ControllerBase
