@@ -229,7 +229,14 @@ builder.Services.AddRateLimiter(opt =>
             return noLimit;
 
         }
-        
+        var originHost = origin.ToString();
+        var fullHost = context.Request.Host.ToString();
+        Console.WriteLine($"has origin {originHost} , full host {fullHost}");
+        if (string.Equals(fullHost,originHost, StringComparison.CurrentCultureIgnoreCase))
+        {
+            Console.WriteLine($"same site - no cors");
+            return noLimit;
+        }
         return simpleLimiter(origin.ToString());
     });
 });
