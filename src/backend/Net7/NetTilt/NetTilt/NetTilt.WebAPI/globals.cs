@@ -25,6 +25,8 @@ global using Hellang.Middleware.ProblemDetails;
 global using System.Diagnostics;
 global using Microsoft.AspNetCore.Http.HttpResults;
 global using UsefullExtensions;
+global using System.Threading.RateLimiting;
+global using System.Net;
 
 
 [assembly: AMS_Base.VersionReleased(Name = "FutureRelease", ISODateTime = "9999-04-16", recordData = AMS_Base.RecordData.Merges)]

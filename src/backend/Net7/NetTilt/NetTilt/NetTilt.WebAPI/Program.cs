@@ -1,8 +1,4 @@
 
-
-using Org.BouncyCastle.Utilities.Net;
-using System.Threading.RateLimiting;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -194,20 +190,7 @@ builder.Services.AddRateLimiter(opt =>
     opt.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
     opt.AddPolicy("UnlimitMeAndLocalHost", context =>
     {
-        //return RateLimitPartition.GetFixedWindowLimiter("local", _ =>
-
-        //{
-        //    return new FixedWindowRateLimiterOptions()
-        //    {
-        //        PermitLimit = 1,
-        //        Window = TimeSpan.FromMinutes(12),
-        //        QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
-        //        QueueLimit = 1
-        //    };
-
-        //}
-        //);
-
+        
         var host = context.Request.Host;
         var hostName = host.HasValue ? host.Host : "";
         if (string.IsNullOrWhiteSpace(hostName))
@@ -233,20 +216,20 @@ builder.Services.AddRateLimiter(opt =>
             return RateLimitPartition.GetNoLimiter("");
 
         }
-        if (IPAddress.Equals(con.RemoteIpAddress.Address, con.LocalIpAddress))
+        if (IPAddress.Equals(con.RemoteIpAddress, con.LocalIpAddress))
         {
             Console.WriteLine("from same site");
             return RateLimitPartition.GetNoLimiter("");
 
         }
         //return RateLimitPartition.GetNoLimiter("");
-        return RateLimitPartition.GetFixedWindowLimiter("local", _ =>
-
+        var address= con.RemoteIpAddress.ToString()??"noRemote";    
+        return RateLimitPartition.GetFixedWindowLimiter(address, _ =>
         {
             return new FixedWindowRateLimiterOptions()
             {
-                PermitLimit = 1,
-                Window = TimeSpan.FromMinutes(12),
+                PermitLimit = 3,
+                Window = TimeSpan.FromMinutes(1),
                 QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
                 QueueLimit = 1
             };
