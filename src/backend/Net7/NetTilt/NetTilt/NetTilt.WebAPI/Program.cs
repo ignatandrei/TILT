@@ -238,8 +238,8 @@ builder.Services.AddRateLimiter(opt =>
             Console.WriteLine($"same site - no cors");
             return noLimit;
         }
-        return noLimit;
-        //return simpleLimiter(origin.ToString());
+        //return noLimit;
+        return simpleLimiter(origin.ToString());
     });
 });
 
