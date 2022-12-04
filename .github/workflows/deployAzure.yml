@@ -19,6 +19,11 @@ jobs:
         with:
           dotnet-version: '6.0.x'
           include-prerelease: false
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '7.0.x'
+          include-prerelease: false
 
       - name: Set up node
         uses: actions/setup-node@v3
@@ -28,7 +33,7 @@ jobs:
 
       - name: Build with dotnet
         run: |
-            cd src/backend/Net6/NetTilt 
+            cd src/backend/Net7/NetTilt 
             dotnet build --configuration Release
 
 
@@ -40,12 +45,12 @@ jobs:
             cd src/frontend/react-tilt/
             npm i
             npm run buildAzure
-            remove-item ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\index.html
+            remove-item ..\..\backend\Net7\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\index.html
             echo afterDelete
-            gci ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\ |  % { Write-Host $_.FullName }
-            Copy-Item .\build\* ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\ -Recurse
+            gci ..\..\backend\Net7\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\ |  % { Write-Host $_.FullName }
+            Copy-Item .\build\* ..\..\backend\Net7\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\ -Recurse
             echo afterCopy
-            gci ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\ |  % { Write-Host $_.FullName }
+            gci ..\..\backend\Net7\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\ |  % { Write-Host $_.FullName }
       - name: Build Angular Site 1
         shell: pwsh
         run: |
@@ -54,8 +59,8 @@ jobs:
             cd src/frontend/AngTilt14/
             npm i
             npm run buildAzure
-            remove-item ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\AngTilt\index.html
-            Copy-Item .\dist\AngTilt\* ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\AngTilt\
+            remove-item ..\..\backend\Net7\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\AngTilt\index.html
+            Copy-Item .\dist\AngTilt\* ..\..\backend\Net7\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\AngTilt\
       - name: dotnet publish
         shell: pwsh
         run: |

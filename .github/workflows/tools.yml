@@ -20,6 +20,11 @@ jobs:
           dotnet-version: '6.0.x'
           include-prerelease: false
 
+    - name: Setup .NET 7
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 7.0.x
+
       - name: Set up node
         uses: actions/setup-node@v3
         with:
@@ -39,8 +44,8 @@ jobs:
             cd src/frontend/AngTilt14/
             npm i
             npm run buildAzure
-            remove-item ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\AngTilt\index.html
-            Copy-Item .\dist\AngTilt\* ..\..\backend\Net6\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\AngTilt\
+            remove-item ..\..\backend\Net7\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\AngTilt\index.html
+            Copy-Item .\dist\AngTilt\* ..\..\backend\Net7\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\AngTilt\
       - name: dotnet publish
         shell: pwsh
         run: |
