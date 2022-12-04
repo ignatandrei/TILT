@@ -65,14 +65,14 @@ jobs:
       - name: dotnet publish
         shell: pwsh
         run: |
-            cd src/backend/Net6/NetTilt
+            cd src/backend/Net7/NetTilt
             dotnet tool restore
             # gci -recurse |  % { Write-Host $_.FullName }
             dotnet dotnet-project-licenses -i ./NetTilt/NetTilt.WebAPI -o --outfile NetTilt/NetTilt.WebAPI/wwwroot/netcorelicences.txt -t
             # ls -lh
             .\AOPMethod.ps1
             cd NetTilt/NetTilt.WebAPI 
-            # copy-item ./wwwroot/AngTilt/3rdpartylicenses.txt ./wwwroot/ 
+            copy-item ./wwwroot/AngTilt/3rdpartylicenses.txt ./wwwroot/ 
             gci ./wwwroot/ |  % { Write-Host $_.FullName } 
             dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp -r linux-x64
 
