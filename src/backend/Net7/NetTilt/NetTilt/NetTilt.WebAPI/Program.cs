@@ -218,31 +218,19 @@ builder.Services.AddRateLimiter(opt =>
         }
         if (string.Equals(hostName,"localhost",StringComparison.InvariantCultureIgnoreCase))
         {
-            Console.WriteLine("from localhost");
+            Console.WriteLine("localhost have no limit");
             return noLimit;
         }
-        var con = context.Connection;
-        if (con.RemoteIpAddress is null)
+        var hasOrigin = context.Request.Headers.TryGetValue("Origin", out var origin);
+        
+        if (!hasOrigin)
         {
-            Console.WriteLine("strange, no remote ip");
-            return simpleLimiter("");
-
-        }
-        if (con.LocalIpAddress is null)
-        {
-            Console.WriteLine("from memory ");
+            Console.WriteLine("no origin -same site?");
             return noLimit;
 
         }
-        if (IPAddress.Equals(con.RemoteIpAddress, con.LocalIpAddress))
-        {
-            Console.WriteLine("from same site");
-            return noLimit;
-
-        }
-        //return RateLimitPartition.GetNoLimiter("");
-        var address= con.RemoteIpAddress?.ToString()??"noRemote";    
-        return simpleLimiter(address);
+        
+        return simpleLimiter(origin.ToString());
     });
 });
 
