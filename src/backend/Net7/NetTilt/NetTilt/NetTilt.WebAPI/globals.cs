@@ -23,6 +23,8 @@ global using Lib.AspNetCore.ServerTiming;
 
 global using Hellang.Middleware.ProblemDetails;
 global using System.Diagnostics;
+global using Microsoft.AspNetCore.Http.HttpResults;
+global using UsefullExtensions;
 
 
 [assembly: AMS_Base.VersionReleased(Name = "FutureRelease", ISODateTime = "9999-04-16", recordData = AMS_Base.RecordData.Merges)]

@@ -1,5 +1,7 @@
 
-using UsefullExtensions;
+
+using Org.BouncyCastle.Utilities.Net;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -186,8 +188,84 @@ builder.Services.AddCors(options =>
                       });
 });
 builder.Services.AddScoped<ServerTiming>();
+
+builder.Services.AddRateLimiter(opt =>
+{
+    opt.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    opt.AddPolicy("UnlimitMeAndLocalHost", context =>
+    {
+        //return RateLimitPartition.GetFixedWindowLimiter("local", _ =>
+
+        //{
+        //    return new FixedWindowRateLimiterOptions()
+        //    {
+        //        PermitLimit = 1,
+        //        Window = TimeSpan.FromMinutes(12),
+        //        QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+        //        QueueLimit = 1
+        //    };
+
+        //}
+        //);
+
+        var host = context.Request.Host;
+        var hostName = host.HasValue ? host.Host : "";
+        if (string.IsNullOrWhiteSpace(hostName))
+        {
+            Console.WriteLine("from desktop or local");
+            return RateLimitPartition.GetNoLimiter("");
+        }
+        if (hostName.Contains("localhost"))
+        {
+            Console.WriteLine("from localhost");
+            return RateLimitPartition.GetNoLimiter("");
+        }
+        var con = context.Connection;
+        if (con.RemoteIpAddress is null)
+        {
+            Console.WriteLine("from local site");
+            return RateLimitPartition.GetNoLimiter("");
+
+        }
+        if (con.LocalIpAddress is null)
+        {
+            Console.WriteLine("from memory ");
+            return RateLimitPartition.GetNoLimiter("");
+
+        }
+        if (IPAddress.Equals(con.RemoteIpAddress.Address, con.LocalIpAddress))
+        {
+            Console.WriteLine("from same site");
+            return RateLimitPartition.GetNoLimiter("");
+
+        }
+        //return RateLimitPartition.GetNoLimiter("");
+        return RateLimitPartition.GetFixedWindowLimiter("local", _ =>
+
+        {
+            return new FixedWindowRateLimiterOptions()
+            {
+                PermitLimit = 1,
+                Window = TimeSpan.FromMinutes(12),
+                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                QueueLimit = 1
+            };
+
+        }
+        );
+
+
+
+
+
+    });
+});
+
+
 var app = builder.Build();
-app.UseProblemDetails(); 
+app.UseProblemDetails();
+app.UseStatusCodePages();
+app.UseRateLimiter();
 app.UseServerTiming();
 app.UseMiddleware<ServerTiming>();
 app.UseDefaultFiles();
@@ -199,7 +277,7 @@ app.UseBlocklyUI(app.Environment);
 app.UseCors("AllowAll");
 app.UseAuthorization();
 app.UseAuthentication();
-app.MapControllers();
+app.MapControllers().RequireRateLimiting("UnlimitMeAndLocalHost");
 app.UseAMS();
 app.UseBlocklyAutomation();
 if (!IsBuildFromCI)
@@ -298,7 +376,13 @@ using (var activity = source.StartActivity("StartApp"))
 
     activity?.SetTag("On", DateTime.UtcNow);
     activity?.SetStatus(Status.Ok);
+
 }
+
+app.MapGet("/EXAMPLE/{orderId}", Results<BadRequest, Ok<string>> (int orderId)
+    => orderId > 999 ? TypedResults.BadRequest() : TypedResults.Ok("done"));
+
+
 app.MapUsefullAll();
 app.MapFallbackToFile("AngTilt/{*path:nonfile}", "/AngTilt/index.html");
 app.MapFallbackToFile("ReactTilt/{*path:nonfile}", "/ReactTilt/index.html");
