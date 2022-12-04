@@ -185,6 +185,24 @@ builder.Services.AddCors(options =>
 });
 builder.Services.AddScoped<ServerTiming>();
 
+
+var noLimit = RateLimitPartition.GetNoLimiter("");
+
+Func<string, RateLimitPartition<string>> simpleLimiter =
+    (string address) =>
+RateLimitPartition.GetFixedWindowLimiter(address, _ =>
+{
+    return new FixedWindowRateLimiterOptions()
+    {
+        PermitLimit = 3,
+        Window = TimeSpan.FromMinutes(1),
+        QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+        QueueLimit = 1
+    };
+
+});
+
+
 builder.Services.AddRateLimiter(opt =>
 {
     opt.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
@@ -195,52 +213,36 @@ builder.Services.AddRateLimiter(opt =>
         var hostName = host.HasValue ? host.Host : "";
         if (string.IsNullOrWhiteSpace(hostName))
         {
-            Console.WriteLine("from desktop or local");
-            return RateLimitPartition.GetNoLimiter("");
+            Console.WriteLine("no host???");
+            return simpleLimiter("");
         }
-        if (hostName.Contains("localhost"))
+        if (string.Equals(hostName,"localhost",StringComparison.InvariantCultureIgnoreCase))
         {
             Console.WriteLine("from localhost");
-            return RateLimitPartition.GetNoLimiter("");
+            return noLimit;
         }
         var con = context.Connection;
         if (con.RemoteIpAddress is null)
         {
-            Console.WriteLine("from local site");
-            return RateLimitPartition.GetNoLimiter("");
+            Console.WriteLine("strange, no remote ip");
+            return simpleLimiter("");
 
         }
         if (con.LocalIpAddress is null)
         {
             Console.WriteLine("from memory ");
-            return RateLimitPartition.GetNoLimiter("");
+            return noLimit;
 
         }
         if (IPAddress.Equals(con.RemoteIpAddress, con.LocalIpAddress))
         {
             Console.WriteLine("from same site");
-            return RateLimitPartition.GetNoLimiter("");
+            return noLimit;
 
         }
         //return RateLimitPartition.GetNoLimiter("");
-        var address= con.RemoteIpAddress.ToString()??"noRemote";    
-        return RateLimitPartition.GetFixedWindowLimiter(address, _ =>
-        {
-            return new FixedWindowRateLimiterOptions()
-            {
-                PermitLimit = 3,
-                Window = TimeSpan.FromMinutes(1),
-                QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
-                QueueLimit = 1
-            };
-
-        }
-        );
-
-
-
-
-
+        var address= con.RemoteIpAddress?.ToString()??"noRemote";    
+        return simpleLimiter(address);
     });
 });
 
