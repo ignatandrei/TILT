@@ -222,13 +222,14 @@ builder.Services.AddRateLimiter(opt =>
             return noLimit;
         }
         var hasOrigin = context.Request.Headers.TryGetValue("Origin", out var origin);
-        
+        //maybe also verify referer?
         if (!hasOrigin)
         {
             Console.WriteLine("no origin -same site?");
             return noLimit;
 
         }
+
         var originHost = origin.ToString();
         var fullHost = context.Request.Host.ToString();
         Console.WriteLine($"has origin {originHost} , full host {fullHost}");
@@ -237,7 +238,8 @@ builder.Services.AddRateLimiter(opt =>
             Console.WriteLine($"same site - no cors");
             return noLimit;
         }
-        return simpleLimiter(origin.ToString());
+        return noLimit;
+        //return simpleLimiter(origin.ToString());
     });
 });
 
