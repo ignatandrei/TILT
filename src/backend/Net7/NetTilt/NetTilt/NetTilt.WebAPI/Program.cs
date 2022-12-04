@@ -206,6 +206,7 @@ RateLimitPartition.GetFixedWindowLimiter(address, _ =>
 builder.Services.AddRateLimiter(opt =>
 {
     opt.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    
     opt.AddPolicy("UnlimitMeAndLocalHost", context =>
     {
         
@@ -221,6 +222,7 @@ builder.Services.AddRateLimiter(opt =>
             Console.WriteLine("localhost have no limit");
             return noLimit;
         }
+        //chrome does not send origin, if same site
         var hasOrigin = context.Request.Headers.TryGetValue("Origin", out var origin);
         //maybe also verify referer?
         if (!hasOrigin)
@@ -229,9 +231,9 @@ builder.Services.AddRateLimiter(opt =>
             return noLimit;
 
         }
-
+        //edge sends origin
         var originHost = origin.ToString();
-        var fullHost = context.Request.Host.ToString();
+        var fullHost = context.Request.Host.Host;
         Console.WriteLine($"has origin {originHost} , full host {fullHost}");
         if (string.Equals(fullHost,originHost, StringComparison.CurrentCultureIgnoreCase))
         {
