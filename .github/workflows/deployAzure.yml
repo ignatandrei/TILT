@@ -60,6 +60,7 @@ jobs:
             npm i
             npm run buildAzure
             remove-item ..\..\backend\Net7\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\AngTilt\index.html
+            dir .\dist\AngTilt\* 
             Copy-Item .\dist\AngTilt\* ..\..\backend\Net7\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\AngTilt\
       - name: dotnet publish
         shell: pwsh
@@ -71,7 +72,7 @@ jobs:
             # ls -lh
             .\AOPMethod.ps1
             cd NetTilt/NetTilt.WebAPI 
-            copy-item ./wwwroot/AngTilt/3rdpartylicenses.txt ./wwwroot/ 
+            # copy-item ./wwwroot/AngTilt/3rdpartylicenses.txt ./wwwroot/ 
             gci ./wwwroot/ |  % { Write-Host $_.FullName } 
             dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp -r linux-x64
 
