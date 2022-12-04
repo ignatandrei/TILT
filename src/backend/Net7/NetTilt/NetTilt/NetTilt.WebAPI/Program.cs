@@ -233,6 +233,15 @@ builder.Services.AddRateLimiter(opt =>
         }
         //edge sends origin
         var originHost = origin.ToString();
+        //removing scheme
+        if (originHost.StartsWith("http://"))
+        {
+            originHost = originHost.Substring(7);
+        }
+        if (originHost.StartsWith("https://"))
+        {
+            originHost = originHost.Substring(8);
+        }
         var fullHost = context.Request.Host.Host;
         Console.WriteLine($"has origin {originHost} , full host {fullHost}");
         if (string.Equals(fullHost,originHost, StringComparison.CurrentCultureIgnoreCase))
