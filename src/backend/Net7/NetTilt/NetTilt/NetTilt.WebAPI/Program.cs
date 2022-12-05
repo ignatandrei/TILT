@@ -206,7 +206,11 @@ RateLimitPartition.GetFixedWindowLimiter(address, _ =>
 builder.Services.AddRateLimiter(opt =>
 {
     opt.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
-    
+    opt.OnRejected = (ctx, ct) =>
+    {
+        ctx.HttpContext.Response.Headers.Add("tiltLimit", "please try later")
+        return ValueTask.CompletedTask;
+    };
     opt.AddPolicy("UnlimitMeAndLocalHost", context =>
     {
         
