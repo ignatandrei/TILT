@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve -o",
+	"buildGithub":"ng build --base-href / --output-path dist/AngTilt --extract-licenses true",
     "buildAzure": "ng build --base-href /AngTilt/ --output-path dist/AngTilt --extract-licenses true",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
