@@ -1,4 +1,4 @@
-import { map, Observable, scan, tap } from "rxjs";
+import { delay, map, Observable, scan, tap } from "rxjs";
 import { ajax } from 'rxjs/ajax';
 import { publicTilt } from "../classes/publicTilt";
 import { TILT } from "../classes/TILT";
@@ -91,7 +91,8 @@ export class PublicTiltsService {
         .pipe(        
           tap(it=>console.log(`for ${id} number of tilts is ${it.response}`)),
           map(it=> isNaN(+it.response)? null: +it.response),
-          map(it=>new publicTilt({url:id,nrTilts: it}))
+          map(it=>new publicTilt({url:id,nrTilts: it})),
+          delay(5000),
         );    
       ;
   
