@@ -161,13 +161,13 @@ builder.Services.AddOpenTelemetryTracing(b =>
 builder.Services.AddDbContextFactory<ApplicationDBContext>(
     options =>
     {
-        if (IsBuildFromCI)
-        {
-            var cn = builder.Configuration.GetConnectionString("DefaultConnection");
-            options.UseSqlServer(cn);
-        }
+        //if (IsBuildFromCI)
+        //{
+        //    var cn = builder.Configuration.GetConnectionString("DefaultConnection");
+        //    options.UseSqlServer(cn);
+        //}
 
-        else
+        //else
         {
             options.UseSqlite(cnSqlite);
         }
