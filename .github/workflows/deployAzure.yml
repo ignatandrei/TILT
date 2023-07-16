@@ -70,11 +70,11 @@ jobs:
             # gci -recurse |  % { Write-Host $_.FullName }
             dotnet dotnet-project-licenses -i ./NetTilt/NetTilt.WebAPI -o --outfile NetTilt/NetTilt.WebAPI/wwwroot/netcorelicences.txt -t
             # ls -lh
-            .\AOPMethod.ps1
+            //.\AOPMethod.ps1
             cd NetTilt/NetTilt.WebAPI 
             copy-item ./wwwroot/AngTilt/3rdpartylicenses.txt ./wwwroot/ 
             gci ./wwwroot/ |  % { Write-Host $_.FullName } 
-            dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp -r linux-x64
+            dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp -r linux-x64 --no-self-contained
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
