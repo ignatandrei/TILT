@@ -70,7 +70,7 @@ jobs:
             # gci -recurse |  % { Write-Host $_.FullName }
             dotnet dotnet-project-licenses -i ./NetTilt/NetTilt.WebAPI -o --outfile NetTilt/NetTilt.WebAPI/wwwroot/netcorelicences.txt -t
             # ls -lh
-            # .\AOPMethod.ps1
+            .\AOPMethod.ps1
             cd NetTilt/NetTilt.WebAPI 
             copy-item ./wwwroot/AngTilt/3rdpartylicenses.txt ./wwwroot/ 
             gci ./wwwroot/ |  % { Write-Host $_.FullName } 
@@ -101,5 +101,5 @@ jobs:
         with:
           app-name: 'TILTWebApp'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0865EB8DA0C847FF9878C2EF8E6AA38C }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_72419C7672544AC09772BC40541107F7 }}
           package: .
