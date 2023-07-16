@@ -1,5 +1,5 @@
 import React from "react";
-import {  useEffect, useState } from "react";
+//import {  useEffect, useState } from "react";
 
 interface VisibilityProps {
     loading?: boolean;
@@ -17,11 +17,11 @@ interface VisibilityProps {
     return VisibityControlled;
   }
   
-
+/*
   interface WithLoadingProps {
     loading: boolean;
   }
-  
+  */
   
 // function withLoading(WrappedComponent) {
 //   return function LoadingComponent({ isLoading, ...props }) {
