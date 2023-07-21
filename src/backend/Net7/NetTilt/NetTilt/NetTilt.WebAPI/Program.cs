@@ -287,7 +287,7 @@ if (!IsBuildFromCI)
         var dbcontext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
         dbcontext.Database.EnsureCreated();
 
-        seed db
+        //seed db
         dbcontext.TILT_URL.Add(new TILT_URL()
         {
             Secret = "Andrei",
