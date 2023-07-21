@@ -161,13 +161,13 @@ builder.Services.AddOpenTelemetryTracing(b =>
 builder.Services.AddDbContextFactory<ApplicationDBContext>(
     options =>
     {
-        //if (IsBuildFromCI)
-        //{
-        //    var cn = builder.Configuration.GetConnectionString("DefaultConnection");
-        //    options.UseSqlServer(cn);
-        //}
+        if (IsBuildFromCI)
+        {
+            var cn = builder.Configuration.GetConnectionString("DefaultConnection");
+            options.UseSqlServer(cn);
+        }
 
-        //else
+        else
         {
             options.UseSqlite(cnSqlite);
         }
@@ -281,78 +281,78 @@ if (!IsBuildFromCI)
 {
     using (var scope = app.Services.CreateScope())
     {
-        //if (File.Exists("Tilt.db"))
-        //    File.Delete("Tilt.db");
+        if (File.Exists("Tilt.db"))
+            File.Delete("Tilt.db");
 
-        //var dbcontext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
-        //dbcontext.Database.EnsureCreated();
+        var dbcontext = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
+        dbcontext.Database.EnsureCreated();
 
-        //seed db
-        //dbcontext.TILT_URL.Add(new TILT_URL()
-        //{
-        //    Secret = "Andrei",
-        //    URLPart = "TestAddWithNoData"
-        //});
-        //dbcontext.TILT_URL.Add(new TILT_URL()
-        //{
-        //    Secret = "test",
-        //    URLPart = "ClickToSeeMyTILTS"
-        //});
-        //await dbcontext.SaveChangesAsync();
+        seed db
+        dbcontext.TILT_URL.Add(new TILT_URL()
+        {
+            Secret = "Andrei",
+            URLPart = "TestAddWithNoData"
+        });
+        dbcontext.TILT_URL.Add(new TILT_URL()
+        {
+            Secret = "test",
+            URLPart = "ClickToSeeMyTILTS"
+        });
+        await dbcontext.SaveChangesAsync();
 
-        //dbcontext.TILT_Note.Add(new TILT_Note()
-        //{
-        //    ForDate = DateTime.UtcNow.AddDays(-9),
-        //    IDURL = 2,
-        //    Text = "I learned how to make an web app with .NET core on backend",
-        //    TimeZoneString = "Europe/Bucharest"
-        //});
-        //dbcontext.TILT_Note.Add(new TILT_Note()
-        //{
-        //    ForDate = DateTime.UtcNow.AddDays(-8),
-        //    IDURL = 2,
-        //    Text = "I learned how to make an web app with Angular on frontend",
-        //    TimeZoneString = "Europe/Bucharest"
-        //});
-        //dbcontext.TILT_Note.Add(new TILT_Note()
-        //{
-        //    ForDate = DateTime.UtcNow.AddDays(-7),
-        //    IDURL = 2,
-        //    Text = "and learned how to deploy bundled together",
-        //    TimeZoneString = "Europe/Bucharest"
-        //});
-        //dbcontext.TILT_Note.Add(new TILT_Note()
-        //{
-        //    ForDate = DateTime.UtcNow.AddDays(-6),
-        //    IDURL = 2,
-        //    Text = "so I made this app - Things I Learned Today - TILT",
-        //    TimeZoneString = "Europe/Bucharest"
-        //});
-        //dbcontext.TILT_Note.Add(new TILT_Note()
-        //{
-        //    ForDate = DateTime.UtcNow.AddDays(-6),
-        //    IDURL = 2,
-        //    Text = "see link",
-        //    Link = "https://tiltwebapp.azurewebsites.net/",
-        //    TimeZoneString = "Europe/Bucharest"
-        //});
-        //dbcontext.TILT_Note.Add(new TILT_Note()
-        //{
-        //    ForDate = DateTime.UtcNow.AddDays(-3),
-        //    IDURL = 2,
-        //    Text = "it has also swagger",
-        //    Link = "https://tiltwebapp.azurewebsites.net/swagger",
-        //    TimeZoneString = "Europe/Bucharest"
-        //});
-        //dbcontext.TILT_Note.Add(new TILT_Note()
-        //{
-        //    ForDate = DateTime.UtcNow.AddDays(-2),
-        //    IDURL = 2,
-        //    Text = "it has also BlocklyAutomation",
-        //    Link = "https://tiltwebapp.azurewebsites.net/BlocklyAutomation",
-        //    TimeZoneString = "Europe/Bucharest"
-        //});
-        //await dbcontext.SaveChangesAsync();
+        dbcontext.TILT_Note.Add(new TILT_Note()
+        {
+            ForDate = DateTime.UtcNow.AddDays(-9),
+            IDURL = 2,
+            Text = "I learned how to make an web app with .NET core on backend",
+            TimeZoneString = "Europe/Bucharest"
+        });
+        dbcontext.TILT_Note.Add(new TILT_Note()
+        {
+            ForDate = DateTime.UtcNow.AddDays(-8),
+            IDURL = 2,
+            Text = "I learned how to make an web app with Angular on frontend",
+            TimeZoneString = "Europe/Bucharest"
+        });
+        dbcontext.TILT_Note.Add(new TILT_Note()
+        {
+            ForDate = DateTime.UtcNow.AddDays(-7),
+            IDURL = 2,
+            Text = "and learned how to deploy bundled together",
+            TimeZoneString = "Europe/Bucharest"
+        });
+        dbcontext.TILT_Note.Add(new TILT_Note()
+        {
+            ForDate = DateTime.UtcNow.AddDays(-6),
+            IDURL = 2,
+            Text = "so I made this app - Things I Learned Today - TILT",
+            TimeZoneString = "Europe/Bucharest"
+        });
+        dbcontext.TILT_Note.Add(new TILT_Note()
+        {
+            ForDate = DateTime.UtcNow.AddDays(-6),
+            IDURL = 2,
+            Text = "see link",
+            Link = "https://tiltwebapp.azurewebsites.net/",
+            TimeZoneString = "Europe/Bucharest"
+        });
+        dbcontext.TILT_Note.Add(new TILT_Note()
+        {
+            ForDate = DateTime.UtcNow.AddDays(-3),
+            IDURL = 2,
+            Text = "it has also swagger",
+            Link = "https://tiltwebapp.azurewebsites.net/swagger",
+            TimeZoneString = "Europe/Bucharest"
+        });
+        dbcontext.TILT_Note.Add(new TILT_Note()
+        {
+            ForDate = DateTime.UtcNow.AddDays(-2),
+            IDURL = 2,
+            Text = "it has also BlocklyAutomation",
+            Link = "https://tiltwebapp.azurewebsites.net/BlocklyAutomation",
+            TimeZoneString = "Europe/Bucharest"
+        });
+        await dbcontext.SaveChangesAsync();
 
     }
 }
