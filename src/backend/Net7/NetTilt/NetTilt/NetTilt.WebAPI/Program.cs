@@ -27,11 +27,11 @@ bool IsBuildFromCI = new XAboutMySoftware_78102118871091131225395110108769286().
 var cnSqlite = "Data Source=Tilt.db";
 
 var hc = builder.Services.AddHealthChecks();
-//if (IsBuildFromCI)
-//{
-//    hc.AddSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"],name:"database SqlServer");
-//}
-//else
+if (IsBuildFromCI)
+{
+    hc.AddSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"], name: "database SqlServer");
+}
+else
 {
     hc.AddSqlite(cnSqlite, name: "database Sqlite");
 }
