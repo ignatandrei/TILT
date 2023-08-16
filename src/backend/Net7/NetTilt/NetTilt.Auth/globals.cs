@@ -6,4 +6,4 @@ global using System.Security.Claims;
 global using Microsoft.Extensions.Configuration;
 global using BoilerplateFree;
 global using AOPMethodsCommon;
-global using Lib.AspNetCore.ServerTiming; 
+global using Lib.AspNetCore.ServerTiming;

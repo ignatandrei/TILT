@@ -23,7 +23,7 @@ builder.Services.AddProblemDetails(options =>
     options.IncludeExceptionDetails = (ctx, ex) => true;
 });
 
-bool IsBuildFromCI = new XAboutMySoftware_78102118871091131225395110108769286().IsInCI;
+bool IsBuildFromCI = new XAboutMySoftware_78102118871091131225395110108769286().IsInCI;// new XAboutMySoftware_65788590105103718781().IsInCI;
 var cnSqlite = "Data Source=Tilt.db";
 
 var hc = builder.Services.AddHealthChecks();
@@ -257,9 +257,11 @@ builder.Services.AddRateLimiter(opt =>
         return simpleLimiter(origin.ToString());
     });
 });
-
-
+WebApiExportToFile.Extensions.AddExport(builder.Services);
+//builder.AddExport();
 var app = builder.Build();
+WebApiExportToFile.Extensions.UseExport(app);
+//builder.UseExport();
 app.UseProblemDetails();
 app.UseStatusCodePages();
 app.UseRateLimiter();
