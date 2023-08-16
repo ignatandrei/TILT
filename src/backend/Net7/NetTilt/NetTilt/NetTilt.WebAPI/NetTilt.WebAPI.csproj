@@ -39,7 +39,7 @@
 
 	  <PackageReference Include="RSCG_TimeBombComment" Version="2022.3.10.1720" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
 
-	  <PackageReference Include="RSCG_WebAPIExports" Version="2023.8.16.1257" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
+	  <PackageReference Include="RSCG_WebAPIExports" Version="2023.8.16.1258" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 	  <PackageReference Include="SkinnyControllersCommon" Version="2021.25.6.855" />
 	  <PackageReference Include="SkinnyControllersGenerator" Version="2021.25.6.855" />
