@@ -1,0 +1,38 @@
+{
+	"version":"2023.12.9.2128",
+	"connections":[
+	{
+		"Enabled":true,
+		"NameContext": "ApplicationDBContext",
+		"Provider": "Microsoft.EntityFrameworkCore.SqlServer",
+		"ProjectForContext": "..\\TiltBlazor8.Context\\TiltBlazor8.Context.csproj",
+		"ProjectForClasses": "..\\TiltBlazor8.Models\\TiltBlazor8.Models.csproj",
+		"ProjectWithDesigner": "..\\TiltBlazor8.Controllers\\TiltBlazor8.Controllers.csproj",
+		"ConnectionString":"Server=127.0.0.1;User ID=sa;Password=<YourStrong@Passw0rd>;Initial Catalog=tilt;TrustServerCertificate=true;",
+		"ConnectionString1":"Server=127.0.0.1;Initial Catalog=tilt;Persist Security Info=False;User ID=sa;Password=<YourStrong@Passw0rd>;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;",
+		"ProjectCRA":"..\\TiltBlazor8.GeneratorCRA\\TiltBlazor8.GeneratorCRA.csproj"
+	},
+	{
+		"Enabled":false,
+		"Provider": "Microsoft.EntityFrameworkCore.SqlServer",
+		"ProjectForContext": "..\\TiltBlazor8.Context\\TiltBlazor8.Context.csproj",
+		"ProjectForClasses": "..\\TiltBlazor8.Models\\TiltBlazor8.Models.csproj",
+		"ProjectWithDesigner": "..\\TiltBlazor8.Controllers\\TiltBlazor8.Controllers.csproj",
+		"NameContext": "PubsDBContext",
+		"ConnectionString":"Server=127.0.0.1;User ID=sa;Password=<YourStrong@Passw0rd>;Initial Catalog=pubs;TrustServerCertificate=true;",
+		"ConnectionString1":"Data Source=sqlservertestdbep.database.windows.net;Initial Catalog=pubs;UId=myadmin;pwd=p@rola123;TrustServerCertificate=true;",
+		"ProjectCRA":"..\\TiltBlazor8.GeneratorCRA\\TiltBlazor8.GeneratorCRA.csproj"
+	},
+	{
+		"Enabled":false,
+		"Provider": "Microsoft.EntityFrameworkCore.SqlServer",
+		"ProjectForContext": "..\\TiltBlazor8.Context\\TiltBlazor8.Context.csproj",
+		"ProjectForClasses": "..\\TiltBlazor8.Models\\TiltBlazor8.Models.csproj",
+		"ProjectWithDesigner": "..\\TiltBlazor8.Controllers\\TiltBlazor8.Controllers.csproj",
+		"NameContext": "NorthwindDBContext",
+		"ConnectionString":"Server=127.0.0.1;User ID=sa;Password=<YourStrong@Passw0rd>;Initial Catalog=northwind;TrustServerCertificate=true;",
+		"ConnectionString1":"Data Source=sqlservertestdbep.database.windows.net;Initial Catalog=Northwind;UId=myadmin;pwd=p@rola123;TrustServerCertificate=true;",
+		"ProjectCRA":"..\\TiltBlazor8.GeneratorCRA\\TiltBlazor8.GeneratorCRA.csproj"
+	}
+	]
+}

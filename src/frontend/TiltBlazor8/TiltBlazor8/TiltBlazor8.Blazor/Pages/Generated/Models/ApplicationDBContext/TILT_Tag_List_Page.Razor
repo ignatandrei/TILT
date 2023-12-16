@@ -1,0 +1,216 @@
+﻿@using global::Generated
+@inject NavigationManager navigationManager
+<FluentButton  Loading="@loading"
+              OnClick="@LoadData" Appearance="Appearance.Accent">LoadData @nrRecordsLoaded / @totalRecords</FluentButton>
+
+@if (ExistsFilter())
+{
+    <text>
+        @recordFiltered records Filtered with : @filterText
+    </text>
+}
+
+
+<FluentDataGrid @ref="gridTILT_Tag" ResizableColumns=true Items="@dataForQuery" Virtualize="true" GenerateHeader="GenerateHeaderOption.Sticky" >
+    <PropertyColumn Property="@(p => p.number)" Sortable="true"  IsDefaultSortColumn="true" InitialSortDirection="SortDirection.Descending" >
+       
+    </PropertyColumn>
+        <TemplateColumn Title="ID" SortBy="@sortByID">
+        <ColumnOptions>
+            ID => @filters[eTILT_TagColumns.ID]
+            <div class="search-box">
+                <FluentSearch type="search" Autofocus=true @bind-Value=filters[eTILT_TagColumns.ID] @oninput='(e)=>HandleColumnsFilter(eTILT_TagColumns.ID,e)' @bind-Value:after='()=>HandleClearColumnsFilter(eTILT_TagColumns.ID)' Placeholder="ID..." />
+            </div>
+        </ColumnOptions>
+        <ChildContent>
+                                <div>@context.data.ID</div>
+                            </ChildContent>
+        
+
+
+    </TemplateColumn>
+        <TemplateColumn Title="Name" SortBy="@sortByName">
+        <ColumnOptions>
+            Name => @filters[eTILT_TagColumns.Name]
+            <div class="search-box">
+                <FluentSearch type="search" Autofocus=true @bind-Value=filters[eTILT_TagColumns.Name] @oninput='(e)=>HandleColumnsFilter(eTILT_TagColumns.Name,e)' @bind-Value:after='()=>HandleClearColumnsFilter(eTILT_TagColumns.Name)' Placeholder="Name..." />
+            </div>
+        </ColumnOptions>
+        <ChildContent>
+                                <div>@context.data.Name</div>
+                            </ChildContent>
+        
+
+
+    </TemplateColumn>
+    </FluentDataGrid>
+
+
+@code {
+    [Inject(Key = "db")]
+    public HttpClient? HttpClient_WebApi { get; set; } = null;
+
+    [Parameter]
+    public string? database { get; set; } = null;
+
+    [Parameter]
+    public string? table { get; set; } = null;
+
+    [Parameter]
+    public long? totalRecords { get; set; } = null;
+
+    List<DataWithNumber<TILT_Tag>> dataArr = [];
+    private FluentDataGrid<DataWithNumber<TILT_Tag>>? gridTILT_Tag;
+    public long recordFiltered  => Filtered.LongLength;
+    public bool loading = false;
+
+    
+    private void GotoTableRow(string table, string rowId)
+    {
+        navigationManager.NavigateTo(string.Format("databases/{0}/tables/{1}/rows/{2}", database, table, rowId),true);
+        
+    }
+        
+    
+    private DataWithNumber<TILT_Tag>[] Filtered
+    {
+        get
+        {
+            var arr = dataArr.ToArray();
+            var existingFilters = filters.Where(x => !string.IsNullOrWhiteSpace(x.Value)).ToArray();
+            foreach (var item in filters)
+            {
+                switch (item.Key)
+                {
+                                    case eTILT_TagColumns.ID:
+                        arr = arr
+                        .Where(x => 
+                        
+                        {
+                            try
+                            {
+                                return x.data.ID.ToString().Contains(item.Value, StringComparison.CurrentCultureIgnoreCase);
+
+                            }
+                            catch
+                            {
+                                return false;
+                            }
+                        }
+                        
+                        
+                        )
+
+                        .ToArray();
+                        break;
+                    case eTILT_TagColumns.Name:
+                        arr = arr
+                        .Where(x => 
+                        
+                        {
+                            try
+                            {
+                                return x.data.Name.ToString().Contains(item.Value, StringComparison.CurrentCultureIgnoreCase);
+
+                            }
+                            catch
+                            {
+                                return false;
+                            }
+                        }
+                        
+                        
+                        )
+
+                        .ToArray();
+                        break;
+                }
+            }
+            return arr;
+        }
+    }
+
+        GridSort<DataWithNumber<TILT_Tag>> sortByID = GridSort<DataWithNumber<TILT_Tag>>
+       .ByAscending(p => p.data.ID)
+       .ThenDescending(p => p.number);
+        GridSort<DataWithNumber<TILT_Tag>> sortByName = GridSort<DataWithNumber<TILT_Tag>>
+       .ByAscending(p => p.data.Name)
+       .ThenDescending(p => p.number);
+    
+    public IQueryable<DataWithNumber<TILT_Tag>>? dataForQuery
+    {
+        get
+        {
+            return Filtered.AsQueryable();
+        }
+    }
+
+    string nameNumberFilter = string.Empty;
+    
+    Dictionary<eTILT_TagColumns, string> filters =new() {
+            {eTILT_TagColumns.ID, string.Empty},     
+                {eTILT_TagColumns.Name, string.Empty},     
+            };
+
+    public string filterText{
+        get
+        {
+            var arr = filters.Where(x => !string.IsNullOrWhiteSpace(x.Value)).Select(x => $"{x.Value} in {x.Key}").ToArray();
+            return string.Join(";", arr);
+        }
+    }
+    public bool ExistsFilter()
+    {
+        return filters.Any(x => !string.IsNullOrWhiteSpace(x.Value));
+    }
+
+    void HandleColumnsFilter(eTILT_TagColumns name, ChangeEventArgs args)
+    {
+        if (args != null && args.Value != null)
+        {
+            filters[name] = args.Value.ToString() ?? "";
+        }
+    }
+    
+    private void HandleClearColumnsFilter(eTILT_TagColumns name)
+    {
+        if (string.IsNullOrWhiteSpace(filters[name]))
+        {
+            filters[name] = string.Empty;
+           
+        }
+    }
+    long? nrRecordsLoaded = null;
+    private async Task LoadData()
+    {
+
+        var url = $"/api/AdvancedSearch_{database}_{table}/GetAll";
+        ArgumentNullException.ThrowIfNull(HttpClient_WebApi);
+        var data = HttpClient_WebApi.GetFromJsonAsAsyncEnumerable<TILT_Tag>(url);
+        ArgumentNullException.ThrowIfNull(data);
+        int i = 0;
+        loading = true;
+        
+        await foreach (var item in data)
+        {
+            if (item == null) continue;
+            i++;
+            if(i ==1){
+                dataArr = [];
+            }
+            dataArr.Add(new DataWithNumber<TILT_Tag>(i, item));
+            if ((i<100 && i%10==0) || (i>100 && i < 900 && i % 100 == 0) || (i > 900 && i % 1000 == 0))
+            {
+                //Console.WriteLine($"i={i}");
+                nrRecordsLoaded = i;
+
+                await InvokeAsync(StateHasChanged);
+                await Task.Delay(i<500? 1_000:2_000);
+            }
+        }
+        nrRecordsLoaded = i;
+
+        await InvokeAsync(StateHasChanged);
+        loading= false;
+    }
+}

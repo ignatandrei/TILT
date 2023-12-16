@@ -1,0 +1,314 @@
+<#@ template hostSpecific="true" #>
+<#@ output extension="_list_page.razor" #>
+<#@ assembly name="Microsoft.EntityFrameworkCore" #>
+<#@ assembly name="Microsoft.EntityFrameworkCore.Design" #>
+<#@ assembly name="Microsoft.EntityFrameworkCore.Relational" #>
+<#@ assembly name="Microsoft.Extensions.DependencyInjection.Abstractions" #>
+<#@ parameter name="EntityType" type="Microsoft.EntityFrameworkCore.Metadata.IEntityType" #>
+<#@ parameter name="Options" type="Microsoft.EntityFrameworkCore.Scaffolding.ModelCodeGenerationOptions" #>
+<#@ parameter name="NamespaceHint" type="System.String" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.ComponentModel.DataAnnotations" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="Microsoft.EntityFrameworkCore" #>
+<#@ import namespace="Microsoft.EntityFrameworkCore.Design" #>
+<#@ import namespace="Microsoft.Extensions.DependencyInjection" #>
+<#
+        //modified 2023.12.15
+    if (EntityType.IsSimpleManyToManyJoinEntityType())
+    {
+        // Don't scaffold these
+        return "";
+    }
+
+    var services = (IServiceProvider)Host;
+    var annotationCodeGenerator = services.GetRequiredService<IAnnotationCodeGenerator>();
+    var code = services.GetRequiredService<ICSharpHelper>();
+    	
+        var key= EntityType.FindPrimaryKey();
+		var EntityhasOneKey = (key != null && key.Properties != null && key.Properties.Count ==1);
+		string nameKey= string.Empty;
+		if(EntityhasOneKey){
+			var lambda= code.Lambda(key.Properties, "e") ;
+			var dot=lambda.IndexOf(".");
+			nameKey=lambda.Substring(dot+1);    	
+		};
+    string nameTable= EntityType.Name;
+    var tableFields = EntityType.GetProperties().ToArray();
+    var fieldsNavig = new List<(string nameNavig,string nameEntityNavig,string keyType,string nameProp)>();
+    foreach (var navigation in EntityType.GetNavigations())
+    {
+         if (navigation.IsCollection)
+            continue;
+        var targetTypeNavig = navigation.TargetEntityType.Name;
+        var navigationName= navigation.Name;
+        var keyNavig = navigation.TargetEntityType.FindPrimaryKey();
+        var hasOneKeynavig = (keyNavig != null && keyNavig.Properties != null && keyNavig.Properties.Count ==1);
+        
+        if(hasOneKeynavig){
+            var pk=keyNavig.Properties[0].FindContainingPrimaryKey() ;   
+            var keyTypeNavig=code.Reference(pk.GetKeyType());   
+            //var inv= navigation.Inverse;
+            //if(inv==null) continue;
+            var nameProp= navigation.ForeignKey.Properties[0].Name;
+
+            fieldsNavig.Add((navigationName,targetTypeNavig,keyTypeNavig,nameProp));            
+        }
+            
+    }
+    
+    
+#>
+@using global::Generated
+@inject NavigationManager navigationManager
+<FluentButton  Loading="@loading"
+              OnClick="@LoadData" Appearance="Appearance.Accent">LoadData @nrRecordsLoaded / @totalRecords</FluentButton>
+
+@if (ExistsFilter())
+{
+    <text>
+        @recordFiltered records Filtered with : @filterText
+    </text>
+}
+
+
+<FluentDataGrid @ref="grid<#=nameTable#>" ResizableColumns=true Items="@dataForQuery" Virtualize="true" GenerateHeader="GenerateHeaderOption.Sticky" >
+    <PropertyColumn Property="@(p => p.number)" Sortable="true"  IsDefaultSortColumn="true" InitialSortDirection="SortDirection.Descending" >
+       
+    </PropertyColumn>
+    <#
+    foreach(var field in tableFields) {
+        var navigField = fieldsNavig.FirstOrDefault(it=>it.nameProp==field.Name);
+        var isNavig = fieldsNavig.Any(it=>it.nameProp==field.Name);
+        var isPK=(nameKey==field.Name);
+    #>
+    <TemplateColumn Title="<#= field.Name #>" SortBy="@sortBy<#= field.Name #>">
+        <ColumnOptions>
+            <#= field.Name #> => @filters[e<#= nameTable #>Columns.<#= field.Name #>]
+            <div class="search-box">
+                <FluentSearch type="search" Autofocus=true @bind-Value=filters[e<#= nameTable #>Columns.<#= field.Name #>] @oninput='(e)=>HandleColumnsFilter(e<#= nameTable #>Columns.<#= field.Name #>,e)' @bind-Value:after='()=>HandleClearColumnsFilter(e<#= nameTable #>Columns.<#= field.Name #>)' Placeholder="<#= field.Name #>..." />
+            </div>
+        </ColumnOptions>
+        <ChildContent>
+        <# if(isNavig){ #> 
+            
+            <FluentButton   size="smallest" OnClick='()=>GotoTableRow("<#=navigField.nameEntityNavig #>",context.data.<#=navigField.nameProp#>.ToString())'> Goto <#=navigField.nameEntityNavig #> : @context.data.<#=navigField.nameProp#></FluentButton>
+            @if (context.data.<#=navigField.nameNavig#> != null)
+            {
+              
+            <text>
+                    @context.data.<#=navigField.nameNavig#>.ToFullPropertyString()
+            </text>
+
+            }
+            else
+            {
+                <text>
+                    <FluentButton size="smallest"  OnClick="()=>Load<#=navigField.nameEntityNavig#>(context.data.<#=navigField.nameProp#>)">Load @context.data.<#=navigField.nameProp#></FluentButton>
+                </text>
+            }
+        
+        <# } else  { #>
+            <# if(isPK){ #>
+            
+            <NavLink Href='@string.Format("databases/{0}/tables/{1}/rows/{2}",database,table, context.data.<#= field.Name #>)'>@context.data.<#= field.Name #></NavLink>
+            <# } else { #>
+            <div>@context.data.<#= field.Name #></div>
+            <# } #>
+        <# } ;// navig field condition #>
+        </ChildContent>
+        
+
+
+    </TemplateColumn>
+    <# } //end foreach field
+    #>
+</FluentDataGrid>
+
+
+@code {
+    [Inject(Key = "db")]
+    public HttpClient? HttpClient_WebApi { get; set; } = null;
+
+    [Parameter]
+    public string? database { get; set; } = null;
+
+    [Parameter]
+    public string? table { get; set; } = null;
+
+    [Parameter]
+    public long? totalRecords { get; set; } = null;
+
+    List<DataWithNumber<<#= nameTable #>>> dataArr = [];
+    private FluentDataGrid<DataWithNumber<<#= nameTable #>>>? grid<#= nameTable #>;
+    public long recordFiltered  => Filtered.LongLength;
+    public bool loading = false;
+
+    
+    private void GotoTableRow(string table, string rowId)
+    {
+        navigationManager.NavigateTo(string.Format("databases/{0}/tables/{1}/rows/{2}", database, table, rowId),true);
+        
+    }
+    <#
+foreach(var field in fieldsNavig) {
+    var nameProp= field.nameProp;
+#>
+    //a <#=field.nameNavig#>,<#=field.nameEntityNavig#>,<#=field.keyType#>
+    public async Task<bool> Load<#=field.nameEntityNavig#>(<#=field.keyType#>? id)
+    {
+        if(id==null) return false;
+        var url = $"api/AdvancedSearch_{database}_<#=field.nameEntityNavig#>/GetSingle?id={id}";
+        ArgumentNullException.ThrowIfNull(HttpClient_WebApi);
+        var data = await HttpClient_WebApi.GetFromJsonAsync<<#=field.nameEntityNavig#>>(url);
+        if (data == null) return false;
+        var arrID = dataArr
+            .Where(it => it.data.<#=nameProp#> == id)
+            .ToArray();
+        foreach (var item in arrID)
+            item.data.<#=field.nameNavig#> = data;
+
+
+        await grid<#= nameTable #>!.RefreshDataAsync();
+
+        return true;
+    }
+   
+<#
+	} //end foreach field
+#>
+    
+    
+    private DataWithNumber<<#= nameTable #>>[] Filtered
+    {
+        get
+        {
+            var arr = dataArr.ToArray();
+            var existingFilters = filters.Where(x => !string.IsNullOrWhiteSpace(x.Value)).ToArray();
+            foreach (var item in filters)
+            {
+                switch (item.Key)
+                {
+                <#
+    foreach(var field in tableFields) {
+    #>
+                    case e<#= nameTable #>Columns.<#= field.Name #>:
+                        arr = arr
+                        .Where(x => 
+                        
+                        {
+                            try
+                            {
+                                return x.data.<#= field.Name #>.ToString().Contains(item.Value, StringComparison.CurrentCultureIgnoreCase);
+
+                            }
+                            catch
+                            {
+                                return false;
+                            }
+                        }
+                        
+                        
+                        )
+
+                        .ToArray();
+                        break;
+<# } //end foreach field
+	#>
+                }
+            }
+            return arr;
+        }
+    }
+
+    <#
+    foreach(var field in tableFields) {
+    #>
+    GridSort<DataWithNumber<<#= nameTable #>>> sortBy<#= field.Name #> = GridSort<DataWithNumber<<#= nameTable #>>>
+       .ByAscending(p => p.data.<#= field.Name #>)
+       .ThenDescending(p => p.number);
+    <# } //end foreach field
+	#>
+
+    public IQueryable<DataWithNumber<<#= nameTable #>>>? dataForQuery
+    {
+        get
+        {
+            return Filtered.AsQueryable();
+        }
+    }
+
+    string nameNumberFilter = string.Empty;
+    
+    Dictionary<e<#= nameTable #>Columns, string> filters =new() {
+    <#
+    foreach(var field in tableFields) {
+    #>
+        {e<#= nameTable #>Columns.<#= field.Name #>, string.Empty},     
+        <# } //end foreach field
+	#>
+    };
+
+    public string filterText{
+        get
+        {
+            var arr = filters.Where(x => !string.IsNullOrWhiteSpace(x.Value)).Select(x => $"{x.Value} in {x.Key}").ToArray();
+            return string.Join(";", arr);
+        }
+    }
+    public bool ExistsFilter()
+    {
+        return filters.Any(x => !string.IsNullOrWhiteSpace(x.Value));
+    }
+
+    void HandleColumnsFilter(e<#= nameTable #>Columns name, ChangeEventArgs args)
+    {
+        if (args != null && args.Value != null)
+        {
+            filters[name] = args.Value.ToString() ?? "";
+        }
+    }
+    
+    private void HandleClearColumnsFilter(e<#= nameTable #>Columns name)
+    {
+        if (string.IsNullOrWhiteSpace(filters[name]))
+        {
+            filters[name] = string.Empty;
+           
+        }
+    }
+    long? nrRecordsLoaded = null;
+    private async Task LoadData()
+    {
+
+        var url = $"/api/AdvancedSearch_{database}_{table}/GetAll";
+        ArgumentNullException.ThrowIfNull(HttpClient_WebApi);
+        var data = HttpClient_WebApi.GetFromJsonAsAsyncEnumerable<<#= nameTable #>>(url);
+        ArgumentNullException.ThrowIfNull(data);
+        int i = 0;
+        loading = true;
+        
+        await foreach (var item in data)
+        {
+            if (item == null) continue;
+            i++;
+            if(i ==1){
+                dataArr = [];
+            }
+            dataArr.Add(new DataWithNumber<<#= nameTable #>>(i, item));
+            if ((i<100 && i%10==0) || (i>100 && i < 900 && i % 100 == 0) || (i > 900 && i % 1000 == 0))
+            {
+                //Console.WriteLine($"i={i}");
+                nrRecordsLoaded = i;
+
+                await InvokeAsync(StateHasChanged);
+                await Task.Delay(i<500? 1_000:2_000);
+            }
+        }
+        nrRecordsLoaded = i;
+
+        await InvokeAsync(StateHasChanged);
+        loading= false;
+    }
+}

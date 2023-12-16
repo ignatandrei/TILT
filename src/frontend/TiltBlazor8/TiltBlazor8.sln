@@ -1,0 +1,82 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GenericProps", "GenericProps", "{4EA9AA42-B41A-42F2-A2CC-AA459BB0EDCA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RunGeneratorPowershellOnceDBChanges", "RunGeneratorPowershellOnceDBChanges", "{BD0AC1ED-F776-4E35-8960-7DA296925E20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiltBlazor8.GeneratorPowershell", "TiltBlazor8\TiltBlazor8.GeneratorPowershell\TiltBlazor8.GeneratorPowershell.csproj", "{22CF32E8-9CCF-4E67-BC78-FA7214742B3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiltBlazor8.GeneratorCRA", "TiltBlazor8\TiltBlazor8.GeneratorCRA\TiltBlazor8.GeneratorCRA.csproj", "{D73B92D7-15EF-42FC-828D-13D117E7BB23}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GeneratedProjects", "GeneratedProjects", "{E3651A0C-6DFA-40E6-AC75-BCADB0F992A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiltBlazor8.GeneratorFromDB", "TiltBlazor8\TiltBlazor8.GeneratorFromDB\TiltBlazor8.GeneratorFromDB.csproj", "{B5578CE5-A554-4FD4-9E12-709D9F787859}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiltBlazor8.Models", "TiltBlazor8\TiltBlazor8.Models\TiltBlazor8.Models.csproj", "{08164CA5-DE2B-44DA-A5D7-0E6779FFCDFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiltBlazor8.Context", "TiltBlazor8\TiltBlazor8.Context\TiltBlazor8.Context.csproj", "{DDA1E10B-2A71-4A6E-8645-FA4F504980F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiltBlazor8.Controllers", "TiltBlazor8\TiltBlazor8.Controllers\TiltBlazor8.Controllers.csproj", "{F9CB1350-26F3-4EBF-9CF5-23ED1723658A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiltBlazor8.Blazor", "TiltBlazor8\TiltBlazor8.Blazor\TiltBlazor8.Blazor.csproj", "{4BC8CCCC-6565-4A7E-8644-5A2B4EED816D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiltBlazor8.WebAPI", "TiltBlazor8\TiltBlazor8.WebAPI\TiltBlazor8.WebAPI.csproj", "{1760990C-47AC-4A41-9491-CA13C1340AAB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{22CF32E8-9CCF-4E67-BC78-FA7214742B3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22CF32E8-9CCF-4E67-BC78-FA7214742B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22CF32E8-9CCF-4E67-BC78-FA7214742B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22CF32E8-9CCF-4E67-BC78-FA7214742B3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D73B92D7-15EF-42FC-828D-13D117E7BB23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D73B92D7-15EF-42FC-828D-13D117E7BB23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D73B92D7-15EF-42FC-828D-13D117E7BB23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D73B92D7-15EF-42FC-828D-13D117E7BB23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5578CE5-A554-4FD4-9E12-709D9F787859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5578CE5-A554-4FD4-9E12-709D9F787859}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5578CE5-A554-4FD4-9E12-709D9F787859}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5578CE5-A554-4FD4-9E12-709D9F787859}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08164CA5-DE2B-44DA-A5D7-0E6779FFCDFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08164CA5-DE2B-44DA-A5D7-0E6779FFCDFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08164CA5-DE2B-44DA-A5D7-0E6779FFCDFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08164CA5-DE2B-44DA-A5D7-0E6779FFCDFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDA1E10B-2A71-4A6E-8645-FA4F504980F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDA1E10B-2A71-4A6E-8645-FA4F504980F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDA1E10B-2A71-4A6E-8645-FA4F504980F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDA1E10B-2A71-4A6E-8645-FA4F504980F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9CB1350-26F3-4EBF-9CF5-23ED1723658A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9CB1350-26F3-4EBF-9CF5-23ED1723658A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9CB1350-26F3-4EBF-9CF5-23ED1723658A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9CB1350-26F3-4EBF-9CF5-23ED1723658A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BC8CCCC-6565-4A7E-8644-5A2B4EED816D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BC8CCCC-6565-4A7E-8644-5A2B4EED816D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BC8CCCC-6565-4A7E-8644-5A2B4EED816D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BC8CCCC-6565-4A7E-8644-5A2B4EED816D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1760990C-47AC-4A41-9491-CA13C1340AAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1760990C-47AC-4A41-9491-CA13C1340AAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1760990C-47AC-4A41-9491-CA13C1340AAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1760990C-47AC-4A41-9491-CA13C1340AAB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{22CF32E8-9CCF-4E67-BC78-FA7214742B3B} = {BD0AC1ED-F776-4E35-8960-7DA296925E20}
+		{D73B92D7-15EF-42FC-828D-13D117E7BB23} = {BD0AC1ED-F776-4E35-8960-7DA296925E20}
+		{B5578CE5-A554-4FD4-9E12-709D9F787859} = {E3651A0C-6DFA-40E6-AC75-BCADB0F992A5}
+		{08164CA5-DE2B-44DA-A5D7-0E6779FFCDFB} = {E3651A0C-6DFA-40E6-AC75-BCADB0F992A5}
+		{DDA1E10B-2A71-4A6E-8645-FA4F504980F2} = {E3651A0C-6DFA-40E6-AC75-BCADB0F992A5}
+		{F9CB1350-26F3-4EBF-9CF5-23ED1723658A} = {E3651A0C-6DFA-40E6-AC75-BCADB0F992A5}
+		{4BC8CCCC-6565-4A7E-8644-5A2B4EED816D} = {E3651A0C-6DFA-40E6-AC75-BCADB0F992A5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8616BDA8-1DAE-4202-92DE-91EC941833B1}
+	EndGlobalSection
+EndGlobal
