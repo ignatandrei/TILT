@@ -63,6 +63,10 @@ else
     {
         if (database == null || tables == null || tables.Count == 0)
             return;
+        if(tables.All(it=>it.Value.HasValue)){
+            Console.WriteLine("all tables loaded");
+            return;
+        }
         var tasks = tables.Keys
             .Select(it => interaction.GetTableCount(database, it).AddData(it))
             .ToArray();
@@ -75,7 +79,7 @@ else
                     tables[t.Result.data] = t.Result.res;
             }
 
-            await InvokeAsync(StateHasChanged);
+            
         }
         catch (Exception ex)
         {
@@ -83,6 +87,7 @@ else
             await ShowErrorAsync("Error loading data", ex);
         }
         await base.OnAfterRenderAsync(firstRender);
+        await InvokeAsync(StateHasChanged);
     }
     private async Task ShowErrorAsync(string message, Exception ex)
     {
