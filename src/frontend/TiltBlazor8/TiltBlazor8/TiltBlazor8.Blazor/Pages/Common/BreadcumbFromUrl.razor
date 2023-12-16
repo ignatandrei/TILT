@@ -12,7 +12,7 @@
         var i = it;
         var data = baseAddress+ splitUrl[i];
 
-        <FluentBreadcrumbItem Href="@splitUrl[i].fullUrl">
+        <FluentBreadcrumbItem Href="@data">
             <FluentIcon Value="@splitUrl[i].icon" Color="@Color.Neutral" Slot="start" />
             @splitUrl[i].title
         </FluentBreadcrumbItem>

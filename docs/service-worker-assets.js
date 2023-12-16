@@ -69,7 +69,7 @@
       "url": "_framework\/icudt_no_CJK.dat"
     },
     {
-      "hash": "sha256-9rILEvBvxnugftOdjPMCUA3VOM33Rpsfb0qS++QLY9M=",
+      "hash": "sha256-ZYaCDeSkg68BjAVKvzuGLKMqIpptF7AcluxtjTZN36o=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -545,15 +545,15 @@
       "url": "_framework\/System.Xml.XmlSerializer.wasm"
     },
     {
-      "hash": "sha256-2hxsmrsOh8IM4How1Q5v6+W+rt\/1sN2UZJsNXoTd0Xo=",
+      "hash": "sha256-v0btDIMm+NUgFOR6hYVCjz+FqxmqA84OkgNAmerVfUU=",
       "url": "_framework\/TiltBlazor8.Blazor.wasm"
     },
     {
-      "hash": "sha256-Ho72kulCz47sPnpSsZ8VzcuECxtilMg0UV0JWzPfmUE=",
+      "hash": "sha256-WuU3+3hGm8LigJ2NP7vkJeQ4jAP4mmUpXjTjZMOGEic=",
       "url": "_framework\/TiltBlazor8.GeneratorFromDB.wasm"
     },
     {
-      "hash": "sha256-zakTq13nKBPNfGg\/g518ZcaeWQedp49XktEwgG+49NY=",
+      "hash": "sha256-HUU6aUHp0iteZ5RBD+luP0E\/IUskITfAFrnN8X3gx+k=",
       "url": "_framework\/TiltBlazor8.Models.wasm"
     },
     {
@@ -645,5 +645,5 @@
       "url": "_content\/Microsoft.FluentUI.AspNetCore.Components\/Microsoft.FluentUI.AspNetCore.Components.lib.module.js"
     }
   ],
-  "version": "KjShIf4X"
+  "version": "fo7t\/Nq\/"
 };
