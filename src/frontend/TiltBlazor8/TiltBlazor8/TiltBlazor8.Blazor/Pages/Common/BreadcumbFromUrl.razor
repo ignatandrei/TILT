@@ -1,12 +1,16 @@
 @using DataBreadcumb = (string title, string fullUrl, Icon icon);
 @inject NavigationManager navigationManager
-
-
+@inject IWebAssemblyHostEnvironment HostEnvironment
+@{
+    var baseAddress = HostEnvironment.BaseAddress;
+    if (!baseAddress.EndsWith("/"))
+        baseAddress += "/"; 
+}
 <FluentBreadcrumb>
     @for (int it = 0; it < splitUrl.Count; it++)
     {
         var i = it;
-        var data = splitUrl[i];
+        var data = baseAddress+ splitUrl[i];
 
         <FluentBreadcrumbItem Href="@splitUrl[i].fullUrl">
             <FluentIcon Value="@splitUrl[i].icon" Color="@Color.Neutral" Slot="start" />
