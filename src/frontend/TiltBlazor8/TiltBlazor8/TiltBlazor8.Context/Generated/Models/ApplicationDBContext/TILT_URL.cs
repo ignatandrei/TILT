@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 //modified 2023.12.15
 namespace Generated;
 
-[Keyless]
 public partial class SearchTILT_URL:  GeneratorFromDB.Search<eTILT_URLColumns,TILT_URL>
 {
     //private ApplicationDBContext _context;
@@ -19,7 +18,7 @@ public static SearchTILT_URL FromSearch(GeneratorFromDB.SearchCriteria sc, eTILT
     {
         var search = new SearchTILT_URL();
         var orderBy = new GeneratorFromDB.OrderBy<eTILT_URLColumns>();
-                    orderBy.FieldName = colToSearch;
+                orderBy.FieldName = eTILT_URLColumns.ID ;;
         
         orderBy.Asc = false;
         search.OrderBys = new[] { orderBy };

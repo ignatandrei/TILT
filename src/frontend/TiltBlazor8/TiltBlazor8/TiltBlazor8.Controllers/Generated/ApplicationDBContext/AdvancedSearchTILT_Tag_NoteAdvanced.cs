@@ -79,6 +79,16 @@ public partial class AdvancedSearch_ApplicationDBContext_TILT_Tag_NoteController
 
         return await _search.GetAllCount(s);
     }
+
+//has one key
+    [HttpGet]
+    public async Task<TILT_Tag_Note_Table?> GetSingle(long id){
+        var data=await _search.TILT_Tag_NoteGetSingle(id);
+       if(data == null)
+        return null;
+       return (TILT_Tag_Note_Table)data;
+    }
+
         
     [HttpGet]
     public async IAsyncEnumerable<TILT_Tag_Note_Table> ID_EqualValue( long  value)

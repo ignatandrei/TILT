@@ -7,3 +7,4 @@ global using System.Globalization;
 global using System.Net.Http.Json;
 global using TiltBlazor8.Blazor;
 global using TiltBlazor8.Blazor.Classes;
+global using Generated;

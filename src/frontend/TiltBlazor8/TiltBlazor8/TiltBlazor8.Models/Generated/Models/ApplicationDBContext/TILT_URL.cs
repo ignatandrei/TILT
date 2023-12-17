@@ -33,7 +33,7 @@ public class TILT_URL_Table : I_TILT_URL_Table
     static TILT_URL_Table (){
         MetaColumn mc=null;
         mc=new ("ID","long",false);                
-        mc.IsPk = false ;
+        mc.IsPk = true ;
         mc.TypeJS = "number";
         metaData.AddColumn(mc);
         mc=new ("URLPart","string",false);                
@@ -104,10 +104,10 @@ public enum eTILT_URLColumns {
 
 //finish ADDED by code generator
 
-[Keyless]
 
 public partial class TILT_URL
 {
+    [Key]
     public long ID { get; set; }
 
     [StringLength(20)]

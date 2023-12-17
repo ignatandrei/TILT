@@ -1,0 +1,20 @@
+﻿
+<h3>PublicTilts</h3>
+
+
+
+@code {
+    [Inject(Key = "db")]
+    public HttpClient? HttpClient_WebApi { get; set; } = null;
+
+
+    public bool IsLoading { get; set; } = true;
+    public TILT_URL[]? Tilts { get; set; }=null;
+
+    protected override async Task OnInitializedAsync()
+    {        
+        ArgumentNullException.ThrowIfNull(HttpClient_WebApi);
+Tilts = await HttpClient_WebApi.GetFromJsonAsync<TILT_URL[]>("api/TILT_URL");
+        await base.OnInitializedAsync();
+    }
+}

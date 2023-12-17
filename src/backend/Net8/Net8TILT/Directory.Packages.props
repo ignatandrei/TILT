@@ -53,6 +53,7 @@
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="7.0.3" />
     <PackageVersion Include="System.Linq.Async" Version="6.0.1" />
     <PackageVersion Include="Lib.AspNetCore.ServerTiming.Abstractions" Version="1.0.0" />
+    <PackageVersion Include="Lib.AspNetCore.ServerTiming" Version="6.0.0" />
     <PackageVersion Include="altcover" Version="8.6.95" />
     <PackageVersion Include="Ductus.FluentDocker" Version="2.10.59" />
     <PackageVersion Include="LightBDD.NUnit3" Version="3.7.0" />
@@ -63,6 +64,7 @@
     <PackageVersion Include="NUnit3TestAdapter" Version="4.5.0" />
     <PackageVersion Include="coverlet.collector" Version="3.2.0">
     </PackageVersion>
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
     <PackageVersion Include="System.Linq.Async.Queryable" Version="6.0.1" />
   </ItemGroup>
 </Project>

@@ -14,7 +14,7 @@
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "BlocklyAutomation",
-      "applicationUrl": "http://localhost:9900",
+      "applicationUrl": "http://localhost:990",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

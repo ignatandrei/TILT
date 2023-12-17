@@ -1,3 +1,4 @@
+using NetTilt.WebAPI;
 
 internal class Program
 {
@@ -72,6 +73,8 @@ internal class Program
             return a;
         });
 
+        builder.Services.AddServerTiming();
+        builder.Services.AddScoped<ServerTiming>();
 
 
         var app = builder.Build();
@@ -84,10 +87,15 @@ internal class Program
             app.UseBlocklyUI(app.Environment);
 
         }
-
         app.UseHttpsRedirection();
+        app.UseDefaultFiles();
+        app.UseStaticFiles();
 
         app.UseAuthorization();
+        app.UseAuthentication();
+        app.UseStatusCodePages();
+        app.UseServerTiming();
+        app.UseMiddleware<ServerTiming>();
         app.MapControllers();
         app.UseAMS();
         app.UseBlocklyAutomation();

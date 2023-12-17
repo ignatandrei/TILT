@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 //modified 2023.12.15
 namespace Generated;
 
-[Keyless]
 public partial class SearchTILT_Tag_Note:  GeneratorFromDB.Search<eTILT_Tag_NoteColumns,TILT_Tag_Note>
 {
     //private ApplicationDBContext _context;
@@ -19,7 +18,7 @@ public static SearchTILT_Tag_Note FromSearch(GeneratorFromDB.SearchCriteria sc, 
     {
         var search = new SearchTILT_Tag_Note();
         var orderBy = new GeneratorFromDB.OrderBy<eTILT_Tag_NoteColumns>();
-                    orderBy.FieldName = colToSearch;
+                orderBy.FieldName = eTILT_Tag_NoteColumns.ID ;;
         
         orderBy.Asc = false;
         search.OrderBys = new[] { orderBy };

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     
@@ -20,6 +20,8 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
     <PackageReference Include="NetCore2Blockly" />
     <PackageReference Include="Swashbuckle.AspNetCore" />
+	  <PackageReference Include="Lib.AspNetCore.ServerTiming"  />
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer"  />
   </ItemGroup>
 
 	<ItemGroup>
