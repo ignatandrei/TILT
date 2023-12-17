@@ -33,7 +33,7 @@ jobs:
 
       - name: Build backend with dotnet
         run: |
-            cd src/backend/Net8/NetTilt 
+            cd src/backend/Net8/Net8Tilt 
             dotnet build --configuration Release
 
       - name: Build frontend with dotnet
