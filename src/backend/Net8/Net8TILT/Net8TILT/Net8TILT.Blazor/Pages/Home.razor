@@ -1,0 +1,11 @@
+@page "/"
+@inject IWebAssemblyHostEnvironment HostEnvironment
+@{
+    string baseAddress = HostEnvironment.BaseAddress;
+    if (!baseAddress.EndsWith("/"))
+        baseAddress += "/";
+    var db = baseAddress + "databases";
+}
+<PageTitle>Home</PageTitle>
+
+You can use this app to view the <FluentNavLink Href="@db" Icon="@(new Icons.Regular.Size16.DatabaseStack())" IconColor="Color.Accent">Databases</FluentNavLink> and tables in your SQL Server instance.

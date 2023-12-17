@@ -1,0 +1,372 @@
+﻿@using global::Generated
+@inject NavigationManager navigationManager
+<FluentButton  Loading="@loading"
+              OnClick="@LoadData" Appearance="Appearance.Accent">LoadData @nrRecordsLoaded / @totalRecords</FluentButton>
+
+@if (ExistsFilter())
+{
+    <text>
+        @recordFiltered records Filtered with : @filterText
+    </text>
+}
+
+
+<FluentDataGrid @ref="gridTILT_Note" ResizableColumns=true Items="@dataForQuery" Virtualize="true" GenerateHeader="GenerateHeaderOption.Sticky" >
+    <PropertyColumn Property="@(p => p.number)" Sortable="true"  IsDefaultSortColumn="true" InitialSortDirection="SortDirection.Descending" >
+       
+    </PropertyColumn>
+        <TemplateColumn Title="ForDate" SortBy="@sortByForDate">
+        <ColumnOptions>
+            ForDate => @filters[eTILT_NoteColumns.ForDate]
+            <div class="search-box">
+                <FluentSearch type="search" Autofocus=true @bind-Value=filters[eTILT_NoteColumns.ForDate] @oninput='(e)=>HandleColumnsFilter(eTILT_NoteColumns.ForDate,e)' @bind-Value:after='()=>HandleClearColumnsFilter(eTILT_NoteColumns.ForDate)' Placeholder="ForDate..." />
+            </div>
+        </ColumnOptions>
+        <ChildContent>
+                                <div>@context.data.ForDate</div>
+                            </ChildContent>
+        
+
+
+    </TemplateColumn>
+        <TemplateColumn Title="ID" SortBy="@sortByID">
+        <ColumnOptions>
+            ID => @filters[eTILT_NoteColumns.ID]
+            <div class="search-box">
+                <FluentSearch type="search" Autofocus=true @bind-Value=filters[eTILT_NoteColumns.ID] @oninput='(e)=>HandleColumnsFilter(eTILT_NoteColumns.ID,e)' @bind-Value:after='()=>HandleClearColumnsFilter(eTILT_NoteColumns.ID)' Placeholder="ID..." />
+            </div>
+        </ColumnOptions>
+        <ChildContent>
+                                <div>@context.data.ID</div>
+                            </ChildContent>
+        
+
+
+    </TemplateColumn>
+        <TemplateColumn Title="IDURL" SortBy="@sortByIDURL">
+        <ColumnOptions>
+            IDURL => @filters[eTILT_NoteColumns.IDURL]
+            <div class="search-box">
+                <FluentSearch type="search" Autofocus=true @bind-Value=filters[eTILT_NoteColumns.IDURL] @oninput='(e)=>HandleColumnsFilter(eTILT_NoteColumns.IDURL,e)' @bind-Value:after='()=>HandleClearColumnsFilter(eTILT_NoteColumns.IDURL)' Placeholder="IDURL..." />
+            </div>
+        </ColumnOptions>
+        <ChildContent>
+                                <div>@context.data.IDURL</div>
+                            </ChildContent>
+        
+
+
+    </TemplateColumn>
+        <TemplateColumn Title="Link" SortBy="@sortByLink">
+        <ColumnOptions>
+            Link => @filters[eTILT_NoteColumns.Link]
+            <div class="search-box">
+                <FluentSearch type="search" Autofocus=true @bind-Value=filters[eTILT_NoteColumns.Link] @oninput='(e)=>HandleColumnsFilter(eTILT_NoteColumns.Link,e)' @bind-Value:after='()=>HandleClearColumnsFilter(eTILT_NoteColumns.Link)' Placeholder="Link..." />
+            </div>
+        </ColumnOptions>
+        <ChildContent>
+                                <div>@context.data.Link</div>
+                            </ChildContent>
+        
+
+
+    </TemplateColumn>
+        <TemplateColumn Title="Text" SortBy="@sortByText">
+        <ColumnOptions>
+            Text => @filters[eTILT_NoteColumns.Text]
+            <div class="search-box">
+                <FluentSearch type="search" Autofocus=true @bind-Value=filters[eTILT_NoteColumns.Text] @oninput='(e)=>HandleColumnsFilter(eTILT_NoteColumns.Text,e)' @bind-Value:after='()=>HandleClearColumnsFilter(eTILT_NoteColumns.Text)' Placeholder="Text..." />
+            </div>
+        </ColumnOptions>
+        <ChildContent>
+                                <div>@context.data.Text</div>
+                            </ChildContent>
+        
+
+
+    </TemplateColumn>
+        <TemplateColumn Title="TimeZoneString" SortBy="@sortByTimeZoneString">
+        <ColumnOptions>
+            TimeZoneString => @filters[eTILT_NoteColumns.TimeZoneString]
+            <div class="search-box">
+                <FluentSearch type="search" Autofocus=true @bind-Value=filters[eTILT_NoteColumns.TimeZoneString] @oninput='(e)=>HandleColumnsFilter(eTILT_NoteColumns.TimeZoneString,e)' @bind-Value:after='()=>HandleClearColumnsFilter(eTILT_NoteColumns.TimeZoneString)' Placeholder="TimeZoneString..." />
+            </div>
+        </ColumnOptions>
+        <ChildContent>
+                                <div>@context.data.TimeZoneString</div>
+                            </ChildContent>
+        
+
+
+    </TemplateColumn>
+    </FluentDataGrid>
+
+
+@code {
+    [Inject(Key = "db")]
+    public HttpClient? HttpClient_WebApi { get; set; } = null;
+
+    [Parameter]
+    public string? database { get; set; } = null;
+
+    [Parameter]
+    public string? table { get; set; } = null;
+
+    [Parameter]
+    public long? totalRecords { get; set; } = null;
+
+    List<DataWithNumber<TILT_Note>> dataArr = [];
+    private FluentDataGrid<DataWithNumber<TILT_Note>>? gridTILT_Note;
+    public long recordFiltered  => Filtered.LongLength;
+    public bool loading = false;
+
+    
+    private void GotoTableRow(string table, string rowId)
+    {
+        navigationManager.NavigateTo(string.Format("databases/{0}/tables/{1}/rows/{2}", database, table, rowId),true);
+        
+    }
+        
+    
+    private DataWithNumber<TILT_Note>[] Filtered
+    {
+        get
+        {
+            var arr = dataArr.ToArray();
+            var existingFilters = filters.Where(x => !string.IsNullOrWhiteSpace(x.Value)).ToArray();
+            foreach (var item in filters)
+            {
+                switch (item.Key)
+                {
+                                    case eTILT_NoteColumns.ForDate:
+                        arr = arr
+                        .Where(x => 
+                        
+                        {
+                            try
+                            {
+                                return x.data.ForDate.ToString().Contains(item.Value, StringComparison.CurrentCultureIgnoreCase);
+
+                            }
+                            catch
+                            {
+                                return false;
+                            }
+                        }
+                        
+                        
+                        )
+
+                        .ToArray();
+                        break;
+                    case eTILT_NoteColumns.ID:
+                        arr = arr
+                        .Where(x => 
+                        
+                        {
+                            try
+                            {
+                                return x.data.ID.ToString().Contains(item.Value, StringComparison.CurrentCultureIgnoreCase);
+
+                            }
+                            catch
+                            {
+                                return false;
+                            }
+                        }
+                        
+                        
+                        )
+
+                        .ToArray();
+                        break;
+                    case eTILT_NoteColumns.IDURL:
+                        arr = arr
+                        .Where(x => 
+                        
+                        {
+                            try
+                            {
+                                return x.data.IDURL.ToString().Contains(item.Value, StringComparison.CurrentCultureIgnoreCase);
+
+                            }
+                            catch
+                            {
+                                return false;
+                            }
+                        }
+                        
+                        
+                        )
+
+                        .ToArray();
+                        break;
+                    case eTILT_NoteColumns.Link:
+                        arr = arr
+                        .Where(x => 
+                        
+                        {
+                            try
+                            {
+                                return x.data.Link.ToString().Contains(item.Value, StringComparison.CurrentCultureIgnoreCase);
+
+                            }
+                            catch
+                            {
+                                return false;
+                            }
+                        }
+                        
+                        
+                        )
+
+                        .ToArray();
+                        break;
+                    case eTILT_NoteColumns.Text:
+                        arr = arr
+                        .Where(x => 
+                        
+                        {
+                            try
+                            {
+                                return x.data.Text.ToString().Contains(item.Value, StringComparison.CurrentCultureIgnoreCase);
+
+                            }
+                            catch
+                            {
+                                return false;
+                            }
+                        }
+                        
+                        
+                        )
+
+                        .ToArray();
+                        break;
+                    case eTILT_NoteColumns.TimeZoneString:
+                        arr = arr
+                        .Where(x => 
+                        
+                        {
+                            try
+                            {
+                                return x.data.TimeZoneString.ToString().Contains(item.Value, StringComparison.CurrentCultureIgnoreCase);
+
+                            }
+                            catch
+                            {
+                                return false;
+                            }
+                        }
+                        
+                        
+                        )
+
+                        .ToArray();
+                        break;
+                }
+            }
+            return arr;
+        }
+    }
+
+        GridSort<DataWithNumber<TILT_Note>> sortByForDate = GridSort<DataWithNumber<TILT_Note>>
+       .ByAscending(p => p.data.ForDate)
+       .ThenDescending(p => p.number);
+        GridSort<DataWithNumber<TILT_Note>> sortByID = GridSort<DataWithNumber<TILT_Note>>
+       .ByAscending(p => p.data.ID)
+       .ThenDescending(p => p.number);
+        GridSort<DataWithNumber<TILT_Note>> sortByIDURL = GridSort<DataWithNumber<TILT_Note>>
+       .ByAscending(p => p.data.IDURL)
+       .ThenDescending(p => p.number);
+        GridSort<DataWithNumber<TILT_Note>> sortByLink = GridSort<DataWithNumber<TILT_Note>>
+       .ByAscending(p => p.data.Link)
+       .ThenDescending(p => p.number);
+        GridSort<DataWithNumber<TILT_Note>> sortByText = GridSort<DataWithNumber<TILT_Note>>
+       .ByAscending(p => p.data.Text)
+       .ThenDescending(p => p.number);
+        GridSort<DataWithNumber<TILT_Note>> sortByTimeZoneString = GridSort<DataWithNumber<TILT_Note>>
+       .ByAscending(p => p.data.TimeZoneString)
+       .ThenDescending(p => p.number);
+    
+    public IQueryable<DataWithNumber<TILT_Note>>? dataForQuery
+    {
+        get
+        {
+            return Filtered.AsQueryable();
+        }
+    }
+
+    string nameNumberFilter = string.Empty;
+    
+    Dictionary<eTILT_NoteColumns, string> filters =new() {
+            {eTILT_NoteColumns.ForDate, string.Empty},     
+                {eTILT_NoteColumns.ID, string.Empty},     
+                {eTILT_NoteColumns.IDURL, string.Empty},     
+                {eTILT_NoteColumns.Link, string.Empty},     
+                {eTILT_NoteColumns.Text, string.Empty},     
+                {eTILT_NoteColumns.TimeZoneString, string.Empty},     
+            };
+
+    public string filterText{
+        get
+        {
+            var arr = filters.Where(x => !string.IsNullOrWhiteSpace(x.Value)).Select(x => $"{x.Value} in {x.Key}").ToArray();
+            return string.Join(";", arr);
+        }
+    }
+    public bool ExistsFilter()
+    {
+        return filters.Any(x => !string.IsNullOrWhiteSpace(x.Value));
+    }
+
+    void HandleColumnsFilter(eTILT_NoteColumns name, ChangeEventArgs args)
+    {
+        if (args != null && args.Value != null)
+        {
+            filters[name] = args.Value.ToString() ?? "";
+        }
+    }
+    
+    private void HandleClearColumnsFilter(eTILT_NoteColumns name)
+    {
+        if (string.IsNullOrWhiteSpace(filters[name]))
+        {
+            filters[name] = string.Empty;
+           
+        }
+    }
+    long? nrRecordsLoaded = null;
+    private async Task LoadData()
+    {
+
+        var url = $"/api/AdvancedSearch_{database}_{table}/GetAll";
+        ArgumentNullException.ThrowIfNull(HttpClient_WebApi);
+        var data = HttpClient_WebApi.GetFromJsonAsAsyncEnumerable<TILT_Note>(url);
+        ArgumentNullException.ThrowIfNull(data);
+        int i = 0;
+        loading = true;
+        
+        await foreach (var item in data)
+        {
+            if (item == null) continue;
+            i++;
+            if(i ==1){
+                dataArr = [];
+            }
+            dataArr.Add(new DataWithNumber<TILT_Note>(i, item));
+            if ((i<100 && i%10==0) || (i>100 && i < 900 && i % 100 == 0) || (i > 900 && i % 1000 == 0))
+            {
+                //Console.WriteLine($"i={i}");
+                nrRecordsLoaded = i;
+
+                await InvokeAsync(StateHasChanged);
+                await Task.Delay(i<500? 1_000:2_000);
+            }
+        }
+        nrRecordsLoaded = i;
+
+        await InvokeAsync(StateHasChanged);
+        loading= false;
+    }
+}

@@ -1,0 +1,255 @@
+﻿@using global::Generated
+@inject NavigationManager navigationManager
+<FluentButton  Loading="@loading"
+              OnClick="@LoadData" Appearance="Appearance.Accent">LoadData @nrRecordsLoaded / @totalRecords</FluentButton>
+
+@if (ExistsFilter())
+{
+    <text>
+        @recordFiltered records Filtered with : @filterText
+    </text>
+}
+
+
+<FluentDataGrid @ref="gridTILT_Tag_Note" ResizableColumns=true Items="@dataForQuery" Virtualize="true" GenerateHeader="GenerateHeaderOption.Sticky" >
+    <PropertyColumn Property="@(p => p.number)" Sortable="true"  IsDefaultSortColumn="true" InitialSortDirection="SortDirection.Descending" >
+       
+    </PropertyColumn>
+        <TemplateColumn Title="ID" SortBy="@sortByID">
+        <ColumnOptions>
+            ID => @filters[eTILT_Tag_NoteColumns.ID]
+            <div class="search-box">
+                <FluentSearch type="search" Autofocus=true @bind-Value=filters[eTILT_Tag_NoteColumns.ID] @oninput='(e)=>HandleColumnsFilter(eTILT_Tag_NoteColumns.ID,e)' @bind-Value:after='()=>HandleClearColumnsFilter(eTILT_Tag_NoteColumns.ID)' Placeholder="ID..." />
+            </div>
+        </ColumnOptions>
+        <ChildContent>
+                                <div>@context.data.ID</div>
+                            </ChildContent>
+        
+
+
+    </TemplateColumn>
+        <TemplateColumn Title="IDNote" SortBy="@sortByIDNote">
+        <ColumnOptions>
+            IDNote => @filters[eTILT_Tag_NoteColumns.IDNote]
+            <div class="search-box">
+                <FluentSearch type="search" Autofocus=true @bind-Value=filters[eTILT_Tag_NoteColumns.IDNote] @oninput='(e)=>HandleColumnsFilter(eTILT_Tag_NoteColumns.IDNote,e)' @bind-Value:after='()=>HandleClearColumnsFilter(eTILT_Tag_NoteColumns.IDNote)' Placeholder="IDNote..." />
+            </div>
+        </ColumnOptions>
+        <ChildContent>
+                                <div>@context.data.IDNote</div>
+                            </ChildContent>
+        
+
+
+    </TemplateColumn>
+        <TemplateColumn Title="IDTag" SortBy="@sortByIDTag">
+        <ColumnOptions>
+            IDTag => @filters[eTILT_Tag_NoteColumns.IDTag]
+            <div class="search-box">
+                <FluentSearch type="search" Autofocus=true @bind-Value=filters[eTILT_Tag_NoteColumns.IDTag] @oninput='(e)=>HandleColumnsFilter(eTILT_Tag_NoteColumns.IDTag,e)' @bind-Value:after='()=>HandleClearColumnsFilter(eTILT_Tag_NoteColumns.IDTag)' Placeholder="IDTag..." />
+            </div>
+        </ColumnOptions>
+        <ChildContent>
+                                <div>@context.data.IDTag</div>
+                            </ChildContent>
+        
+
+
+    </TemplateColumn>
+    </FluentDataGrid>
+
+
+@code {
+    [Inject(Key = "db")]
+    public HttpClient? HttpClient_WebApi { get; set; } = null;
+
+    [Parameter]
+    public string? database { get; set; } = null;
+
+    [Parameter]
+    public string? table { get; set; } = null;
+
+    [Parameter]
+    public long? totalRecords { get; set; } = null;
+
+    List<DataWithNumber<TILT_Tag_Note>> dataArr = [];
+    private FluentDataGrid<DataWithNumber<TILT_Tag_Note>>? gridTILT_Tag_Note;
+    public long recordFiltered  => Filtered.LongLength;
+    public bool loading = false;
+
+    
+    private void GotoTableRow(string table, string rowId)
+    {
+        navigationManager.NavigateTo(string.Format("databases/{0}/tables/{1}/rows/{2}", database, table, rowId),true);
+        
+    }
+        
+    
+    private DataWithNumber<TILT_Tag_Note>[] Filtered
+    {
+        get
+        {
+            var arr = dataArr.ToArray();
+            var existingFilters = filters.Where(x => !string.IsNullOrWhiteSpace(x.Value)).ToArray();
+            foreach (var item in filters)
+            {
+                switch (item.Key)
+                {
+                                    case eTILT_Tag_NoteColumns.ID:
+                        arr = arr
+                        .Where(x => 
+                        
+                        {
+                            try
+                            {
+                                return x.data.ID.ToString().Contains(item.Value, StringComparison.CurrentCultureIgnoreCase);
+
+                            }
+                            catch
+                            {
+                                return false;
+                            }
+                        }
+                        
+                        
+                        )
+
+                        .ToArray();
+                        break;
+                    case eTILT_Tag_NoteColumns.IDNote:
+                        arr = arr
+                        .Where(x => 
+                        
+                        {
+                            try
+                            {
+                                return x.data.IDNote.ToString().Contains(item.Value, StringComparison.CurrentCultureIgnoreCase);
+
+                            }
+                            catch
+                            {
+                                return false;
+                            }
+                        }
+                        
+                        
+                        )
+
+                        .ToArray();
+                        break;
+                    case eTILT_Tag_NoteColumns.IDTag:
+                        arr = arr
+                        .Where(x => 
+                        
+                        {
+                            try
+                            {
+                                return x.data.IDTag.ToString().Contains(item.Value, StringComparison.CurrentCultureIgnoreCase);
+
+                            }
+                            catch
+                            {
+                                return false;
+                            }
+                        }
+                        
+                        
+                        )
+
+                        .ToArray();
+                        break;
+                }
+            }
+            return arr;
+        }
+    }
+
+        GridSort<DataWithNumber<TILT_Tag_Note>> sortByID = GridSort<DataWithNumber<TILT_Tag_Note>>
+       .ByAscending(p => p.data.ID)
+       .ThenDescending(p => p.number);
+        GridSort<DataWithNumber<TILT_Tag_Note>> sortByIDNote = GridSort<DataWithNumber<TILT_Tag_Note>>
+       .ByAscending(p => p.data.IDNote)
+       .ThenDescending(p => p.number);
+        GridSort<DataWithNumber<TILT_Tag_Note>> sortByIDTag = GridSort<DataWithNumber<TILT_Tag_Note>>
+       .ByAscending(p => p.data.IDTag)
+       .ThenDescending(p => p.number);
+    
+    public IQueryable<DataWithNumber<TILT_Tag_Note>>? dataForQuery
+    {
+        get
+        {
+            return Filtered.AsQueryable();
+        }
+    }
+
+    string nameNumberFilter = string.Empty;
+    
+    Dictionary<eTILT_Tag_NoteColumns, string> filters =new() {
+            {eTILT_Tag_NoteColumns.ID, string.Empty},     
+                {eTILT_Tag_NoteColumns.IDNote, string.Empty},     
+                {eTILT_Tag_NoteColumns.IDTag, string.Empty},     
+            };
+
+    public string filterText{
+        get
+        {
+            var arr = filters.Where(x => !string.IsNullOrWhiteSpace(x.Value)).Select(x => $"{x.Value} in {x.Key}").ToArray();
+            return string.Join(";", arr);
+        }
+    }
+    public bool ExistsFilter()
+    {
+        return filters.Any(x => !string.IsNullOrWhiteSpace(x.Value));
+    }
+
+    void HandleColumnsFilter(eTILT_Tag_NoteColumns name, ChangeEventArgs args)
+    {
+        if (args != null && args.Value != null)
+        {
+            filters[name] = args.Value.ToString() ?? "";
+        }
+    }
+    
+    private void HandleClearColumnsFilter(eTILT_Tag_NoteColumns name)
+    {
+        if (string.IsNullOrWhiteSpace(filters[name]))
+        {
+            filters[name] = string.Empty;
+           
+        }
+    }
+    long? nrRecordsLoaded = null;
+    private async Task LoadData()
+    {
+
+        var url = $"/api/AdvancedSearch_{database}_{table}/GetAll";
+        ArgumentNullException.ThrowIfNull(HttpClient_WebApi);
+        var data = HttpClient_WebApi.GetFromJsonAsAsyncEnumerable<TILT_Tag_Note>(url);
+        ArgumentNullException.ThrowIfNull(data);
+        int i = 0;
+        loading = true;
+        
+        await foreach (var item in data)
+        {
+            if (item == null) continue;
+            i++;
+            if(i ==1){
+                dataArr = [];
+            }
+            dataArr.Add(new DataWithNumber<TILT_Tag_Note>(i, item));
+            if ((i<100 && i%10==0) || (i>100 && i < 900 && i % 100 == 0) || (i > 900 && i % 1000 == 0))
+            {
+                //Console.WriteLine($"i={i}");
+                nrRecordsLoaded = i;
+
+                await InvokeAsync(StateHasChanged);
+                await Task.Delay(i<500? 1_000:2_000);
+            }
+        }
+        nrRecordsLoaded = i;
+
+        await InvokeAsync(StateHasChanged);
+        loading= false;
+    }
+}

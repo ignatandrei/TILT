@@ -1,0 +1,37 @@
+{
+	"version":"2023.12.9.2128",
+	"connections":[
+	{
+		"Enabled":true,
+		"NameContext": "ApplicationDBContext",
+		"Provider": "Microsoft.EntityFrameworkCore.SqlServer",
+		"ProjectForContext": "..\\Net8TILT.Context\\Net8TILT.Context.csproj",
+		"ProjectForClasses": "..\\Net8TILT.Models\\Net8TILT.Models.csproj",
+		"ProjectWithDesigner": "..\\Net8TILT.Controllers\\Net8TILT.Controllers.csproj",
+		"ConnectionString":"Server=127.0.0.1;User ID=sa;Password=<YourStrong@Passw0rd>;Initial Catalog=tilt;TrustServerCertificate=true;",
+		"ProjectCRA":"..\\Net8TILT.GeneratorCRA\\Net8TILT.GeneratorCRA.csproj"
+	},
+	{
+		"Enabled":false,
+		"Provider": "Microsoft.EntityFrameworkCore.SqlServer",
+		"ProjectForContext": "..\\Net8TILT.Context\\Net8TILT.Context.csproj",
+		"ProjectForClasses": "..\\Net8TILT.Models\\Net8TILT.Models.csproj",
+		"ProjectWithDesigner": "..\\Net8TILT.Controllers\\Net8TILT.Controllers.csproj",
+		"NameContext": "PubsDBContext",
+		"ConnectionString":"Server=127.0.0.1;User ID=sa;Password=<YourStrong@Passw0rd>;Initial Catalog=pubs;TrustServerCertificate=true;",
+		"ConnectionString1":"Data Source=sqlservertestdbep.database.windows.net;Initial Catalog=pubs;UId=myadmin;pwd=p@rola123;TrustServerCertificate=true;",
+		"ProjectCRA":"..\\Net8TILT.GeneratorCRA\\Net8TILT.GeneratorCRA.csproj"
+	},
+	{
+		"Enabled":false,
+		"Provider": "Microsoft.EntityFrameworkCore.SqlServer",
+		"ProjectForContext": "..\\Net8TILT.Context\\Net8TILT.Context.csproj",
+		"ProjectForClasses": "..\\Net8TILT.Models\\Net8TILT.Models.csproj",
+		"ProjectWithDesigner": "..\\Net8TILT.Controllers\\Net8TILT.Controllers.csproj",
+		"NameContext": "NorthwindDBContext",
+		"ConnectionString":"Server=127.0.0.1;User ID=sa;Password=<YourStrong@Passw0rd>;Initial Catalog=northwind;TrustServerCertificate=true;",
+		"ConnectionString1":"Data Source=sqlservertestdbep.database.windows.net;Initial Catalog=Northwind;UId=myadmin;pwd=p@rola123;TrustServerCertificate=true;",
+		"ProjectCRA":"..\\Net8TILT.GeneratorCRA\\Net8TILT.GeneratorCRA.csproj"
+	}
+	]
+}

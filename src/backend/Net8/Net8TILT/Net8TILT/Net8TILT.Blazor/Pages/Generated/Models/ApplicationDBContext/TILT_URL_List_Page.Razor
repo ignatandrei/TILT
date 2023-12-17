@@ -1,0 +1,255 @@
+﻿@using global::Generated
+@inject NavigationManager navigationManager
+<FluentButton  Loading="@loading"
+              OnClick="@LoadData" Appearance="Appearance.Accent">LoadData @nrRecordsLoaded / @totalRecords</FluentButton>
+
+@if (ExistsFilter())
+{
+    <text>
+        @recordFiltered records Filtered with : @filterText
+    </text>
+}
+
+
+<FluentDataGrid @ref="gridTILT_URL" ResizableColumns=true Items="@dataForQuery" Virtualize="true" GenerateHeader="GenerateHeaderOption.Sticky" >
+    <PropertyColumn Property="@(p => p.number)" Sortable="true"  IsDefaultSortColumn="true" InitialSortDirection="SortDirection.Descending" >
+       
+    </PropertyColumn>
+        <TemplateColumn Title="ID" SortBy="@sortByID">
+        <ColumnOptions>
+            ID => @filters[eTILT_URLColumns.ID]
+            <div class="search-box">
+                <FluentSearch type="search" Autofocus=true @bind-Value=filters[eTILT_URLColumns.ID] @oninput='(e)=>HandleColumnsFilter(eTILT_URLColumns.ID,e)' @bind-Value:after='()=>HandleClearColumnsFilter(eTILT_URLColumns.ID)' Placeholder="ID..." />
+            </div>
+        </ColumnOptions>
+        <ChildContent>
+                                <div>@context.data.ID</div>
+                            </ChildContent>
+        
+
+
+    </TemplateColumn>
+        <TemplateColumn Title="Secret" SortBy="@sortBySecret">
+        <ColumnOptions>
+            Secret => @filters[eTILT_URLColumns.Secret]
+            <div class="search-box">
+                <FluentSearch type="search" Autofocus=true @bind-Value=filters[eTILT_URLColumns.Secret] @oninput='(e)=>HandleColumnsFilter(eTILT_URLColumns.Secret,e)' @bind-Value:after='()=>HandleClearColumnsFilter(eTILT_URLColumns.Secret)' Placeholder="Secret..." />
+            </div>
+        </ColumnOptions>
+        <ChildContent>
+                                <div>@context.data.Secret</div>
+                            </ChildContent>
+        
+
+
+    </TemplateColumn>
+        <TemplateColumn Title="URLPart" SortBy="@sortByURLPart">
+        <ColumnOptions>
+            URLPart => @filters[eTILT_URLColumns.URLPart]
+            <div class="search-box">
+                <FluentSearch type="search" Autofocus=true @bind-Value=filters[eTILT_URLColumns.URLPart] @oninput='(e)=>HandleColumnsFilter(eTILT_URLColumns.URLPart,e)' @bind-Value:after='()=>HandleClearColumnsFilter(eTILT_URLColumns.URLPart)' Placeholder="URLPart..." />
+            </div>
+        </ColumnOptions>
+        <ChildContent>
+                                <div>@context.data.URLPart</div>
+                            </ChildContent>
+        
+
+
+    </TemplateColumn>
+    </FluentDataGrid>
+
+
+@code {
+    [Inject(Key = "db")]
+    public HttpClient? HttpClient_WebApi { get; set; } = null;
+
+    [Parameter]
+    public string? database { get; set; } = null;
+
+    [Parameter]
+    public string? table { get; set; } = null;
+
+    [Parameter]
+    public long? totalRecords { get; set; } = null;
+
+    List<DataWithNumber<TILT_URL>> dataArr = [];
+    private FluentDataGrid<DataWithNumber<TILT_URL>>? gridTILT_URL;
+    public long recordFiltered  => Filtered.LongLength;
+    public bool loading = false;
+
+    
+    private void GotoTableRow(string table, string rowId)
+    {
+        navigationManager.NavigateTo(string.Format("databases/{0}/tables/{1}/rows/{2}", database, table, rowId),true);
+        
+    }
+        
+    
+    private DataWithNumber<TILT_URL>[] Filtered
+    {
+        get
+        {
+            var arr = dataArr.ToArray();
+            var existingFilters = filters.Where(x => !string.IsNullOrWhiteSpace(x.Value)).ToArray();
+            foreach (var item in filters)
+            {
+                switch (item.Key)
+                {
+                                    case eTILT_URLColumns.ID:
+                        arr = arr
+                        .Where(x => 
+                        
+                        {
+                            try
+                            {
+                                return x.data.ID.ToString().Contains(item.Value, StringComparison.CurrentCultureIgnoreCase);
+
+                            }
+                            catch
+                            {
+                                return false;
+                            }
+                        }
+                        
+                        
+                        )
+
+                        .ToArray();
+                        break;
+                    case eTILT_URLColumns.Secret:
+                        arr = arr
+                        .Where(x => 
+                        
+                        {
+                            try
+                            {
+                                return x.data.Secret.ToString().Contains(item.Value, StringComparison.CurrentCultureIgnoreCase);
+
+                            }
+                            catch
+                            {
+                                return false;
+                            }
+                        }
+                        
+                        
+                        )
+
+                        .ToArray();
+                        break;
+                    case eTILT_URLColumns.URLPart:
+                        arr = arr
+                        .Where(x => 
+                        
+                        {
+                            try
+                            {
+                                return x.data.URLPart.ToString().Contains(item.Value, StringComparison.CurrentCultureIgnoreCase);
+
+                            }
+                            catch
+                            {
+                                return false;
+                            }
+                        }
+                        
+                        
+                        )
+
+                        .ToArray();
+                        break;
+                }
+            }
+            return arr;
+        }
+    }
+
+        GridSort<DataWithNumber<TILT_URL>> sortByID = GridSort<DataWithNumber<TILT_URL>>
+       .ByAscending(p => p.data.ID)
+       .ThenDescending(p => p.number);
+        GridSort<DataWithNumber<TILT_URL>> sortBySecret = GridSort<DataWithNumber<TILT_URL>>
+       .ByAscending(p => p.data.Secret)
+       .ThenDescending(p => p.number);
+        GridSort<DataWithNumber<TILT_URL>> sortByURLPart = GridSort<DataWithNumber<TILT_URL>>
+       .ByAscending(p => p.data.URLPart)
+       .ThenDescending(p => p.number);
+    
+    public IQueryable<DataWithNumber<TILT_URL>>? dataForQuery
+    {
+        get
+        {
+            return Filtered.AsQueryable();
+        }
+    }
+
+    string nameNumberFilter = string.Empty;
+    
+    Dictionary<eTILT_URLColumns, string> filters =new() {
+            {eTILT_URLColumns.ID, string.Empty},     
+                {eTILT_URLColumns.Secret, string.Empty},     
+                {eTILT_URLColumns.URLPart, string.Empty},     
+            };
+
+    public string filterText{
+        get
+        {
+            var arr = filters.Where(x => !string.IsNullOrWhiteSpace(x.Value)).Select(x => $"{x.Value} in {x.Key}").ToArray();
+            return string.Join(";", arr);
+        }
+    }
+    public bool ExistsFilter()
+    {
+        return filters.Any(x => !string.IsNullOrWhiteSpace(x.Value));
+    }
+
+    void HandleColumnsFilter(eTILT_URLColumns name, ChangeEventArgs args)
+    {
+        if (args != null && args.Value != null)
+        {
+            filters[name] = args.Value.ToString() ?? "";
+        }
+    }
+    
+    private void HandleClearColumnsFilter(eTILT_URLColumns name)
+    {
+        if (string.IsNullOrWhiteSpace(filters[name]))
+        {
+            filters[name] = string.Empty;
+           
+        }
+    }
+    long? nrRecordsLoaded = null;
+    private async Task LoadData()
+    {
+
+        var url = $"/api/AdvancedSearch_{database}_{table}/GetAll";
+        ArgumentNullException.ThrowIfNull(HttpClient_WebApi);
+        var data = HttpClient_WebApi.GetFromJsonAsAsyncEnumerable<TILT_URL>(url);
+        ArgumentNullException.ThrowIfNull(data);
+        int i = 0;
+        loading = true;
+        
+        await foreach (var item in data)
+        {
+            if (item == null) continue;
+            i++;
+            if(i ==1){
+                dataArr = [];
+            }
+            dataArr.Add(new DataWithNumber<TILT_URL>(i, item));
+            if ((i<100 && i%10==0) || (i>100 && i < 900 && i % 100 == 0) || (i > 900 && i % 1000 == 0))
+            {
+                //Console.WriteLine($"i={i}");
+                nrRecordsLoaded = i;
+
+                await InvokeAsync(StateHasChanged);
+                await Task.Delay(i<500? 1_000:2_000);
+            }
+        }
+        nrRecordsLoaded = i;
+
+        await InvokeAsync(StateHasChanged);
+        loading= false;
+    }
+}

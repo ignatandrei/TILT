@@ -1,0 +1,9 @@
+global using GeneratorFromDB;
+global using Microsoft.AspNetCore.Components.Web;
+global using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.FluentUI.AspNetCore.Components;
+global using Net8TILT.Blazor;
+global using Net8TILT.Blazor.Classes;
+global using System.Globalization;
+global using System.Net.Http.Json;

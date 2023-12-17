@@ -1,0 +1,96 @@
+@page "/databases/{database}/tables"
+@inject WebAPIInteraction interaction
+@inject IDialogService DialogService
+<h1>Tables</h1>
+
+
+@if (tables == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    int i = 0;
+    foreach (var t in tables.Keys)
+    {
+        var nr = ++i;
+        var c = t;
+
+        var data = $"databases/{database}/tables/{c}";
+        <div>
+            <FluentIcon Value="@(new Icons.Regular.Size24.Table())" />
+        @if (tables[c].HasValue)
+        {
+            <NavLink class="nav-link" href="@data">
+                
+                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span>@(nr)) @c
+            </NavLink>
+        }
+        else
+        {
+            @(nr) @c 
+        }
+       
+        @(tables[c] == null ? "" : " rows : " + tables[c].ToString())
+        </div>
+
+    }
+}
+
+
+
+@code {
+    [Parameter]
+    public string? database { get; set; } = null;
+
+    [Inject(Key = "db")]
+    public HttpClient? HttpClient_WebApi { get; set; } = null;
+
+    public Dictionary<string, long?>? tables = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        ArgumentNullException.ThrowIfNull(HttpClient_WebApi);
+
+        var data = await HttpClient_WebApi.GetFromJsonAsync<string[]>($"api/MetaData/TableNames/{database}");
+        if (data != null)
+        {
+            tables = data.OrderBy(a => a).ToDictionary(a => a, a => (long?)null);
+        }
+
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (database == null || tables == null || tables.Count == 0)
+            return;
+        if(tables.All(it=>it.Value.HasValue)){
+            Console.WriteLine("all tables loaded");
+            return;
+        }
+        var tasks = tables.Keys
+            .Select(it => interaction.GetTableCount(database, it).AddData(it))
+            .ToArray();
+        try
+        {
+            await Task.WhenAll(tasks);
+            foreach (var t in tasks)
+            {
+                if (t.IsCompletedSuccessfully)
+                    tables[t.Result.data] = t.Result.res;
+            }
+
+            await InvokeAsync(StateHasChanged);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            await ShowErrorAsync("Error loading data", ex);
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+    private async Task ShowErrorAsync(string message, Exception ex)
+    {
+        var dialog = await DialogService.ShowErrorAsync(message);
+        Console.WriteLine(ex);
+    }
+}

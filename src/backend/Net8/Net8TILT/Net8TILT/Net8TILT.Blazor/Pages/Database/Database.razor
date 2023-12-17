@@ -1,0 +1,12 @@
+@page "/databases/{database}"
+@inherits LayoutComponentBase
+<h3>Database @database</h3>
+
+More details about the database @database.
+
+<Tables database="@database"></Tables>
+
+@code {
+    [Parameter]
+    public string? database { get; set; } = null;
+}
