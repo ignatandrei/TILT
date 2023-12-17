@@ -11,7 +11,7 @@
 		<PackageReference Include="OpenTelemetry.Api" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" />
 		<PackageReference Include="System.Linq.Async" />
-		<PackageReference Include="Lib.AspNetCore.ServerTiming.Abstractions" />
+		<PackageReference Include="Lib.ServerTiming.Abstractions" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Net8TILT\Net8TILT.Context\Net8TILT.Context.csproj" />

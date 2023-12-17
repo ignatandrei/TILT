@@ -6,8 +6,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Net8TILT\Net8TILT.Context\Net8TILT.Context.csproj" />
+    <ProjectReference Include="..\..\Net8TILT\Net8TILT.GeneratorFromDB\Net8TILT.GeneratorFromDB.csproj" />
+    <ProjectReference Include="..\..\Net8TILT\Net8TILT.Models\Net8TILT.Models.csproj" />
     <ProjectReference Include="..\NetTilt.Auth\NetTilt.Auth.csproj" />
-	<PackageReference Include="Lib.AspNetCore.ServerTiming.Abstractions"  />
+	<PackageReference Include="Lib.ServerTiming.Abstractions" />
 
 
   </ItemGroup>

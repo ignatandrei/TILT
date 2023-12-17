@@ -1,4 +1,3 @@
-using NetTilt.WebAPI;
 
 internal class Program
 {
@@ -72,9 +71,15 @@ internal class Program
             };
             return a;
         });
-
+        builder.Services.AddMemoryCache();
         builder.Services.AddServerTiming();
-        builder.Services.AddScoped<ServerTiming>();
+        builder.Services.AddScoped<ServerTimingMid>();
+        builder.Services.AddScoped<IAuthUrl, AuthUrl>();
+        builder.Services.AddScoped<IMyTilts, MyTilts>();
+        builder.Services.AddScoped<I_InsertDataApplicationDBContext, InsertDataApplicationDBContext>();
+        builder.Services.AddScoped<ISearchDataTILT_URL, SearchDataTILT_URL>();
+        builder.Services.AddScoped<ISearchDataTILT_Note, SearchDataTILT_Note>();
+        builder.Services.AddScoped<IPublicTILTS, PublicTILTS>();
 
 
         var app = builder.Build();
@@ -95,7 +100,7 @@ internal class Program
         app.UseAuthentication();
         app.UseStatusCodePages();
         app.UseServerTiming();
-        app.UseMiddleware<ServerTiming>();
+        //app.UseMiddleware<ServerTimingMid>();
         app.MapControllers();
         app.UseAMS();
         app.UseBlocklyAutomation();

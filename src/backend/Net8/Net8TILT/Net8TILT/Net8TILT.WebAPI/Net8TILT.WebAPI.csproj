@@ -12,6 +12,7 @@
     <PackageReference Include="AspNetCore.HealthChecks.UI" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" />
+    <PackageReference Include="Lib.ServerTiming.Abstractions" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
       <PrivateAssets>all</PrivateAssets>
@@ -20,8 +21,8 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
     <PackageReference Include="NetCore2Blockly" />
     <PackageReference Include="Swashbuckle.AspNetCore" />
-	  <PackageReference Include="Lib.AspNetCore.ServerTiming"  />
-	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer"  />
+	  <PackageReference Include="Lib.AspNetCore.ServerTiming" />
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
   </ItemGroup>
 
 	<ItemGroup>

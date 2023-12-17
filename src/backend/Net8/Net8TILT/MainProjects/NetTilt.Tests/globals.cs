@@ -20,9 +20,8 @@ global using LightBDD.Framework.Configuration;
 global using System.Text;
 global using Microsoft.EntityFrameworkCore;
 global using LightBDD.Framework.Parameters;
-
 global using Microsoft.Extensions.Configuration;
-global using Lib.AspNetCore.ServerTiming;
+global using Lib.ServerTiming;
 global using LightBDD.Framework.Expectations;
 global using LightBDD.Framework.Formatting.Values;
 global using Ductus.FluentDocker.Builders;

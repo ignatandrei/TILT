@@ -1,5 +1,4 @@
-﻿
-namespace NetTilt.Logic;
+﻿namespace NetTilt.Logic;
 
 public interface IPublicTILTS
 {
