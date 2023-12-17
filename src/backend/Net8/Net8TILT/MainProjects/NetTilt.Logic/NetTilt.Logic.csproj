@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Net8TILT\Net8TILT.Context\Net8TILT.Context.csproj" />
+    <ProjectReference Include="..\NetTilt.Auth\NetTilt.Auth.csproj" />
+	<PackageReference Include="Lib.AspNetCore.ServerTiming.Abstractions"  />
+
+
+  </ItemGroup>
+	<PropertyGroup>
+		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+		<CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)GeneratedX</CompilerGeneratedFilesOutputPath>
+	</PropertyGroup>
+
+</Project>

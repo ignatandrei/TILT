@@ -15,6 +15,21 @@
     <PropertyColumn Property="@(p => p.number)" Sortable="true"  IsDefaultSortColumn="true" InitialSortDirection="SortDirection.Descending" >
        
     </PropertyColumn>
+        <TemplateColumn Title="ID" SortBy="@sortByID">
+        <ColumnOptions>
+            ID => @filters[eTILT_NoteColumns.ID]
+            <div class="search-box">
+                <FluentSearch type="search" Autofocus=true @bind-Value=filters[eTILT_NoteColumns.ID] @oninput='(e)=>HandleColumnsFilter(eTILT_NoteColumns.ID,e)' @bind-Value:after='()=>HandleClearColumnsFilter(eTILT_NoteColumns.ID)' Placeholder="ID..." />
+            </div>
+        </ColumnOptions>
+        <ChildContent>
+                                
+            <NavLink Href='@string.Format("databases/{0}/tables/{1}/rows/{2}",database,table, context.data.ID)'>@context.data.ID</NavLink>
+                            </ChildContent>
+        
+
+
+    </TemplateColumn>
         <TemplateColumn Title="ForDate" SortBy="@sortByForDate">
         <ColumnOptions>
             ForDate => @filters[eTILT_NoteColumns.ForDate]
@@ -24,20 +39,6 @@
         </ColumnOptions>
         <ChildContent>
                                 <div>@context.data.ForDate</div>
-                            </ChildContent>
-        
-
-
-    </TemplateColumn>
-        <TemplateColumn Title="ID" SortBy="@sortByID">
-        <ColumnOptions>
-            ID => @filters[eTILT_NoteColumns.ID]
-            <div class="search-box">
-                <FluentSearch type="search" Autofocus=true @bind-Value=filters[eTILT_NoteColumns.ID] @oninput='(e)=>HandleColumnsFilter(eTILT_NoteColumns.ID,e)' @bind-Value:after='()=>HandleClearColumnsFilter(eTILT_NoteColumns.ID)' Placeholder="ID..." />
-            </div>
-        </ColumnOptions>
-        <ChildContent>
-                                <div>@context.data.ID</div>
                             </ChildContent>
         
 
@@ -138,14 +139,14 @@
             {
                 switch (item.Key)
                 {
-                                    case eTILT_NoteColumns.ForDate:
+                                    case eTILT_NoteColumns.ID:
                         arr = arr
                         .Where(x => 
                         
                         {
                             try
                             {
-                                return x.data.ForDate.ToString().Contains(item.Value, StringComparison.CurrentCultureIgnoreCase);
+                                return x.data.ID.ToString().Contains(item.Value, StringComparison.CurrentCultureIgnoreCase);
 
                             }
                             catch
@@ -159,14 +160,14 @@
 
                         .ToArray();
                         break;
-                    case eTILT_NoteColumns.ID:
+                    case eTILT_NoteColumns.ForDate:
                         arr = arr
                         .Where(x => 
                         
                         {
                             try
                             {
-                                return x.data.ID.ToString().Contains(item.Value, StringComparison.CurrentCultureIgnoreCase);
+                                return x.data.ForDate.ToString().Contains(item.Value, StringComparison.CurrentCultureIgnoreCase);
 
                             }
                             catch
@@ -270,11 +271,11 @@
         }
     }
 
-        GridSort<DataWithNumber<TILT_Note>> sortByForDate = GridSort<DataWithNumber<TILT_Note>>
-       .ByAscending(p => p.data.ForDate)
-       .ThenDescending(p => p.number);
         GridSort<DataWithNumber<TILT_Note>> sortByID = GridSort<DataWithNumber<TILT_Note>>
        .ByAscending(p => p.data.ID)
+       .ThenDescending(p => p.number);
+        GridSort<DataWithNumber<TILT_Note>> sortByForDate = GridSort<DataWithNumber<TILT_Note>>
+       .ByAscending(p => p.data.ForDate)
        .ThenDescending(p => p.number);
         GridSort<DataWithNumber<TILT_Note>> sortByIDURL = GridSort<DataWithNumber<TILT_Note>>
        .ByAscending(p => p.data.IDURL)
@@ -300,8 +301,8 @@
     string nameNumberFilter = string.Empty;
     
     Dictionary<eTILT_NoteColumns, string> filters =new() {
-            {eTILT_NoteColumns.ForDate, string.Empty},     
-                {eTILT_NoteColumns.ID, string.Empty},     
+            {eTILT_NoteColumns.ID, string.Empty},     
+                {eTILT_NoteColumns.ForDate, string.Empty},     
                 {eTILT_NoteColumns.IDURL, string.Empty},     
                 {eTILT_NoteColumns.Link, string.Empty},     
                 {eTILT_NoteColumns.Text, string.Empty},     

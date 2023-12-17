@@ -61,7 +61,7 @@ public interface I_<#= EntityType.Name #>_Table
 		
 }
 
-public class <#= EntityType.Name #>_Table : I_<#= EntityType.Name #>_Table
+public partial class <#= EntityType.Name #>_Table : I_<#= EntityType.Name #>_Table
 {
     public string ToFullPropertyString(){
         string data="";

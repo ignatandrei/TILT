@@ -25,4 +25,87 @@ public partial class REST_ApplicationDBContext_TILT_TagController : Controller
 
         
     }
+    
+        [HttpGet("{id}")]
+    public async Task<ActionResult<TILT_Tag_Table>> GetTILT_Tag(long id)
+    {
+        if (_context.TILT_Tag == null)
+        {
+            return NotFound();
+        }
+        var item = await _context.TILT_Tag.FirstOrDefaultAsync(e => e.ID==id);
+
+        if (item == null)
+        {
+            return NotFound();
+        }
+
+        return (TILT_Tag_Table)item!;
+    }
+
+
+    [HttpPatch("{id}")]
+        public async Task<IActionResult> PutTILT_Tag(long id, TILT_Tag value)
+        {
+            if (id != value.ID)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(value).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TILT_TagExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<TILT_Tag>> PostTILT_Tag(TILT_Tag_Table value)
+        {
+          
+            var val = new TILT_Tag();
+            val.CopyFrom(value);
+            _context.TILT_Tag.Add(val);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetTILT_Tag", new { id = val.ID }, val);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTILT_Tag(long id)
+        {
+            if (_context.TILT_Tag == null)
+            {
+                return NotFound();
+            }
+            var item = await _context.TILT_Tag.FirstOrDefaultAsync(e => e.ID==id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            _context.TILT_Tag .Remove(item);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool TILT_TagExists(long id)
+        {
+            return (_context.TILT_Tag.Any(e => e.ID  == id));
+        }
+
     }    

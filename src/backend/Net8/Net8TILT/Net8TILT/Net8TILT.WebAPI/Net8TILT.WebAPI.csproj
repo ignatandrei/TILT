@@ -35,6 +35,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\MainProjects\NetTilt.Auth\NetTilt.Auth.csproj" />
+	  <ProjectReference Include="..\..\MainProjects\NetTilt.Logic\NetTilt.Logic.csproj" />
 	  <ProjectReference Include="..\Net8TILT.Context\Net8TILT.Context.csproj" />
 	  <ProjectReference Include="..\Net8TILT.Controllers\Net8TILT.Controllers.csproj" />
 	  <ProjectReference Include="..\Net8TILT.Models\Net8TILT.Models.csproj" />

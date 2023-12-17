@@ -25,4 +25,87 @@ public partial class REST_ApplicationDBContext_TILT_Tag_NoteController : Control
 
         
     }
+    
+        [HttpGet("{id}")]
+    public async Task<ActionResult<TILT_Tag_Note_Table>> GetTILT_Tag_Note(long id)
+    {
+        if (_context.TILT_Tag_Note == null)
+        {
+            return NotFound();
+        }
+        var item = await _context.TILT_Tag_Note.FirstOrDefaultAsync(e => e.ID==id);
+
+        if (item == null)
+        {
+            return NotFound();
+        }
+
+        return (TILT_Tag_Note_Table)item!;
+    }
+
+
+    [HttpPatch("{id}")]
+        public async Task<IActionResult> PutTILT_Tag_Note(long id, TILT_Tag_Note value)
+        {
+            if (id != value.ID)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(value).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TILT_Tag_NoteExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<TILT_Tag_Note>> PostTILT_Tag_Note(TILT_Tag_Note_Table value)
+        {
+          
+            var val = new TILT_Tag_Note();
+            val.CopyFrom(value);
+            _context.TILT_Tag_Note.Add(val);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetTILT_Tag_Note", new { id = val.ID }, val);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTILT_Tag_Note(long id)
+        {
+            if (_context.TILT_Tag_Note == null)
+            {
+                return NotFound();
+            }
+            var item = await _context.TILT_Tag_Note.FirstOrDefaultAsync(e => e.ID==id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            _context.TILT_Tag_Note .Remove(item);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool TILT_Tag_NoteExists(long id)
+        {
+            return (_context.TILT_Tag_Note.Any(e => e.ID  == id));
+        }
+
     }    

@@ -1,1 +1,67 @@
-﻿TILT_Note has not ONE PK
+﻿@using global::Generated
+@inject NavigationManager navigationManager
+@if (TheRow == null)
+{
+    <p><em>Loading @table row with ID = @rowId</em></p>
+}
+else
+{
+<FluentStack Orientation="Orientation.Vertical"
+                
+                 VerticalGap="20"
+                 >
+        
+        <span class="demopanel">	ID :@TheRow.ID </span>    
+    
+    
+        <span class="demopanel">	ForDate :@TheRow.ForDate </span>    
+    
+    
+        <span class="demopanel">	IDURL :@TheRow.IDURL </span>    
+    
+    
+        <span class="demopanel">	Link :@TheRow.Link </span>    
+    
+    
+        <span class="demopanel">	Text :@TheRow.Text </span>    
+    
+    
+        <span class="demopanel">	TimeZoneString :@TheRow.TimeZoneString </span>    
+    
+    
+</FluentStack>
+
+}
+
+@code {
+    [Inject(Key = "db")]
+    public HttpClient? HttpClient_WebApi { get; set; } = null;
+
+    [Parameter]
+    public string? database { get; set; } = null;
+
+    [Parameter]
+    public string? table { get; set; } = null;
+
+    [Parameter]
+    public string? rowId { get; set; } = null;
+
+    public TILT_Note? TheRow { get; set; } = null;
+
+    private void GotoTableRow(string table, string rowId)
+    {
+        navigationManager.NavigateTo(string.Format("databases/{0}/tables/{1}/rows/{2}", database, table, rowId),true);
+        
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ArgumentNullException.ThrowIfNull(HttpClient_WebApi);
+        ArgumentNullException.ThrowIfNull(database);
+        ArgumentNullException.ThrowIfNull(table);
+        ArgumentNullException.ThrowIfNull(rowId);
+        var url = $"api/AdvancedSearch_{database}_{table}/GetSingle?id={rowId}";
+        TheRow = await HttpClient_WebApi.GetFromJsonAsync<TILT_Note>(url);
+        await base.OnInitializedAsync();
+    }
+}

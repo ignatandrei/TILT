@@ -8,5 +8,16 @@ global using Microsoft.EntityFrameworkCore;
 global using Net8TILT.WebAPIWebAPI;
 global using NetCore2BlocklyNew;
 global using System.Text.Json;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.RateLimiting;
+global using System.Security.Claims;
+global using Microsoft.AspNetCore.Authorization;
+global using NetTilt.Auth;
+global using Lib.AspNetCore.ServerTiming;
+global using Microsoft.AspNetCore.Http.HttpResults;
+global using NetTilt.Logic;
+
+
+
 
 [assembly: VersionReleased(Name = "FutureRelease", ISODateTime = "9999-04-16", recordData = RecordData.Merges)]

@@ -19,7 +19,7 @@ public interface I_TILT_Tag_Note_Table
 		
 }
 
-public class TILT_Tag_Note_Table : I_TILT_Tag_Note_Table
+public partial class TILT_Tag_Note_Table : I_TILT_Tag_Note_Table
 {
     public string ToFullPropertyString(){
         string data="";
@@ -33,7 +33,7 @@ public class TILT_Tag_Note_Table : I_TILT_Tag_Note_Table
     static TILT_Tag_Note_Table (){
         MetaColumn mc=null;
         mc=new ("ID","long",false);                
-        mc.IsPk = false ;
+        mc.IsPk = true ;
         mc.TypeJS = "number";
         metaData.AddColumn(mc);
         mc=new ("IDTag","long",false);                
@@ -104,10 +104,10 @@ public enum eTILT_Tag_NoteColumns {
 
 //finish ADDED by code generator
 
-[Keyless]
 
 public partial class TILT_Tag_Note
 {
+    [Key]
     public long ID { get; set; }
 
     public long IDTag { get; set; }

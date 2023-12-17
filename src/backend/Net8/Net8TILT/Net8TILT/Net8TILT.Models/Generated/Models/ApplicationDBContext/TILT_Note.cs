@@ -22,12 +22,12 @@ public interface I_TILT_Note_Table
 		
 }
 
-public class TILT_Note_Table : I_TILT_Note_Table
+public partial class TILT_Note_Table : I_TILT_Note_Table
 {
     public string ToFullPropertyString(){
         string data="";
-                data += "ForDate=" +this.ForDate;
-            data += "ID=" +this.ID;
+                data += "ID=" +this.ID;
+            data += "ForDate=" +this.ForDate;
             data += "IDURL=" +this.IDURL;
             data += "Link=" +this.Link;
             data += "Text=" +this.Text;
@@ -39,7 +39,7 @@ public class TILT_Note_Table : I_TILT_Note_Table
     static TILT_Note_Table (){
         MetaColumn mc=null;
         mc=new ("ID","long",false);                
-        mc.IsPk = false ;
+        mc.IsPk = true ;
         mc.TypeJS = "number";
         metaData.AddColumn(mc);
         mc=new ("IDURL","long",false);                
@@ -104,8 +104,8 @@ public partial class TILT_Note : I_TILT_Note_Table
 
     public string ToFullPropertyString(){
         string data="";
-                data += "ForDate=" +this.ForDate;
-            data += "ID=" +this.ID;
+                data += "ID=" +this.ID;
+            data += "ForDate=" +this.ForDate;
             data += "IDURL=" +this.IDURL;
             data += "Link=" +this.Link;
             data += "Text=" +this.Text;
@@ -137,10 +137,10 @@ public enum eTILT_NoteColumns {
 
 //finish ADDED by code generator
 
-[Keyless]
 
 public partial class TILT_Note
 {
+    [Key]
     public long ID { get; set; }
 
     public long IDURL { get; set; }

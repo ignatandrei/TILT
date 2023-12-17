@@ -25,4 +25,87 @@ public partial class REST_ApplicationDBContext_TILT_URLController : Controller
 
         
     }
+    
+        [HttpGet("{id}")]
+    public async Task<ActionResult<TILT_URL_Table>> GetTILT_URL(long id)
+    {
+        if (_context.TILT_URL == null)
+        {
+            return NotFound();
+        }
+        var item = await _context.TILT_URL.FirstOrDefaultAsync(e => e.ID==id);
+
+        if (item == null)
+        {
+            return NotFound();
+        }
+
+        return (TILT_URL_Table)item!;
+    }
+
+
+    [HttpPatch("{id}")]
+        public async Task<IActionResult> PutTILT_URL(long id, TILT_URL value)
+        {
+            if (id != value.ID)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(value).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TILT_URLExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<TILT_URL>> PostTILT_URL(TILT_URL_Table value)
+        {
+          
+            var val = new TILT_URL();
+            val.CopyFrom(value);
+            _context.TILT_URL.Add(val);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetTILT_URL", new { id = val.ID }, val);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTILT_URL(long id)
+        {
+            if (_context.TILT_URL == null)
+            {
+                return NotFound();
+            }
+            var item = await _context.TILT_URL.FirstOrDefaultAsync(e => e.ID==id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            _context.TILT_URL .Remove(item);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool TILT_URLExists(long id)
+        {
+            return (_context.TILT_URL.Any(e => e.ID  == id));
+        }
+
     }    

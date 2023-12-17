@@ -23,7 +23,8 @@
             </div>
         </ColumnOptions>
         <ChildContent>
-                                <div>@context.data.ID</div>
+                                
+            <NavLink Href='@string.Format("databases/{0}/tables/{1}/rows/{2}",database,table, context.data.ID)'>@context.data.ID</NavLink>
                             </ChildContent>
         
 

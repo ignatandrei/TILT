@@ -94,7 +94,7 @@ public partial class ApplicationDBContext : DbContext
  var search = SearchTILT_Note.FromSearch(sc,colToSearch,value);
  /*
         var orderBy = new GeneratorFromDB.OrderBy<eTILT_NoteColumns>();
-                    orderBy.FieldName = colToSearch;
+                    orderBy.FieldName = eTILT_NoteColumns.ID;
                 orderBy.Asc = false;
         search.OrderBys = new[] { orderBy };
         search.PageNumber = 1;
@@ -134,12 +134,42 @@ public partial class ApplicationDBContext : DbContext
     }
     
 
+    //oneKey
+    
+    public  async Task<bool> TILT_NoteDelete(long id){
+
+        var item = await TILT_NoteGetSingle(id);
+        if(item == null)
+            return false;
+       this.TILT_Note.Remove(item);
+        await this.SaveChangesAsync();
+        return true; 
+    }
+    public  async Task<bool> TILT_NoteModify(TILT_Note val ){
+        //do the attach
+        /* var item = await TILT_NoteGetSingle(val.??ID?????);
+        if(item == null)
+            return false;
+        item.CopyFrom(val);        
+        await this.SaveChangesAsync();
+        */
+        this.TILT_Note.Update(val);
+        await this.SaveChangesAsync();
+        return true; 
+    }
+    
+
+
+
+    public Task<TILT_Note?> TILT_NoteGetSingle(long id){
+        return this.TILT_Note.FirstOrDefaultAsync(e => e.ID == id);
+    }
     
 
     public IAsyncEnumerable<TILT_Note> TILT_NoteFind_AsyncEnumerable(SearchTILT_Note? search){
         IQueryable<TILT_Note> data= this.TILT_Note ;
         if(search == null){
-                        return data.AsAsyncEnumerable();
+                        return data.OrderByDescending(e => e.ID).AsAsyncEnumerable();
                     }
         data = search.TransformToWhere(data); 
         
@@ -199,7 +229,7 @@ public partial class ApplicationDBContext : DbContext
  var search = SearchTILT_Tag.FromSearch(sc,colToSearch,value);
  /*
         var orderBy = new GeneratorFromDB.OrderBy<eTILT_TagColumns>();
-                    orderBy.FieldName = colToSearch;
+                    orderBy.FieldName = eTILT_TagColumns.ID;
                 orderBy.Asc = false;
         search.OrderBys = new[] { orderBy };
         search.PageNumber = 1;
@@ -239,12 +269,42 @@ public partial class ApplicationDBContext : DbContext
     }
     
 
+    //oneKey
+    
+    public  async Task<bool> TILT_TagDelete(long id){
+
+        var item = await TILT_TagGetSingle(id);
+        if(item == null)
+            return false;
+       this.TILT_Tag.Remove(item);
+        await this.SaveChangesAsync();
+        return true; 
+    }
+    public  async Task<bool> TILT_TagModify(TILT_Tag val ){
+        //do the attach
+        /* var item = await TILT_TagGetSingle(val.??ID?????);
+        if(item == null)
+            return false;
+        item.CopyFrom(val);        
+        await this.SaveChangesAsync();
+        */
+        this.TILT_Tag.Update(val);
+        await this.SaveChangesAsync();
+        return true; 
+    }
+    
+
+
+
+    public Task<TILT_Tag?> TILT_TagGetSingle(long id){
+        return this.TILT_Tag.FirstOrDefaultAsync(e => e.ID == id);
+    }
     
 
     public IAsyncEnumerable<TILT_Tag> TILT_TagFind_AsyncEnumerable(SearchTILT_Tag? search){
         IQueryable<TILT_Tag> data= this.TILT_Tag ;
         if(search == null){
-                        return data.AsAsyncEnumerable();
+                        return data.OrderByDescending(e => e.ID).AsAsyncEnumerable();
                     }
         data = search.TransformToWhere(data); 
         
@@ -304,7 +364,7 @@ public partial class ApplicationDBContext : DbContext
  var search = SearchTILT_Tag_Note.FromSearch(sc,colToSearch,value);
  /*
         var orderBy = new GeneratorFromDB.OrderBy<eTILT_Tag_NoteColumns>();
-                    orderBy.FieldName = colToSearch;
+                    orderBy.FieldName = eTILT_Tag_NoteColumns.ID;
                 orderBy.Asc = false;
         search.OrderBys = new[] { orderBy };
         search.PageNumber = 1;
@@ -344,12 +404,42 @@ public partial class ApplicationDBContext : DbContext
     }
     
 
+    //oneKey
+    
+    public  async Task<bool> TILT_Tag_NoteDelete(long id){
+
+        var item = await TILT_Tag_NoteGetSingle(id);
+        if(item == null)
+            return false;
+       this.TILT_Tag_Note.Remove(item);
+        await this.SaveChangesAsync();
+        return true; 
+    }
+    public  async Task<bool> TILT_Tag_NoteModify(TILT_Tag_Note val ){
+        //do the attach
+        /* var item = await TILT_Tag_NoteGetSingle(val.??ID?????);
+        if(item == null)
+            return false;
+        item.CopyFrom(val);        
+        await this.SaveChangesAsync();
+        */
+        this.TILT_Tag_Note.Update(val);
+        await this.SaveChangesAsync();
+        return true; 
+    }
+    
+
+
+
+    public Task<TILT_Tag_Note?> TILT_Tag_NoteGetSingle(long id){
+        return this.TILT_Tag_Note.FirstOrDefaultAsync(e => e.ID == id);
+    }
     
 
     public IAsyncEnumerable<TILT_Tag_Note> TILT_Tag_NoteFind_AsyncEnumerable(SearchTILT_Tag_Note? search){
         IQueryable<TILT_Tag_Note> data= this.TILT_Tag_Note ;
         if(search == null){
-                        return data.AsAsyncEnumerable();
+                        return data.OrderByDescending(e => e.ID).AsAsyncEnumerable();
                     }
         data = search.TransformToWhere(data); 
         
@@ -409,7 +499,7 @@ public partial class ApplicationDBContext : DbContext
  var search = SearchTILT_URL.FromSearch(sc,colToSearch,value);
  /*
         var orderBy = new GeneratorFromDB.OrderBy<eTILT_URLColumns>();
-                    orderBy.FieldName = colToSearch;
+                    orderBy.FieldName = eTILT_URLColumns.ID;
                 orderBy.Asc = false;
         search.OrderBys = new[] { orderBy };
         search.PageNumber = 1;
@@ -449,12 +539,42 @@ public partial class ApplicationDBContext : DbContext
     }
     
 
+    //oneKey
+    
+    public  async Task<bool> TILT_URLDelete(long id){
+
+        var item = await TILT_URLGetSingle(id);
+        if(item == null)
+            return false;
+       this.TILT_URL.Remove(item);
+        await this.SaveChangesAsync();
+        return true; 
+    }
+    public  async Task<bool> TILT_URLModify(TILT_URL val ){
+        //do the attach
+        /* var item = await TILT_URLGetSingle(val.??ID?????);
+        if(item == null)
+            return false;
+        item.CopyFrom(val);        
+        await this.SaveChangesAsync();
+        */
+        this.TILT_URL.Update(val);
+        await this.SaveChangesAsync();
+        return true; 
+    }
+    
+
+
+
+    public Task<TILT_URL?> TILT_URLGetSingle(long id){
+        return this.TILT_URL.FirstOrDefaultAsync(e => e.ID == id);
+    }
     
 
     public IAsyncEnumerable<TILT_URL> TILT_URLFind_AsyncEnumerable(SearchTILT_URL? search){
         IQueryable<TILT_URL> data= this.TILT_URL ;
         if(search == null){
-                        return data.AsAsyncEnumerable();
+                        return data.OrderByDescending(e => e.ID).AsAsyncEnumerable();
                     }
         data = search.TransformToWhere(data); 
         
@@ -582,7 +702,9 @@ public class InsertDataApplicationDBContext: I_InsertDataApplicationDBContext{
     public Task<long> GetAllCount();
     public Task<long> GetAllCount(SearchTILT_Note? search);
 
-        
+        //oneKey    
+    public Task<TILT_Note?> TILT_NoteGetSingle(long id);
+    
     
     public  IAsyncEnumerable<TILT_Note> TILT_NoteSimpleSearch_ID(GeneratorFromDB.SearchCriteria sc,  long value);
     public  IAsyncEnumerable<TILT_Note> TILT_NoteSimpleSearchNull_ID(GeneratorFromDB.SearchCriteria sc);
@@ -618,12 +740,16 @@ public class InsertDataApplicationDBContext: I_InsertDataApplicationDBContext{
         public IAsyncEnumerable<TILT_Note> TILT_NoteFind_AsyncEnumerable(SearchTILT_Note? search){
             return context.TILT_NoteFind_AsyncEnumerable(search);
         }
-        public  IAsyncEnumerable<TILT_Note> TILT_NoteSimpleSearch(GeneratorFromDB.SearchCriteria sc, eTILT_NoteColumns colToSearch, string? value){
+        //oneKey    
+    public Task<TILT_Note?> TILT_NoteGetSingle(long id){
+            return context.TILT_NoteGetSingle(id);
+    }
+    public  IAsyncEnumerable<TILT_Note> TILT_NoteSimpleSearch(GeneratorFromDB.SearchCriteria sc, eTILT_NoteColumns colToSearch, string? value){
         var search =SearchTILT_Note.FromSearch(sc,colToSearch,value);
     /*
             var search = new SearchTILT_Note();
             var orderBy = new GeneratorFromDB.OrderBy<eTILT_NoteColumns>();
-                              orderBy.FieldName = colToSearch;
+                              orderBy.FieldName = eTILT_NoteColumns.ID;
           
             orderBy.Asc = false;
             search.OrderBys = new[] { orderBy };
@@ -724,7 +850,9 @@ public class InsertDataApplicationDBContext: I_InsertDataApplicationDBContext{
     public Task<long> GetAllCount();
     public Task<long> GetAllCount(SearchTILT_Tag? search);
 
-        
+        //oneKey    
+    public Task<TILT_Tag?> TILT_TagGetSingle(long id);
+    
     
     public  IAsyncEnumerable<TILT_Tag> TILT_TagSimpleSearch_ID(GeneratorFromDB.SearchCriteria sc,  long value);
     public  IAsyncEnumerable<TILT_Tag> TILT_TagSimpleSearchNull_ID(GeneratorFromDB.SearchCriteria sc);
@@ -748,12 +876,16 @@ public class InsertDataApplicationDBContext: I_InsertDataApplicationDBContext{
         public IAsyncEnumerable<TILT_Tag> TILT_TagFind_AsyncEnumerable(SearchTILT_Tag? search){
             return context.TILT_TagFind_AsyncEnumerable(search);
         }
-        public  IAsyncEnumerable<TILT_Tag> TILT_TagSimpleSearch(GeneratorFromDB.SearchCriteria sc, eTILT_TagColumns colToSearch, string? value){
+        //oneKey    
+    public Task<TILT_Tag?> TILT_TagGetSingle(long id){
+            return context.TILT_TagGetSingle(id);
+    }
+    public  IAsyncEnumerable<TILT_Tag> TILT_TagSimpleSearch(GeneratorFromDB.SearchCriteria sc, eTILT_TagColumns colToSearch, string? value){
         var search =SearchTILT_Tag.FromSearch(sc,colToSearch,value);
     /*
             var search = new SearchTILT_Tag();
             var orderBy = new GeneratorFromDB.OrderBy<eTILT_TagColumns>();
-                              orderBy.FieldName = colToSearch;
+                              orderBy.FieldName = eTILT_TagColumns.ID;
           
             orderBy.Asc = false;
             search.OrderBys = new[] { orderBy };
@@ -806,7 +938,9 @@ public class InsertDataApplicationDBContext: I_InsertDataApplicationDBContext{
     public Task<long> GetAllCount();
     public Task<long> GetAllCount(SearchTILT_Tag_Note? search);
 
-        
+        //oneKey    
+    public Task<TILT_Tag_Note?> TILT_Tag_NoteGetSingle(long id);
+    
     
     public  IAsyncEnumerable<TILT_Tag_Note> TILT_Tag_NoteSimpleSearch_ID(GeneratorFromDB.SearchCriteria sc,  long value);
     public  IAsyncEnumerable<TILT_Tag_Note> TILT_Tag_NoteSimpleSearchNull_ID(GeneratorFromDB.SearchCriteria sc);
@@ -833,12 +967,16 @@ public class InsertDataApplicationDBContext: I_InsertDataApplicationDBContext{
         public IAsyncEnumerable<TILT_Tag_Note> TILT_Tag_NoteFind_AsyncEnumerable(SearchTILT_Tag_Note? search){
             return context.TILT_Tag_NoteFind_AsyncEnumerable(search);
         }
-        public  IAsyncEnumerable<TILT_Tag_Note> TILT_Tag_NoteSimpleSearch(GeneratorFromDB.SearchCriteria sc, eTILT_Tag_NoteColumns colToSearch, string? value){
+        //oneKey    
+    public Task<TILT_Tag_Note?> TILT_Tag_NoteGetSingle(long id){
+            return context.TILT_Tag_NoteGetSingle(id);
+    }
+    public  IAsyncEnumerable<TILT_Tag_Note> TILT_Tag_NoteSimpleSearch(GeneratorFromDB.SearchCriteria sc, eTILT_Tag_NoteColumns colToSearch, string? value){
         var search =SearchTILT_Tag_Note.FromSearch(sc,colToSearch,value);
     /*
             var search = new SearchTILT_Tag_Note();
             var orderBy = new GeneratorFromDB.OrderBy<eTILT_Tag_NoteColumns>();
-                              orderBy.FieldName = colToSearch;
+                              orderBy.FieldName = eTILT_Tag_NoteColumns.ID;
           
             orderBy.Asc = false;
             search.OrderBys = new[] { orderBy };
@@ -903,7 +1041,9 @@ public class InsertDataApplicationDBContext: I_InsertDataApplicationDBContext{
     public Task<long> GetAllCount();
     public Task<long> GetAllCount(SearchTILT_URL? search);
 
-        
+        //oneKey    
+    public Task<TILT_URL?> TILT_URLGetSingle(long id);
+    
     
     public  IAsyncEnumerable<TILT_URL> TILT_URLSimpleSearch_ID(GeneratorFromDB.SearchCriteria sc,  long value);
     public  IAsyncEnumerable<TILT_URL> TILT_URLSimpleSearchNull_ID(GeneratorFromDB.SearchCriteria sc);
@@ -930,12 +1070,16 @@ public class InsertDataApplicationDBContext: I_InsertDataApplicationDBContext{
         public IAsyncEnumerable<TILT_URL> TILT_URLFind_AsyncEnumerable(SearchTILT_URL? search){
             return context.TILT_URLFind_AsyncEnumerable(search);
         }
-        public  IAsyncEnumerable<TILT_URL> TILT_URLSimpleSearch(GeneratorFromDB.SearchCriteria sc, eTILT_URLColumns colToSearch, string? value){
+        //oneKey    
+    public Task<TILT_URL?> TILT_URLGetSingle(long id){
+            return context.TILT_URLGetSingle(id);
+    }
+    public  IAsyncEnumerable<TILT_URL> TILT_URLSimpleSearch(GeneratorFromDB.SearchCriteria sc, eTILT_URLColumns colToSearch, string? value){
         var search =SearchTILT_URL.FromSearch(sc,colToSearch,value);
     /*
             var search = new SearchTILT_URL();
             var orderBy = new GeneratorFromDB.OrderBy<eTILT_URLColumns>();
-                              orderBy.FieldName = colToSearch;
+                              orderBy.FieldName = eTILT_URLColumns.ID;
           
             orderBy.Asc = false;
             search.OrderBys = new[] { orderBy };

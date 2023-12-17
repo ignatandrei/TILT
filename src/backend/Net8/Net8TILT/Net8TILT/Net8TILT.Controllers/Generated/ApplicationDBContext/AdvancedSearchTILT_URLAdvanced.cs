@@ -79,6 +79,16 @@ public partial class AdvancedSearch_ApplicationDBContext_TILT_URLController : Co
 
         return await _search.GetAllCount(s);
     }
+
+//has one key
+    [HttpGet]
+    public async Task<TILT_URL_Table?> GetSingle(long id){
+        var data=await _search.TILT_URLGetSingle(id);
+       if(data == null)
+        return null;
+       return (TILT_URL_Table)data;
+    }
+
         
     [HttpGet]
     public async IAsyncEnumerable<TILT_URL_Table> ID_EqualValue( long  value)
