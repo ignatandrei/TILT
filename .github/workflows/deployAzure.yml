@@ -37,6 +37,7 @@ jobs:
             dotnet build --configuration Release
 
       - name: Build frontend with dotnet
+        shell: pwsh
         run: |
             cd src/frontend/TiltBlazor8/TiltBlazor8/TiltBlazor8.Blazor 
             dotnet build --configuration Release -o build
