@@ -83,9 +83,9 @@ public partial class PublicTILTS : IPublicTILTS
             //why I cant return result.ToAsyncEnumerable() ?
             await foreach (var item in result.ToAsyncEnumerable())
             {
-                if (nr > 0 && nr % 10 == 0)
-                    await Task.Delay(2500);
-                nr++;
+                //if (nr > 0 && nr % 10 == 0)
+                //    await Task.Delay(2500);
+                //nr++;
                 //await Task.Delay(rand.Next(2,1000));
                 yield return item;
             }
@@ -98,8 +98,8 @@ public partial class PublicTILTS : IPublicTILTS
         var data = dataFromDB.Select(it => { var n = new TILT_Note_Table(); n.CopyFrom(it); return n; });
         await foreach (var it in data)
         {
-            if (nr > 0 && nr % 10 == 0)
-                await Task.Delay(2500);
+            //if (nr > 0 && nr % 10 == 0)
+            //    await Task.Delay(2500);
             nr++;
             //await Task.Delay(rand.Next(2, 1000));
             yield return it;

@@ -1,20 +1,72 @@
-﻿
-<h3>PublicTilts</h3>
+﻿@page "/PublicTilts"
+@inject IWebAssemblyHostEnvironment HostEnvironment
+@{
 
+    string baseAddress = HostEnvironment.BaseAddress;
+    if (!baseAddress.EndsWith("/"))
+        baseAddress += "/";
+}
+<h3>Public Tilts</h3>
+<ol>
+@foreach (var item in this.Tilts??[])
+{
+    var item1 = item;
+     var link = $"{baseAddress}PublicTilts/{item1.Key}/";
+       <li>
+    <NavLink Href="@link">@item.Key @item.Value </NavLink>
+            </li>
+
+    }
+</ol>
 
 
 @code {
     [Inject(Key = "db")]
     public HttpClient? HttpClient_WebApi { get; set; } = null;
 
-
-    public bool IsLoading { get; set; } = true;
-    public TILT_URL[]? Tilts { get; set; }=null;
+    public Dictionary<string,long?>? Tilts { get; set; }=null;
 
     protected override async Task OnInitializedAsync()
     {        
         ArgumentNullException.ThrowIfNull(HttpClient_WebApi);
-Tilts = await HttpClient_WebApi.GetFromJsonAsync<TILT_URL[]>("api/TILT_URL");
+        if(Tilts != null)
+            return;
+        var data = await HttpClient_WebApi.GetFromJsonAsync<string[]>("api/PublicTILTs/PublicTiltsURL");
+        if(data != null)
+        {
+            Tilts = data.ToDictionary(a=>a,a=>(long?)null);    
+
+        }
         await base.OnInitializedAsync();
+    }
+    override protected async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(Tilts == null || Tilts.Count == 0)
+            return;
+        if(Tilts.All(it=>it.Value.HasValue)){
+            Console.WriteLine("all tables loaded");
+            return;
+        }
+        ArgumentNullException.ThrowIfNull(HttpClient_WebApi);
+        var tasks = Tilts.Keys
+            .Select(it => HttpClient_WebApi.GetFromJsonAsync<long?>($"/api/PublicTILTs/CountTILTs/{it}/count").AddData(it))
+            .ToArray();
+        try
+        {
+            await Task.WhenAll(tasks);
+            foreach (var t in tasks)
+            {
+                if (t.IsCompletedSuccessfully)
+                    Tilts[t.Result.data] = t.Result.res;
+            }
+            
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+        await base.OnAfterRenderAsync(firstRender);
+        await InvokeAsync(StateHasChanged);
     }
 }

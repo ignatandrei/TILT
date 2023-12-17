@@ -1,0 +1,84 @@
+﻿@page "/PublicTilts/{TiltAuthor}"
+
+<h3>Public Tilts for @TiltAuthor : @count</h3>
+
+<FluentDataGrid ResizableColumns=true Items="@dataForQuery" Virtualize="true" GenerateHeader="GenerateHeaderOption.Sticky" >
+    <PropertyColumn Property="@(p => p.number)" Sortable="true"  IsDefaultSortColumn="true" InitialSortDirection="SortDirection.Descending" >
+    </PropertyColumn>
+    <TemplateColumn Title="Text" >
+        <ChildContent>
+            <div>@context.data.Text @context.data.Link</div>
+            
+        </ChildContent>
+    </TemplateColumn>
+</FluentDataGrid>
+
+@code {
+    [Parameter]
+    public string? TiltAuthor { get; set; }
+
+    [Inject(Key = "db")]
+    public HttpClient? HttpClient_WebApi { get; set; } = null;
+
+    long? count = null;
+    List<DataWithNumber<TILT_Note_Table>> dataArr = [];
+    public IQueryable<DataWithNumber<TILT_Note_Table>>? dataForQuery
+    {
+        get
+        {
+            return dataArr.AsQueryable();
+        }
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        ArgumentNullException.ThrowIfNull(HttpClient_WebApi);
+        var url = $"api/PublicTILTs/CountTILTs/{TiltAuthor}/count";
+        count = await HttpClient_WebApi.GetFromJsonAsync<long?>(url);
+        await InvokeAsync(StateHasChanged);
+        // if (dataArr.Count > 0)
+        // {
+        //     await base.OnAfterRenderAsync(firstRender);
+        //     return;
+        // }
+        ArgumentNullException.ThrowIfNull(HttpClient_WebApi);
+        var urlTilts = $"api/PublicTILTs/LatestTILTs/{TiltAuthor}/100000";
+        IAsyncEnumerable<TILT_Note_Table?>? data;
+        //lock (doNotEnter)
+        {
+            if (dataArr.Count > 0)
+            {
+                return;
+            }
+            data = HttpClient_WebApi.GetFromJsonAsAsyncEnumerable<TILT_Note_Table>(urlTilts);
+        }
+        ArgumentNullException.ThrowIfNull(data);
+        int i = 0;
+        await foreach (var item in data)
+        {
+            if (item == null) continue;
+            i++;
+            if (i == 1)
+            {
+                dataArr = [];
+            }
+            dataArr.Add(new DataWithNumber<TILT_Note_Table>(i, item));
+            
+            if ((i < 100 && i % 10 == 0) || (i > 100 && i < 900 && i % 100 == 0) || (i > 900 && i % 1000 == 0))
+            {
+                Console.WriteLine("numar" + i); 
+                await InvokeAsync(StateHasChanged);
+                await Task.Delay(i < 500 ? 1_000 : 2_000);
+            }
+        }
+
+
+
+        //await base.OnAfterRenderAsync(firstRender);
+        await InvokeAsync(StateHasChanged);
+    }
+
+    }
+    
+

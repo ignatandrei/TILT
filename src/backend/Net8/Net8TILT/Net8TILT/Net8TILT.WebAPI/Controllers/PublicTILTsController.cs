@@ -22,16 +22,29 @@ public class PublicTILTsController : ControllerBase
         return publicTILTS.PublicTiltsURL();
     }
     [HttpGet("{urlPart}/{numberTILTS}")]
-    public ActionResult<IAsyncEnumerable<TILT_Note_Table>> LatestTILTs(string urlPart, int numberTILTS, [FromServices] ISearchDataTILT_Note searchNotes)
+    public async IAsyncEnumerable<TILT_Note_Table> LatestTILTs(string urlPart, int numberTILTS, [FromServices] ISearchDataTILT_Note searchNotes)
     {
+        Console.WriteLine("LatestTilts");
         var data =  publicTILTS.LatestTILTs(urlPart,numberTILTS);
         
         if (data== null)
         {
-            return new NotFoundObjectResult($"cannot find {urlPart}");
+            throw new Exception("No data found");
         }
-
-        return Ok(data);
+        Console.WriteLine("starting");
+        long i=0;
+        await foreach (var item in data)
+        {
+            i++;
+            if(i % 100 == 0)
+            {
+                await Task.Delay(2500);
+                Console.WriteLine("Delaying" +DateTime.Now.ToString("HHmmss"));
+            }
+            yield return item;
+        }
+        await Task.Delay(2500);
+        Console.WriteLine("ending");
     }
     [HttpGet("{urlPart}/count")]
     public async Task<long> CountTILTs(string urlPart,[FromServices] ISearchDataTILT_Note searchNotes)

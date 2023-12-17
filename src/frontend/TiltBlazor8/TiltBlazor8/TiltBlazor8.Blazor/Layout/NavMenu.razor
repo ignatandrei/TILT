@@ -12,14 +12,14 @@
     var healthz = hostAPI + "healthz";
     var healthchecksApi= hostAPI + "healthchecks-api";
     var ams = hostAPI + "ams";
-
+    var tilts = baseAddress + "PublicTilts";
     Console.WriteLine("swagger:"+swagger);
 }
 <nav>
     <FluentNavMenu Width="250" Collapsible="true" Title="Custom navigation menu">
         <FluentNavLink Href="@baseAddress" Match="NavLinkMatch.All" Icon="@Icon.FromImageUrl(baseAddress+ "images/home.svg")" IconColor="Color.Accent">Home</FluentNavLink>
-        @* <FluentNavLink Href="counter" Icon="@Icon.FromImageUrl("/images/counter.svg")" IconColor="Color.Accent">Counter</FluentNavLink>
-        <FluentNavLink Href="weather" Icon="@Icon.FromImageUrl("/images/weather.svg")" IconColor="Color.Accent">Weather</FluentNavLink> *@
+        <FluentNavLink Href="@tilts" Icon="@(new Icons.Regular.Size16.Bookmark())" IconColor="Color.Accent">TILTS</FluentNavLink>
+        
         <FluentNavLink Href="@db" Icon="@(new Icons.Regular.Size16.DatabaseStack())" IconColor="Color.Accent">Databases</FluentNavLink>
         <FluentDivider></FluentDivider>
         <FluentNavLink Target="_blank" Href="@swagger" Icon="@(new Icons.Regular.Size16.Link())" IconColor="Color.Accent">Swagger</FluentNavLink>

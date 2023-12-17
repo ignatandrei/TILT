@@ -31,47 +31,52 @@ jobs:
       #     node-version: '16.13.0'
           
 
-      - name: Build with dotnet
+      - name: Build backend with dotnet
         run: |
             cd src/backend/Net8/NetTilt 
             dotnet build --configuration Release
 
-
-      # - name: Build React Site 1
-      #   shell: pwsh
-      #   run: |
-      #       node -v
-      #       npm -v
-      #       cd src/frontend/react-tilt/
-      #       npm i
-      #       npm run buildAzure
-      #       remove-item ..\..\backend\Net7\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\index.html
-      #       echo afterDelete
-      #       gci ..\..\backend\Net7\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\ |  % { Write-Host $_.FullName }
-      #       Copy-Item .\build\* ..\..\backend\Net7\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\ -Recurse
-      #       echo afterCopy
-      #       gci ..\..\backend\Net7\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\ReactTilt\ |  % { Write-Host $_.FullName }
-      # - name: Build Angular Site 1
-      #   shell: pwsh
-      #   run: |
-      #       node -v
-      #       npm -v
-      #       cd src/frontend/AngTilt14/
-      #       npm i
-      #       npm run buildAzure
-      #       remove-item ..\..\backend\Net7\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\AngTilt\index.html
-      #       dir .\dist\AngTilt\* 
-      #       Copy-Item .\dist\AngTilt\* ..\..\backend\Net7\NetTilt\NetTilt\NetTilt.WebAPI\wwwroot\AngTilt\
+      - name: Build frontend with dotnet
+        run: |
+            cd src/frontend/TiltBlazor8/TiltBlazor8/TiltBlazor8.Blazor 
+            dotnet build --configuration Release -o build
+            Copy-Item .\build\wwwroot\* ..\..\..\..\backend\Net8\Net8TILT\Net8TILT\Net8TILT.WebAPI\wwwroot\ReactTilt\ -Recurse
+    
+      - name: Build React Site 1
+        shell: pwsh
+        run: |
+            node -v
+            npm -v
+            cd src/frontend/react-tilt/
+            npm i
+            npm run buildAzure
+            remove-item ..\..\backend\Net8\Net8TILT\Net8TILT\Net8TILT.WebAPI\wwwroot\ReactTilt\index.html
+            echo afterDelete
+            gci ..\..\backend\Net8\Net8TILT\Net8TILT\Net8TILT.WebAPI\wwwroot\ReactTilt\ |  % { Write-Host $_.FullName }
+            Copy-Item .\build\* ..\..\backend\Net8\Net8TILT\Net8TILT\Net8TILT.WebAPI\wwwroot\ReactTilt\ -Recurse
+            echo afterCopy
+            gci ..\..\backend\Net8\Net8TILT\Net8TILT\Net8TILT.WebAPI\wwwroot\ReactTilt\ |  % { Write-Host $_.FullName }
+      - name: Build Angular Site 1
+        shell: pwsh
+        run: |
+            node -v
+            npm -v
+            cd src/frontend/AngTilt14/
+            npm i
+            npm run buildAzure
+            remove-item ..\..\backend\Net8\Net8TILT\Net8TILT\Net8TILT.WebAPI\wwwroot\AngTilt\index.html
+            dir .\dist\AngTilt\* 
+            Copy-Item .\dist\AngTilt\* ..\..\backend\Net8\Net8TILT\Net8TILT\Net8TILT.WebAPI\wwwroot\AngTilt\
       - name: dotnet publish
         shell: pwsh
         run: |
-            cd src/backend/Net7/NetTilt
-            dotnet tool restore
+            cd src/backend/Net8/Net8TILT
+            #dotnet tool restore
             # gci -recurse |  % { Write-Host $_.FullName }
-            dotnet dotnet-project-licenses -i ./NetTilt/NetTilt.WebAPI -o --outfile NetTilt/NetTilt.WebAPI/wwwroot/netcorelicences.txt -t
+            #dotnet dotnet-project-licenses -i ./Net8TILT/Net8TILT.WebAPI -o --outfile NetTilt/Net8TILT.WebAPI/wwwroot/netcorelicences.txt -t
             # ls -lh
             # .\AOPMethod.ps1
-            cd NetTilt/NetTilt.WebAPI 
+            cd Net8TILT/Net8TILT.WebAPI 
             copy-item ./wwwroot/AngTilt/3rdpartylicenses.txt ./wwwroot/ 
             gci ./wwwroot/ |  % { Write-Host $_.FullName } 
             dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp -r linux-x64 --no-self-contained
