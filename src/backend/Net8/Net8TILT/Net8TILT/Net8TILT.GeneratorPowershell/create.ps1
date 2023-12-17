@@ -78,11 +78,11 @@ function Generate{
 }
 
 
- # Generate "Models"  "../Net8TILT.Models/Generated/" $project
+ Generate "Models"  "../Net8TILT.Models/Generated/" $project
 
- # Generate "Context"  "../Net8TILT.Context/Generated/" $project
+ Generate "Context"  "../Net8TILT.Context/Generated/" $project
 
- # Generate "Controllers"  "../Net8TILT.Controllers/Generated/" $project 
+ Generate "Controllers"  "../Net8TILT.Controllers/Generated/" $project 
 
 # Generate "crats"  "../Net8TILT.crats/src/Admin/Generated/" $project
 
